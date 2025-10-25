@@ -86,9 +86,10 @@ export const useWidgetStore = create<WidgetState>((set, get) => ({
     if (id) {
       const location = get().locations.find((loc) => loc.id === id);
       if (location) {
+        // Use zoom level 11 for better context (less zoomed in than 12)
         set({
           mapCenter: [location.latitude, location.longitude],
-          mapZoom: 12,
+          mapZoom: 11,
           currentView: 'map', // Switch to map view
         });
       }

@@ -43,6 +43,7 @@ export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
   const markerRef = useRef<L.Marker>(null);
   const map = useMap();
   const [maxPopupHeight, setMaxPopupHeight] = useState(400);
+  const [shouldAutoPan, setShouldAutoPan] = useState(true);
 
   const handleMarkerClick = () => {
     setSelectedLocation(location.id);
@@ -65,15 +66,37 @@ export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
     return () => window.removeEventListener('resize', calculateMaxHeight);
   }, [map]);
 
+  // Track map animation state to control autopan
+  useEffect(() => {
+    const handleMoveStart = () => {
+      // Disable autopan when map starts moving
+      setShouldAutoPan(false);
+    };
+
+    const handleMoveEnd = () => {
+      // Re-enable autopan after map finishes moving
+      // Small delay to ensure animation is fully complete
+      setTimeout(() => setShouldAutoPan(true), 100);
+    };
+
+    map.on('movestart', handleMoveStart);
+    map.on('moveend', handleMoveEnd);
+
+    return () => {
+      map.off('movestart', handleMoveStart);
+      map.off('moveend', handleMoveEnd);
+    };
+  }, [map]);
+
   // Open popup when this location is selected
   useEffect(() => {
     if (selectedLocationId === location.id && markerRef.current) {
-      // Small delay to ensure map has finished centering and cluster has expanded
+      // Minimal delay for cluster expansion only
       const timer = setTimeout(() => {
         if (markerRef.current) {
           markerRef.current.openPopup();
         }
-      }, 300);
+      }, 50);
 
       return () => clearTimeout(timer);
     }
@@ -92,8 +115,10 @@ export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
         className="location-popup"
         maxWidth={300}
         minWidth={250}
-        autoPanPaddingTopLeft={[10, Math.floor(maxPopupHeight * 0.6)]}
-        autoPanPaddingBottomRight={[10, 10]}
+        autoPan={shouldAutoPan}
+        autoPanPaddingTopLeft={[50, 50]}
+        autoPanPaddingBottomRight={[50, 50]}
+        autoPanPadding={[50, 50]}
       >
         <div
           className="lmw-p-2 lmw-overflow-y-auto"

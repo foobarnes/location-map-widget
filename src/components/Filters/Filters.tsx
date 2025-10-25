@@ -169,7 +169,7 @@ export const Filters: React.FC = () => {
       </div>
 
       {/* Row 2: Category Chips + Clear All Button */}
-      <div className="lmw-flex lmw-flex-wrap lmw-items-center lmw-gap-2">
+      <div className="lmw-flex lmw-flex-nowrap lmw-overflow-x-auto lmw-items-center lmw-gap-2 lmw-pb-1">
         {/* Category Chips */}
         {categories.map((category) => {
           const isSelected = filters.selectedCategories.includes(category.value);
