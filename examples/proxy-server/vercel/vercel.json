@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "name": "location-widget-proxy",
+  "builds": [
+    {
+      "src": "api/**/*.ts",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/sheets/(.*)",
+      "dest": "/api/sheets/$1"
+    }
+  ],
+  "env": {
+    "GOOGLE_SHEETS_API_KEY": "@google-sheets-api-key"
+  }
+}

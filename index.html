@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Location Map Widget - Development</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 20px;
+        font-family: system-ui, -apple-system, sans-serif;
+        background-color: #f5f5f5;
+        transition: background-color 0.3s ease;
+      }
+      body.dark-mode {
+        background-color: #1a1a1a;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      h1 {
+        color: #333;
+        margin: 0;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode h1 {
+        color: #f5f5f5;
+      }
+      .theme-switcher {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .theme-button {
+        padding: 8px 16px;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        background: white;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+      }
+      .theme-button:hover {
+        background: #f0f0f0;
+        border-color: #999;
+      }
+      .theme-button.active {
+        background: #2563eb;
+        color: white;
+        border-color: #2563eb;
+      }
+      body.dark-mode .theme-button {
+        background: #2a2a2a;
+        border-color: #444;
+        color: #f5f5f5;
+      }
+      body.dark-mode .theme-button:hover {
+        background: #333;
+        border-color: #666;
+      }
+      body.dark-mode .theme-button.active {
+        background: #2563eb;
+        color: white;
+        border-color: #2563eb;
+      }
+      #location-widget {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        height: 700px; /* Container controls height */
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      }
+      body.dark-mode #location-widget {
+        border-color: #444;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Location Map Widget - Development Preview</h1>
+        <div class="theme-switcher">
+          <span style="color: #666; font-size: 14px; font-weight: 500;">Theme:</span>
+          <button class="theme-button active" onclick="setTheme('light')" id="light-btn">
+            ☀️ Light
+          </button>
+          <button class="theme-button" onclick="setTheme('dark')" id="dark-btn">
+            🌙 Dark
+          </button>
+          <button class="theme-button" onclick="setTheme('auto')" id="auto-btn">
+            🔄 Auto
+          </button>
+        </div>
+      </div>
+      <div id="location-widget"></div>
+    </div>
+
+    <script type="module" src="/src/main.tsx"></script>
+    <script type="module">
+      import { init } from '/src/main.tsx';
+
+      let widgetInstance = null;
+
+      // Theme switcher function
+      window.setTheme = function(theme) {
+        // Update button states
+        document.querySelectorAll('.theme-button').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(`${theme}-btn`).classList.add('active');
+
+        // Update body class for page background
+        if (theme === 'dark') {
+          document.body.classList.add('dark-mode');
+        } else {
+          document.body.classList.remove('dark-mode');
+        }
+
+        // Reinitialize widget with new theme
+        document.getElementById('location-widget').innerHTML = '';
+        initWidget(theme);
+      };
+
+      function initWidget(theme = 'light') {
+        // Initialize widget with test configuration
+        // Note: You'll need to replace these with your actual Google Sheets credentials
+        widgetInstance = init({
+          container: '#location-widget',
+          dataSource: {
+            type: 'google-sheets',
+            sheetId: 'YOUR_SHEET_ID_HERE',
+            apiKey: 'YOUR_API_KEY_HERE'
+          },
+          config: {
+            // height is now controlled by the container
+            defaultView: 'map',
+            theme: theme,
+            defaultCenter: [39.8283, -98.5795],
+            defaultZoom: 4
+          }
+        });
+      }
+
+      // Initialize with light theme on load
+      initWidget('light');
+    </script>
+  </body>
+</html>

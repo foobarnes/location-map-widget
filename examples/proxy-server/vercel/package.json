@@ -1,0 +1,16 @@
+{
+  "name": "location-widget-proxy",
+  "version": "1.0.0",
+  "description": "Secure proxy server for Location Map Widget",
+  "private": true,
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "@vercel/node": "^3.0.0"
+  },
+  "devDependencies": {
+    "vercel": "^33.0.0"
+  }
+}

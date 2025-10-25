@@ -1,0 +1,4 @@
+id,name,latitude,longitude,category,description,street,city,state,zip,country,phone,email,website,images,hours
+1,Example Location 1,37.7749,-122.4194,ambassador,This is a sample location with all fields populated,123 Main Street,San Francisco,CA,94102,USA,(555) 123-4567,contact@example.com,https://example.com,"https://images.example.com/photo1.jpg,https://images.example.com/photo2.jpg","Mon-Fri 9AM-5PM, Sat 10AM-3PM"
+2,Example Location 2,34.0522,-118.2437,rental,Minimal location with only required fields,456 Broadway,Los Angeles,CA,90001,USA,,,,,,
+3,Example Location 3,40.7128,-74.0060,trail,Location with contact info,789 Park Ave,New York,NY,10001,USA,(555) 987-6543,,https://trailsite.com,,Daily 6AM-8PM
