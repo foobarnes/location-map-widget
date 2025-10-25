@@ -2,12 +2,13 @@
  * LocationMarker component - Individual marker with popup
  */
 
-import React, { useRef, useEffect } from 'react';
-import { Marker, Popup } from 'react-leaflet';
+import React, { useRef, useEffect, useState } from 'react';
+import { Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import type { Location } from '../../types';
 import { useWidgetStore } from '../../stores/widgetStore';
 import { formatDistance } from '../../utils/distance';
+import { ImageGallery, CustomFields } from '../shared';
 
 interface LocationMarkerProps {
   location: Location;
@@ -40,10 +41,29 @@ const getMarkerIcon = (category: string): L.Icon => {
 export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
   const { setSelectedLocation, selectedLocationId } = useWidgetStore();
   const markerRef = useRef<L.Marker>(null);
+  const map = useMap();
+  const [maxPopupHeight, setMaxPopupHeight] = useState(400);
 
   const handleMarkerClick = () => {
     setSelectedLocation(location.id);
   };
+
+  // Calculate max popup height as 80% of map container height
+  useEffect(() => {
+    const calculateMaxHeight = () => {
+      const mapContainer = map.getContainer();
+      const mapHeight = mapContainer.clientHeight;
+      // Set max height to 80% of map height, with min of 300px and max of 600px
+      const calculatedHeight = Math.max(300, Math.min(600, Math.floor(mapHeight * 0.8)));
+      setMaxPopupHeight(calculatedHeight);
+    };
+
+    calculateMaxHeight();
+
+    // Recalculate on window resize
+    window.addEventListener('resize', calculateMaxHeight);
+    return () => window.removeEventListener('resize', calculateMaxHeight);
+  }, [map]);
 
   // Open popup when this location is selected
   useEffect(() => {
@@ -72,8 +92,13 @@ export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
         className="location-popup"
         maxWidth={300}
         minWidth={250}
+        autoPanPaddingTopLeft={[10, Math.floor(maxPopupHeight * 0.6)]}
+        autoPanPaddingBottomRight={[10, 10]}
       >
-        <div className="lmw-p-2">
+        <div
+          className="lmw-p-2 lmw-overflow-y-auto"
+          style={{ maxHeight: `${maxPopupHeight}px` }}
+        >
           {/* Category badge */}
           <div className="lmw-mb-2">
             <CategoryBadge category={location.category} />
@@ -83,6 +108,11 @@ export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
           <h3 className="lmw-text-lg lmw-font-bold lmw-text-gray-900 dark:lmw-text-gray-100 lmw-mb-2">
             {location.name}
           </h3>
+
+          {/* Images */}
+          {location.images && location.images.length > 0 && (
+            <ImageGallery images={location.images} locationName={location.name} />
+          )}
 
           {/* Distance (if calculated) */}
           {location.distance !== undefined && (
@@ -154,6 +184,13 @@ export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
                   </a>
                 </div>
               )}
+            </div>
+          )}
+
+          {/* Custom Fields */}
+          {location.customFields && Object.keys(location.customFields).length > 0 && (
+            <div className="lmw-mb-3">
+              <CustomFields customFields={location.customFields} />
             </div>
           )}
 

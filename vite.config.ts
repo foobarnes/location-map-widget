@@ -37,5 +37,8 @@ export default defineConfig({
   define: {
     // Ensure process.env is defined for libraries that expect it
     'process.env': {}
+  },
+  server: {
+    allowedHosts: ['rootnote.ngrok.dev'],
   }
 })

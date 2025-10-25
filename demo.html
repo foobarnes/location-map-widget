@@ -255,11 +255,12 @@
       };
 
       function initWidget(theme = 'light') {
-        // Initialize with mock data for demo
+        // Initialize with real published Google Sheets data (no API key required!)
         widgetInstance = LocationMapWidget.init({
           container: '#location-widget',
           dataSource: {
-            type: 'mock'
+            type: 'google-sheets-public',
+            sheetId: '2PACX-1vQv1jSRY0gTFmVaSXufZ0SQ0cH0Wd9XjFNySoUXsrQpFeWMWbgT10HeK8GXq7z2aV-P5gOnTqaaXX6H'
           },
           config: {
             theme: theme,

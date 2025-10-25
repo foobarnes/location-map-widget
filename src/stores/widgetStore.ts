@@ -110,14 +110,26 @@ export const useWidgetStore = create<WidgetState>((set, get) => ({
     // Apply search query filter
     if (filters.searchQuery) {
       const query = filters.searchQuery.toLowerCase();
-      filtered = filtered.filter(
-        (loc) =>
+      filtered = filtered.filter((loc) => {
+        // Search in standard fields
+        const standardFieldsMatch =
           loc.name.toLowerCase().includes(query) ||
           loc.description.toLowerCase().includes(query) ||
+          loc.category.toLowerCase().includes(query) ||
+          loc.address.street?.toLowerCase().includes(query) ||
           loc.address.city?.toLowerCase().includes(query) ||
           loc.address.state?.toLowerCase().includes(query) ||
-          loc.category.toLowerCase().includes(query)
-      );
+          loc.address.country?.toLowerCase().includes(query);
+
+        // Search in custom fields values
+        const customFieldsMatch = loc.customFields
+          ? Object.values(loc.customFields).some((value) =>
+              String(value).toLowerCase().includes(query)
+            )
+          : false;
+
+        return standardFieldsMatch || customFieldsMatch;
+      });
     }
 
     // Apply category filter

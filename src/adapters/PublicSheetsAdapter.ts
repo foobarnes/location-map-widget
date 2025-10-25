@@ -47,8 +47,9 @@ export class PublicSheetsAdapter implements DataAdapter {
     }
 
     try {
-      // Public CSV export URL format
-      const url = `https://docs.google.com/spreadsheets/d/${this.sheetId}/export?format=csv&gid=${this.gid}`;
+      // Public CSV export URL format for published sheets
+      // Format: /pub?output=csv (for published sheets)
+      const url = `https://docs.google.com/spreadsheets/d/e/${this.sheetId}/pub?output=csv&gid=${this.gid}`;
 
       const response = await axios.get<string>(url, {
         responseType: 'text',

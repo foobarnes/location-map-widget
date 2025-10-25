@@ -24,6 +24,9 @@ A comprehensive guide to embedding and customizing the Location Map Widget in yo
   - [WordPress Integration](#wordpress-integration)
 - [Configuration Options](#configuration-options)
 - [Category Customization](#category-customization)
+- [Image Galleries](#image-galleries)
+- [Custom Fields](#custom-fields)
+- [Search and Filtering](#search-and-filtering)
 - [Data Source Options](#data-source-options)
 - [Responsive Design](#responsive-design)
 - [Examples](#examples)
@@ -526,6 +529,304 @@ Available Tailwind classes (prefixed with `lmw-`):
 
 **Dark Mode:**
 - Prefix with `dark:` (e.g., `dark:lmw-bg-blue-900`)
+
+---
+
+## Image Galleries
+
+The widget automatically displays location images in both map tooltips and table view.
+
+### Adding Images to Your Data
+
+Include an `images` column in your Google Sheet with comma-separated image URLs:
+
+```csv
+id,name,latitude,longitude,category,images
+loc-1,Coffee Shop,37.7749,-122.4194,cafe,"https://example.com/shop-front.jpg,https://example.com/interior.jpg"
+loc-2,Bike Rental,34.0522,-118.2437,rental,https://example.com/bikes.jpg
+```
+
+### Image Display Features
+
+- **Map Tooltips**: Images appear automatically in location popups when you click markers
+- **Table View**: Images display in the expanded details section
+- **Gallery View**: Multiple images show in a horizontal scrollable gallery
+- **Lazy Loading**: Images load on-demand for better performance
+- **Error Handling**: Failed images are automatically hidden
+- **Full Size View**: Click any image to open full size in a new tab
+
+### Image Best Practices
+
+**Formats**: JPEG, PNG, WebP, GIF
+```csv
+images: "https://cdn.example.com/photo.jpg,https://cdn.example.com/photo2.webp"
+```
+
+**Recommended Specifications**:
+- **Dimensions**: 800×600px or smaller
+- **File Size**: Under 200KB per image
+- **Compression**: 80-90% quality for JPEGs
+- **Hosting**: Use a CDN for faster loading
+
+**Multiple Images**:
+```csv
+# Three images in a gallery
+images: "https://example.com/1.jpg,https://example.com/2.jpg,https://example.com/3.jpg"
+```
+
+**Alternative Column Name**:
+- You can use `image` (singular) instead of `images`
+
+### Image Gallery Example
+
+```html
+<script>
+  LocationMapWidget.init({
+    container: '#map',
+    dataSource: {
+      type: 'google-sheets-public',
+      sheetId: 'YOUR_SHEET_ID'
+    }
+  });
+</script>
+```
+
+Your Google Sheet with images:
+| id | name | latitude | longitude | category | images |
+|----|------|----------|-----------|----------|--------|
+| 1 | Bay Trail | 37.8044 | -122.2712 | trail | `https://example.com/trail1.jpg,https://example.com/trail2.jpg` |
+
+Result: Both images display in a scrollable gallery when the location is clicked on the map or expanded in the table.
+
+---
+
+## Custom Fields
+
+The widget automatically detects and displays any custom columns you add to your Google Sheet, making it easy to extend location data with your own fields.
+
+### Adding Custom Fields to Your Data
+
+Simply add any additional columns to your Google Sheet beyond the standard fields:
+
+```csv
+id,name,latitude,longitude,category,rental_price,bike_types,parking_available
+loc-1,Bike Shop,37.7749,-122.4194,rental,25,Road|Mountain|Hybrid,true
+loc-2,Trail Head,34.0522,-118.2437,trail,,,,false
+```
+
+**Common Use Cases**:
+- Pricing information: `rental_price`, `membership_cost`
+- Availability details: `parking_available`, `wheelchair_accessible`
+- Features: `bike_types_available`, `amenities`, `equipment`
+- Business info: `years_in_business`, `certified_mechanic`
+- Technical specs: `max_capacity`, `trail_difficulty`, `elevation_gain`
+
+### Custom Field Display
+
+Custom fields automatically appear in an **"Additional Information"** section:
+
+**Map Tooltips**: Display below contact info
+```
+Additional Information:
+• Rental Price: $25/day
+• Bike Types: Road, Mountain, Hybrid
+• Parking Available: Yes
+```
+
+**Table View**: Display in expanded details section after hours
+
+### Field Name Formatting
+
+The widget automatically formats field names for better readability:
+
+| Column Name | Displayed As |
+|-------------|--------------|
+| `rental_price` | Rental Price |
+| `bike_types_available` | Bike Types Available |
+| `wheelchairAccessible` | Wheelchair Accessible |
+| `parking_available` | Parking Available |
+| `yearsInBusiness` | Years In Business |
+
+**Formatting Rules**:
+- Underscores (`_`) are converted to spaces
+- camelCase words are split at capitals
+- First letter of each word is capitalized
+
+### Value Type Handling
+
+The widget intelligently handles different value types:
+
+**Boolean Values**: `true` → "Yes", `false` → "No"
+```csv
+parking_available,wheelchair_accessible
+true,false
+```
+Displays as:
+```
+• Parking Available: Yes
+• Wheelchair Accessible: No
+```
+
+**Numeric Values**: Displayed as-is
+```csv
+rental_price,max_capacity
+25,50
+```
+Displays as:
+```
+• Rental Price: 25
+• Max Capacity: 50
+```
+
+**String Values**: Displayed as-is
+```csv
+bike_types,amenities
+Road|Mountain|Hybrid,Repair Shop|Rentals|Classes
+```
+Displays as:
+```
+• Bike Types: Road|Mountain|Hybrid
+• Amenities: Repair Shop|Rentals|Classes
+```
+
+### Custom Fields Example
+
+```html
+<script>
+  LocationMapWidget.init({
+    container: '#map',
+    dataSource: {
+      type: 'google-sheets-public',
+      sheetId: 'YOUR_SHEET_ID'
+    }
+  });
+</script>
+```
+
+Your Google Sheet with custom fields:
+| id | name | category | rental_price | bike_types | parking |
+|----|------|----------|--------------|------------|---------|
+| 1 | Bay Bikes | rental | $25/day | Road, Mountain | Yes |
+
+Result: Custom fields automatically appear under "Additional Information" in both map and table views.
+
+### Best Practices
+
+1. **Use descriptive field names**: `rental_price` is better than `price` or `cost`
+2. **Be consistent**: Use the same naming style across all fields
+3. **Use snake_case or camelCase**: Both are automatically formatted
+4. **Keep values concise**: Long text values may not display well
+5. **Use booleans wisely**: For yes/no values, use `true`/`false` or `yes`/`no`
+
+---
+
+## Search and Filtering
+
+The widget includes powerful search and filtering capabilities to help users find locations quickly.
+
+### Search Functionality
+
+The search bar performs a **comprehensive text search** across multiple fields:
+
+**Standard Fields:**
+- **Name**: Location name
+- **Description**: Full description text
+- **Category**: Location category/type
+- **Street**: Street address
+- **City**: City name
+- **State**: State/province name
+- **Country**: Country name
+
+**Custom Fields:**
+- **All custom field values** are automatically included in search
+
+### Search Examples
+
+**Search by State:**
+```
+Search: "California"
+Results: All locations in California
+```
+
+**Search by Country:**
+```
+Search: "USA"
+Results: All locations in the USA
+```
+
+**Search by Category:**
+```
+Search: "rental"
+Results: All locations with "rental" category
+```
+
+**Search by Custom Field:**
+```
+Search: "parking"
+Results: All locations where any custom field contains "parking"
+(e.g., parking_available: "Yes", amenities: "Free parking")
+```
+
+**Search by Name:**
+```
+Search: "Bay Bikes"
+Results: Locations with "Bay" or "Bikes" in the name
+```
+
+### Search Behavior
+
+- **Case-insensitive**: "california", "California", and "CALIFORNIA" all work
+- **Partial matching**: "calif" will match "California"
+- **Real-time filtering**: Results update as you type
+- **Combined with filters**: Search works alongside category and distance filters
+
+### Category Filtering
+
+Click category badges to filter by one or more categories:
+
+- **Single category**: Click one badge to show only that category
+- **Multiple categories**: Click multiple badges to show locations from any selected category
+- **Clear filter**: Click a selected badge again to deselect it
+
+### Distance Filtering
+
+Use the "Find Near Me" button to enable location-based filtering:
+
+1. Click "Find Near Me"
+2. Allow location access
+3. Use distance slider to set maximum distance
+4. Locations are filtered and sorted by distance
+
+**Distance Filter Features:**
+- Shows distance to each location
+- Automatically sorts by nearest first
+- Works with search and category filters
+- Distance displayed in miles or kilometers
+
+### Combining Filters
+
+All filters work together:
+
+```
+Example: Search "California" + Category "rental" + Within 50 miles
+Result: Rental locations in California within 50 miles of your location
+```
+
+### Configuration
+
+You can disable specific filters if needed:
+
+```javascript
+init({
+  container: '#map',
+  dataSource: { /* ... */ },
+  config: {
+    enableSearch: true,           // Enable/disable search bar
+    enableFilters: true,           // Enable/disable category filters
+    enableDistanceFilter: true     // Enable/disable distance filtering
+  }
+});
+```
 
 ---
 

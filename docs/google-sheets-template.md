@@ -89,9 +89,17 @@ Add these columns to enhance your location data:
 - Images: `image` also works (singular)
 - Last Updated: `lastupdated` also works (no underscore)
 
+**Image Display**:
+- Images appear in **map tooltips** and **table view expanded details**
+- Multiple images display in a **horizontal scrollable gallery**
+- Thumbnails are sized at 120×90px for optimal performance
+- Click any image to view full size in a new tab
+- Failed images are automatically skipped
+- Supports standard formats: JPEG, PNG, WebP, GIF
+
 ### Custom Fields
 
-You can add ANY additional columns to your sheet! The widget will capture them as custom fields and make them available in the location data. For example:
+You can add ANY additional columns to your sheet! The widget will automatically capture them as custom fields and display them in the UI. For example:
 
 - `rental_price`
 - `bike_types_available`
@@ -99,7 +107,15 @@ You can add ANY additional columns to your sheet! The widget will capture them a
 - `wheelchair_accessible`
 - `special_features`
 
-These custom fields can be accessed programmatically but won't be displayed by default in the UI.
+**Custom Field Display**:
+- Appear under **"Additional Information"** section
+- Shown in both **map tooltips** and **table view expanded details**
+- Field names are automatically formatted for readability:
+  - `rental_price` → **Rental Price**
+  - `bike_types_available` → **Bike Types Available**
+  - `wheelchairAccessible` → **Wheelchair Accessible** (camelCase supported)
+- Boolean values display as "Yes" or "No"
+- All custom fields are displayed in bullet-point format
 
 ---
 
@@ -485,10 +501,14 @@ This minimal example will work perfectly and demonstrate the auto-discovery and 
    - Widget handles pagination automatically
    - Consider splitting very large datasets
 
-2. **Optimize Images**: Use optimized image URLs
-   - Use CDN-hosted images when possible
-   - Compress images before uploading
-   - Use reasonable image dimensions (800x600px or smaller)
+2. **Optimize Images**: Use optimized image URLs for better performance
+   - **Use CDN-hosted images** when possible (faster loading)
+   - **Compress images** before uploading (recommended: 80-90% quality)
+   - **Dimensions**: 800×600px or smaller for gallery thumbnails
+   - **Formats**: JPEG for photos, PNG for graphics, WebP for best compression
+   - **File size**: Keep under 200KB per image for fast loading
+   - **Multiple images**: Comma-separated URLs load in horizontal gallery
+   - Images are lazy-loaded and failed images are automatically hidden
 
 3. **Use Caching**: The widget caches data for 5 minutes
    - Don't fetch data more frequently than needed

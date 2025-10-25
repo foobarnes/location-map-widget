@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import type { Location } from '../../types';
 import { useWidgetStore } from '../../stores/widgetStore';
 import { formatDistance } from '../../utils/distance';
+import { ImageGallery, CustomFields } from '../shared';
 
 export const DataTable: React.FC = () => {
   const {
@@ -206,6 +207,14 @@ const TableRow: React.FC<TableRowProps> = ({ location, isExpanded, isSelected, o
 const ExpandedRowDetails: React.FC<{ location: Location }> = ({ location }) => {
   return (
     <div className="lmw-grid lmw-grid-cols-1 md:lmw-grid-cols-2 lmw-gap-4 lmw-text-sm">
+      {/* Images */}
+      {location.images && location.images.length > 0 && (
+        <div className="md:lmw-col-span-2">
+          <h4 className="lmw-font-semibold lmw-text-gray-900 dark:lmw-text-gray-100 lmw-mb-2">Images</h4>
+          <ImageGallery images={location.images} locationName={location.name} />
+        </div>
+      )}
+
       {/* Description */}
       {location.description && (
         <div className="md:lmw-col-span-2">
@@ -260,6 +269,13 @@ const ExpandedRowDetails: React.FC<{ location: Location }> = ({ location }) => {
         <div>
           <h4 className="lmw-font-semibold lmw-text-gray-900 dark:lmw-text-gray-100 lmw-mb-1">Hours</h4>
           <p className="lmw-text-gray-600 dark:lmw-text-gray-400">{location.hours}</p>
+        </div>
+      )}
+
+      {/* Custom Fields */}
+      {location.customFields && Object.keys(location.customFields).length > 0 && (
+        <div className="md:lmw-col-span-2">
+          <CustomFields customFields={location.customFields} />
         </div>
       )}
 
