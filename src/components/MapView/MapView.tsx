@@ -30,16 +30,14 @@ L.Marker.prototype.options.icon = DefaultIcon;
 const createClusterCustomIcon = (cluster: any) => {
   const count = cluster.getChildCount();
 
-  // Different sizes and colors based on cluster size
+  // Different sizes based on cluster size (color stays blue)
   let size = 'small';
-  let color = '#3B82F6'; // Blue
+  const color = '#3B82F6'; // Blue - consistent for all cluster sizes
 
   if (count >= 20) {
     size = 'large';
-    color = '#EF4444'; // Red
   } else if (count >= 10) {
     size = 'medium';
-    color = '#F59E0B'; // Orange
   }
 
   const sizeMap = {
