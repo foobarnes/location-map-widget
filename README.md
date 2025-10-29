@@ -2,7 +2,7 @@
 
 An embeddable, customizable location map widget with dynamic category support and Google Sheets integration.
 
-[![Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://ablebodied.github.io/location-map-widget/)
+[![Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://foobarnes.github.io/location-map-widget/)
 [![Bundle Size](https://img.shields.io/badge/bundle-218KB_gzipped-blue)](./dist)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
@@ -26,12 +26,12 @@ An embeddable, customizable location map widget with dynamic category support an
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="https://unpkg.com/location-map-widget@latest/dist/location-map-widget.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/foobarnes/location-map-widget@main/dist/location-map-widget.css">
 </head>
 <body>
   <div id="map" style="height: 600px;"></div>
 
-  <script src="https://unpkg.com/location-map-widget@latest/dist/location-map-widget.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/foobarnes/location-map-widget@main/dist/location-map-widget.umd.js"></script>
   <script>
     LocationMapWidget.init({
       container: '#map',
@@ -76,7 +76,7 @@ init({
 
 - **[Embedding Guide](./docs/embedding-guide.md)** - Complete integration guide with examples
 - **[Google Sheets Template](./docs/google-sheets-template.md)** - Set up your data source
-- **[Live Demo](https://ablebodied.github.io/location-map-widget/)** - See it in action
+- **[Live Demo](https://foobarnes.github.io/location-map-widget/)** - See it in action
 
 ## 🎨 Category Customization
 
@@ -153,7 +153,7 @@ This project includes automated GitHub Pages deployment:
 
 3. **Automatic deployment**:
    - GitHub Actions will build and deploy
-   - Demo available at: `https://[username].github.io/location-map-widget/`
+   - Demo available at: `https://foobarnes.github.io/location-map-widget/`
 
 The workflow (`.github/workflows/deploy.yml`) automatically:
 - Builds the library
@@ -175,8 +175,8 @@ Built for [Ablebodied.org](https://ablebodied.org) to help connect adaptive cycl
 ## 💬 Support
 
 - 📖 [Documentation](./docs/)
-- 🐛 [Report Issues](https://github.com/ablebodied/location-map-widget/issues)
-- 💡 [Feature Requests](https://github.com/ablebodied/location-map-widget/issues)
+- 🐛 [Report Issues](https://github.com/foobarnes/location-map-widget/issues)
+- 💡 [Feature Requests](https://github.com/foobarnes/location-map-widget/issues)
 
 ---
 
