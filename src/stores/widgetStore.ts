@@ -40,6 +40,7 @@ export const useWidgetStore = create<WidgetState>((set, get) => ({
   // Map state
   mapCenter: [39.8283, -98.5795], // Center of USA as default
   mapZoom: 4,
+  isProgrammaticMove: false, // Track when we're programmatically navigating
 
   // Actions
   setLocations: (locations: Location[]) => {
@@ -79,20 +80,32 @@ export const useWidgetStore = create<WidgetState>((set, get) => ({
     set({ currentPage: page });
   },
 
-  setSelectedLocation: (id: string | null) => {
+  setSelectedLocation: (id: string | null, context?: 'marker-click' | 'table-click') => {
+    console.log('[STORE] setSelectedLocation called:', { id, context, timestamp: Date.now() });
     set({ selectedLocationId: id });
 
-    // If a location is selected, center map on it
-    if (id) {
+    // Only change map position for table clicks (programmatic navigation)
+    // For marker clicks, the marker is already visible - just open popup
+    if (id && context === 'table-click') {
       const location = get().locations.find((loc) => loc.id === id);
       if (location) {
-        // Use zoom level 11 for better context (less zoomed in than 12)
+        console.log('[STORE] Table click - navigating to:', {
+          id,
+          lat: location.latitude,
+          lng: location.longitude,
+          zoom: 13
+        });
+        // Use zoom level 13 to prevent clustering (disableClusteringAtZoom: 13)
         set({
           mapCenter: [location.latitude, location.longitude],
-          mapZoom: 11,
+          mapZoom: 13,
           currentView: 'map', // Switch to map view
+          isProgrammaticMove: true, // Mark as programmatic move
         });
+        console.log('[STORE] isProgrammaticMove set to TRUE');
       }
+    } else if (context === 'marker-click') {
+      console.log('[STORE] Marker click - no navigation, isProgrammaticMove stays:', get().isProgrammaticMove);
     }
   },
 

@@ -39,14 +39,43 @@ const getMarkerIcon = (category: string): L.Icon => {
 };
 
 export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
-  const { setSelectedLocation, selectedLocationId } = useWidgetStore();
+  const { setSelectedLocation, selectedLocationId, isProgrammaticMove } = useWidgetStore();
   const markerRef = useRef<L.Marker>(null);
   const map = useMap();
   const [maxPopupHeight, setMaxPopupHeight] = useState(400);
-  const [shouldAutoPan, setShouldAutoPan] = useState(true);
+
+  // Log component mount
+  useEffect(() => {
+    console.log('[MARKER] Component mounted:', {
+      locationId: location.id,
+      locationName: location.name,
+      selectedLocationId,
+      isProgrammaticMove,
+      timestamp: Date.now()
+    });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleMarkerClick = () => {
-    setSelectedLocation(location.id);
+    console.log('[MARKER] Click handler called:', {
+      locationId: location.id,
+      timestamp: Date.now()
+    });
+    // Pass 'marker-click' context - don't trigger map pan/zoom
+    setSelectedLocation(location.id, 'marker-click');
+
+    // Directly open popup to handle both new selections and re-clicks of already-selected markers
+    // Small delay to ensure state updates and any cluster spiderfy completes
+    setTimeout(() => {
+      console.log('[MARKER] Attempting to open popup from click handler:', {
+        locationId: location.id,
+        markerRefExists: !!markerRef.current,
+        timestamp: Date.now()
+      });
+      if (markerRef.current) {
+        markerRef.current.openPopup();
+        console.log('[MARKER] openPopup() called from click handler');
+      }
+    }, 50);
   };
 
   // Calculate max popup height as 80% of map container height
@@ -66,41 +95,47 @@ export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
     return () => window.removeEventListener('resize', calculateMaxHeight);
   }, [map]);
 
-  // Track map animation state to control autopan
+  // Open popup when this location is selected via table click (programmatic navigation)
+  // Direct marker clicks are handled in handleMarkerClick
   useEffect(() => {
-    const handleMoveStart = () => {
-      // Disable autopan when map starts moving
-      setShouldAutoPan(false);
-    };
+    console.log('[MARKER] Programmatic move effect running:', {
+      locationId: location.id,
+      selectedLocationId,
+      markerRefExists: !!markerRef.current,
+      isProgrammaticMove,
+      conditionMet: selectedLocationId === location.id && markerRef.current && isProgrammaticMove,
+      timestamp: Date.now()
+    });
 
-    const handleMoveEnd = () => {
-      // Re-enable autopan after map finishes moving
-      // Small delay to ensure animation is fully complete
-      setTimeout(() => setShouldAutoPan(true), 100);
-    };
+    if (selectedLocationId === location.id && markerRef.current && isProgrammaticMove) {
+      console.log('[MARKER] Component mounted for programmatic move - opening popup after delay');
 
-    map.on('movestart', handleMoveStart);
-    map.on('moveend', handleMoveEnd);
-
-    return () => {
-      map.off('movestart', handleMoveStart);
-      map.off('moveend', handleMoveEnd);
-    };
-  }, [map]);
-
-  // Open popup when this location is selected
-  useEffect(() => {
-    if (selectedLocationId === location.id && markerRef.current) {
-      // Minimal delay for cluster expansion only
+      // Component just mounted after programmatic navigation
+      // Don't rely on moveend (it fires before component mounts!)
+      // Just wait for cluster animations to complete, then open popup
       const timer = setTimeout(() => {
+        console.log('[MARKER] Attempting to open popup after delay:', {
+          locationId: location.id,
+          markerRefExists: !!markerRef.current,
+          timestamp: Date.now()
+        });
         if (markerRef.current) {
           markerRef.current.openPopup();
+          console.log('[MARKER] openPopup() called from programmatic move');
+          // Reset isProgrammaticMove flag after successfully opening popup
+          useWidgetStore.setState({ isProgrammaticMove: false });
+          console.log('[MARKER] isProgrammaticMove reset to FALSE');
+        } else {
+          console.warn('[MARKER] markerRef.current is NULL, cannot open popup!');
         }
-      }, 50);
+      }, 300); // 300ms delay for cluster animations
 
-      return () => clearTimeout(timer);
+      return () => {
+        console.log('[MARKER] Cleanup: clearing timeout');
+        clearTimeout(timer);
+      };
     }
-  }, [selectedLocationId, location.id]);
+  }, [selectedLocationId, location.id, isProgrammaticMove]);
 
   return (
     <Marker
@@ -115,7 +150,7 @@ export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
         className="location-popup"
         maxWidth={300}
         minWidth={250}
-        autoPan={shouldAutoPan}
+        autoPan={true}
         autoPanPaddingTopLeft={[50, 50]}
         autoPanPaddingBottomRight={[50, 50]}
         autoPanPadding={[50, 50]}

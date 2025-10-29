@@ -33,7 +33,8 @@ export const DataTable: React.FC = () => {
       setSelectedLocation(null);
     } else {
       setExpandedRowId(location.id);
-      setSelectedLocation(location.id); // This will center map and switch to map view
+      // Pass 'table-click' context to trigger programmatic navigation to marker
+      setSelectedLocation(location.id, 'table-click');
     }
   };
 

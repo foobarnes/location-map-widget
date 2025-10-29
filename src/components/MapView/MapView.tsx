@@ -113,6 +113,7 @@ export const MapView: React.FC<MapViewProps> = ({
             spiderfyOnMaxZoom={true}
             showCoverageOnHover={false}
             zoomToBoundsOnClick={true}
+            disableClusteringAtZoom={13}
             iconCreateFunction={createClusterCustomIcon}
           >
             {filteredLocations.map((location) => (
@@ -136,31 +137,59 @@ export const MapView: React.FC<MapViewProps> = ({
  */
 const MapController: React.FC = () => {
   const map = useMap();
-  const { mapCenter, mapZoom, filteredLocations, selectedLocationId } = useWidgetStore();
+  const { mapCenter, mapZoom, filteredLocations, selectedLocationId, isProgrammaticMove } = useWidgetStore();
   const prevCenter = useRef(mapCenter);
   const prevZoom = useRef(mapZoom);
   const prevFilteredCount = useRef(filteredLocations.length);
 
   // Handle manual center/zoom changes (e.g., when selecting a location)
   useEffect(() => {
-    // Only update if center or zoom actually changed
-    if (
+    // Check if center or zoom actually changed
+    const coordsChanged =
       prevCenter.current[0] !== mapCenter[0] ||
       prevCenter.current[1] !== mapCenter[1] ||
-      prevZoom.current !== mapZoom
-    ) {
+      prevZoom.current !== mapZoom;
+
+    // Always call setView for programmatic moves to ensure moveend fires
+    // OR when coordinates actually changed
+    if (coordsChanged || isProgrammaticMove) {
+      console.log('[MAP CONTROLLER] Calling map.setView:', {
+        center: mapCenter,
+        zoom: mapZoom,
+        isProgrammaticMove,
+        coordsChanged,
+        reason: isProgrammaticMove ? 'programmatic move (forced)' : 'coordinates changed',
+        timestamp: Date.now()
+      });
+
+      // Set up moveend listener to track when animation completes
+      const handleMoveEnd = () => {
+        console.log('[MAP CONTROLLER] moveend event fired', {
+          timestamp: Date.now(),
+          currentZoom: map.getZoom(),
+          currentCenter: map.getCenter()
+        });
+        map.off('moveend', handleMoveEnd);
+      };
+      map.once('moveend', handleMoveEnd);
+
       map.setView(mapCenter, mapZoom);
       prevCenter.current = mapCenter;
       prevZoom.current = mapZoom;
     }
-  }, [map, mapCenter, mapZoom]);
+  }, [map, mapCenter, mapZoom, isProgrammaticMove]);
 
   // Auto-fit bounds when filtered locations change (but not when selecting a specific location)
   useEffect(() => {
     const { locations, filters } = useWidgetStore.getState();
 
-    // Don't auto-zoom if a specific location is selected (user clicked a row)
-    if (selectedLocationId) {
+    // Don't auto-zoom during programmatic navigation or when a specific location is selected
+    if (isProgrammaticMove || selectedLocationId) {
+      console.log('[MAP CONTROLLER] fitBounds skipped:', {
+        isProgrammaticMove,
+        selectedLocationId,
+        reason: isProgrammaticMove ? 'programmatic move in progress' : 'location selected'
+      });
       prevFilteredCount.current = filteredLocations.length;
       return;
     }

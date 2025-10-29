@@ -224,6 +224,7 @@ export interface WidgetState {
   // Map state
   mapCenter: [number, number];
   mapZoom: number;
+  isProgrammaticMove: boolean; // Flag to track programmatic navigation
 
   // Actions
   setLocations: (locations: Location[]) => void;
@@ -233,7 +234,7 @@ export interface WidgetState {
   setTheme: (theme: Theme) => void;
   setFilters: (filters: Partial<FilterState>) => void;
   setCurrentPage: (page: number) => void;
-  setSelectedLocation: (id: string | null) => void;
+  setSelectedLocation: (id: string | null, context?: 'marker-click' | 'table-click') => void;
   setMapCenter: (center: [number, number]) => void;
   setMapZoom: (zoom: number) => void;
   applyFilters: () => void;
