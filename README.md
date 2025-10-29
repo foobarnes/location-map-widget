@@ -22,23 +22,24 @@ An embeddable, customizable location map widget with dynamic category support an
 
 ### CDN (Simplest)
 
+Hosted on GitHub Pages - automatically updated on every push to main:
+
 ```html
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/foobarnes/location-map-widget@main/dist/location-map-widget.css">
+  <link rel="stylesheet" href="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.css">
 </head>
 <body>
   <div id="map" style="height: 600px;"></div>
 
-  <script src="https://cdn.jsdelivr.net/gh/foobarnes/location-map-widget@main/dist/location-map-widget.umd.js"></script>
+  <script src="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.umd.js"></script>
   <script>
     LocationMapWidget.init({
       container: '#map',
       dataSource: {
-        type: 'google-sheets',
-        sheetId: 'YOUR_SHEET_ID',
-        apiKey: 'YOUR_API_KEY'
+        type: 'google-sheets-public',
+        sheetId: 'YOUR_SHEET_ID'
       },
       config: {
         theme: 'light',
@@ -138,9 +139,16 @@ location-map-widget/
 └── demo.html           # GitHub Pages demo
 ```
 
-## 🚢 GitHub Pages Deployment
+## 🚢 GitHub Pages Deployment & CDN
 
-This project includes automated GitHub Pages deployment:
+This project uses GitHub Pages for both the demo site and as a CDN for the widget files:
+
+**Demo Site**: `https://foobarnes.github.io/location-map-widget/`
+**CDN URLs**:
+- CSS: `https://foobarnes.github.io/location-map-widget/dist/location-map-widget.css`
+- JS: `https://foobarnes.github.io/location-map-widget/dist/location-map-widget.umd.js`
+
+### Setup
 
 1. **Enable GitHub Pages**:
    - Go to Repository Settings > Pages
@@ -153,12 +161,13 @@ This project includes automated GitHub Pages deployment:
 
 3. **Automatic deployment**:
    - GitHub Actions will build and deploy
-   - Demo available at: `https://foobarnes.github.io/location-map-widget/`
+   - Files are automatically available via CDN
+   - Updates within minutes of pushing to main
 
 The workflow (`.github/workflows/deploy.yml`) automatically:
 - Builds the library
 - Creates demo site with built assets
-- Deploys to GitHub Pages
+- Deploys to GitHub Pages (serving as CDN)
 
 ## 🤝 Contributing
 

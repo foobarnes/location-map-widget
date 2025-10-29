@@ -47,14 +47,14 @@ The fastest way to get started with the Location Map Widget:
   <title>My Location Map</title>
 
   <!-- Widget CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/foobarnes/location-map-widget@main/dist/location-map-widget.css">
+  <link rel="stylesheet" href="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.css">
 </head>
 <body>
   <!-- Widget container -->
   <div id="map-widget" style="height: 600px;"></div>
 
   <!-- Widget JS -->
-  <script src="https://cdn.jsdelivr.net/gh/foobarnes/location-map-widget@main/dist/location-map-widget.umd.js"></script>
+  <script src="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.umd.js"></script>
 
   <!-- Initialize widget -->
   <script>
@@ -79,10 +79,12 @@ The fastest way to get started with the Location Map Widget:
 
 Best for static websites, WordPress sites, or quick prototypes.
 
+**CDN hosted on GitHub Pages** - automatically updated with every push to main branch.
+
 #### Step 1: Add CSS to your `<head>`
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/foobarnes/location-map-widget@main/dist/location-map-widget.css">
+<link rel="stylesheet" href="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.css">
 ```
 
 #### Step 2: Add container element
@@ -94,7 +96,7 @@ Best for static websites, WordPress sites, or quick prototypes.
 #### Step 3: Add JavaScript before closing `</body>`
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/foobarnes/location-map-widget@main/dist/location-map-widget.umd.js"></script>
+<script src="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.umd.js"></script>
 <script>
   LocationMapWidget.init({
     container: '#map-widget',
@@ -112,19 +114,19 @@ Best for static websites, WordPress sites, or quick prototypes.
 </script>
 ```
 
-#### Using jsDelivr CDN
+#### CDN URLs
 
-jsDelivr provides a free, fast global CDN that serves files directly from GitHub:
+The widget is hosted on GitHub Pages and automatically updated with every push:
 
 ```html
-<!-- Always serves the latest from main branch -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/foobarnes/location-map-widget@main/dist/location-map-widget.css">
-<script src="https://cdn.jsdelivr.net/gh/foobarnes/location-map-widget@main/dist/location-map-widget.umd.js"></script>
-
-<!-- Or use direct GitHub Pages URLs as alternative -->
+<!-- CSS -->
 <link rel="stylesheet" href="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.css">
+
+<!-- JavaScript -->
 <script src="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.umd.js"></script>
 ```
+
+These URLs always serve the latest version from the main branch.
 
 ---
 
@@ -257,13 +259,13 @@ Don't forget to import the CSS in your `angular.json`:
 
 ```html
 <!-- Widget CSS (add this once in your theme's header or here) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/foobarnes/location-map-widget@main/dist/location-map-widget.css">
+<link rel="stylesheet" href="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.css">
 
 <!-- Widget container -->
 <div id="location-map-widget" style="height: 600px; margin: 20px 0;"></div>
 
 <!-- Widget JS -->
-<script src="https://cdn.jsdelivr.net/gh/foobarnes/location-map-widget@main/dist/location-map-widget.umd.js"></script>
+<script src="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.umd.js"></script>
 <script>
   (function() {
     // Wait for DOM to be ready
@@ -302,11 +304,11 @@ function enqueue_location_map_widget() {
     if (is_page('locations')) {
         wp_enqueue_style(
             'location-map-widget',
-            'https://cdn.jsdelivr.net/gh/foobarnes/location-map-widget@main/dist/location-map-widget.css'
+            'https://foobarnes.github.io/location-map-widget/dist/location-map-widget.css'
         );
         wp_enqueue_script(
             'location-map-widget',
-            'https://cdn.jsdelivr.net/gh/foobarnes/location-map-widget@main/dist/location-map-widget.umd.js',
+            'https://foobarnes.github.io/location-map-widget/dist/location-map-widget.umd.js',
             array(),
             null,
             true
@@ -1071,13 +1073,13 @@ Minimal setup with default options:
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Basic Map Widget</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/foobarnes/location-map-widget@main/dist/location-map-widget.css">
+  <link rel="stylesheet" href="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.css">
 </head>
 <body>
   <h1>Our Locations</h1>
   <div id="map-widget" style="height: 600px; max-width: 1200px; margin: 0 auto;"></div>
 
-  <script src="https://cdn.jsdelivr.net/gh/foobarnes/location-map-widget@main/dist/location-map-widget.umd.js"></script>
+  <script src="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.umd.js"></script>
   <script>
     LocationMapWidget.init({
       container: '#map-widget',
@@ -1100,7 +1102,7 @@ Minimal setup with default options:
 <head>
   <meta charset="UTF-8">
   <title>Branded Map Widget</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/foobarnes/location-map-widget@main/dist/location-map-widget.css">
+  <link rel="stylesheet" href="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.css">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -1128,7 +1130,7 @@ Minimal setup with default options:
 
   <div id="map-widget"></div>
 
-  <script src="https://cdn.jsdelivr.net/gh/foobarnes/location-map-widget@main/dist/location-map-widget.umd.js"></script>
+  <script src="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.umd.js"></script>
   <script>
     LocationMapWidget.init({
       container: '#map-widget',
@@ -1180,7 +1182,7 @@ Minimal setup with default options:
 <head>
   <meta charset="UTF-8">
   <title>Dark Mode Map</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/foobarnes/location-map-widget@main/dist/location-map-widget.css">
+  <link rel="stylesheet" href="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.css">
   <style>
     body {
       background: #1a1a1a;
@@ -1199,7 +1201,7 @@ Minimal setup with default options:
   <h1 style="text-align: center;">Night Mode Location Finder</h1>
   <div id="map-widget"></div>
 
-  <script src="https://cdn.jsdelivr.net/gh/foobarnes/location-map-widget@main/dist/location-map-widget.umd.js"></script>
+  <script src="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.umd.js"></script>
   <script>
     LocationMapWidget.init({
       container: '#map-widget',
@@ -1229,7 +1231,7 @@ Minimal setup with default options:
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Responsive Map</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/foobarnes/location-map-widget@main/dist/location-map-widget.css">
+  <link rel="stylesheet" href="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.css">
   <style>
     body {
       margin: 0;
@@ -1268,7 +1270,7 @@ Minimal setup with default options:
     <div id="map-widget"></div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/gh/foobarnes/location-map-widget@main/dist/location-map-widget.umd.js"></script>
+  <script src="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.umd.js"></script>
   <script>
     LocationMapWidget.init({
       container: '#map-widget',
@@ -1295,7 +1297,7 @@ Minimal setup with default options:
 <head>
   <meta charset="UTF-8">
   <title>Multiple Maps</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/foobarnes/location-map-widget@main/dist/location-map-widget.css">
+  <link rel="stylesheet" href="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.css">
   <style>
     .map-container {
       height: 500px;
@@ -1317,7 +1319,7 @@ Minimal setup with default options:
     <div id="map-west" class="map-container"></div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/gh/foobarnes/location-map-widget@main/dist/location-map-widget.umd.js"></script>
+  <script src="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.umd.js"></script>
   <script>
     // East Coast Map
     LocationMapWidget.init({
@@ -1359,12 +1361,12 @@ Minimal setup with default options:
 <head>
   <meta charset="UTF-8">
   <title>Directory View</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/foobarnes/location-map-widget@main/dist/location-map-widget.css">
+  <link rel="stylesheet" href="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.css">
 </head>
 <body>
   <div id="map-widget" style="height: 700px; max-width: 1400px; margin: 0 auto;"></div>
 
-  <script src="https://cdn.jsdelivr.net/gh/foobarnes/location-map-widget@main/dist/location-map-widget.umd.js"></script>
+  <script src="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.umd.js"></script>
   <script>
     LocationMapWidget.init({
       container: '#map-widget',
