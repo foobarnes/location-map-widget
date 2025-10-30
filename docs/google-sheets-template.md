@@ -237,12 +237,12 @@ https://docs.google.com/spreadsheets/d/SHEET_ID_HERE/edit#gid=0
 #### Step 4: Embed the Widget
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/location-map-widget@latest/dist/location-map-widget.css">
+<link rel="stylesheet" href="https://unpkg.com/openmapembed@latest/dist/openmapembed.css">
 <div id="map" style="height: 600px;"></div>
 
-<script src="https://unpkg.com/location-map-widget@latest/dist/location-map-widget.umd.js"></script>
+<script src="https://unpkg.com/openmapembed@latest/dist/openmapembed.umd.js"></script>
 <script>
-  LocationMapWidget.init({
+  OpenMapEmbed.init({
     container: '#map',
     dataSource: {
       type: 'google-sheets-public',
@@ -299,12 +299,12 @@ https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2u
 #### Step 5: Embed the Widget
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/location-map-widget@latest/dist/location-map-widget.css">
+<link rel="stylesheet" href="https://unpkg.com/openmapembed@latest/dist/openmapembed.css">
 <div id="map" style="height: 600px;"></div>
 
-<script src="https://unpkg.com/location-map-widget@latest/dist/location-map-widget.umd.js"></script>
+<script src="https://unpkg.com/openmapembed@latest/dist/openmapembed.umd.js"></script>
 <script>
-  LocationMapWidget.init({
+  OpenMapEmbed.init({
     container: '#map',
     dataSource: {
       type: 'google-sheets',
@@ -350,12 +350,12 @@ export default async function handler(req, res) {
 #### Step 3: Embed the Widget
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/location-map-widget@latest/dist/location-map-widget.css">
+<link rel="stylesheet" href="https://unpkg.com/openmapembed@latest/dist/openmapembed.css">
 <div id="map" style="height: 600px;"></div>
 
-<script src="https://unpkg.com/location-map-widget@latest/dist/location-map-widget.umd.js"></script>
+<script src="https://unpkg.com/openmapembed@latest/dist/openmapembed.umd.js"></script>
 <script>
-  LocationMapWidget.init({
+  OpenMapEmbed.init({
     container: '#map',
     dataSource: {
       type: 'google-sheets-proxy',

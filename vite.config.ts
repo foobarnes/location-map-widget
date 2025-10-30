@@ -8,8 +8,8 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, 'src/main.tsx'),
-      name: 'LocationMapWidget',
-      fileName: (format) => `location-map-widget.${format}.js`,
+      name: 'OpenMapEmbed',
+      fileName: (format) => `openmapembed.${format}.js`,
       formats: ['umd', 'es']
     },
     rollupOptions: {
@@ -19,7 +19,7 @@ export default defineConfig({
         globals: {},
         // Ensure styles are inlined
         assetFileNames: (assetInfo) => {
-          if (assetInfo.name === 'style.css') return 'location-map-widget.css';
+          if (assetInfo.name === 'style.css') return 'openmapembed.css';
           return assetInfo.name as string;
         }
       }

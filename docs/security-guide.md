@@ -35,7 +35,7 @@ The Location Map Widget offers **three deployment modes** with different securit
 
 ```html
 <script>
-  LocationMapWidget.init({
+  OpenMapEmbed.init({
     container: '#map',
     dataSource: {
       type: 'google-sheets-public',
@@ -65,7 +65,7 @@ Uses Google Sheets API directly with client-side API key (following Google's mod
 
 ```html
 <script>
-  LocationMapWidget.init({
+  OpenMapEmbed.init({
     container: '#map',
     dataSource: {
       type: 'google-sheets',
@@ -96,7 +96,7 @@ API key hidden in backend proxy, never exposed to client.
 
 ```html
 <script>
-  LocationMapWidget.init({
+  OpenMapEmbed.init({
     container: '#map',
     dataSource: {
       type: 'google-sheets-proxy',
@@ -143,14 +143,14 @@ API key hidden in backend proxy, never exposed to client.
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="https://unpkg.com/location-map-widget@latest/dist/location-map-widget.css">
+  <link rel="stylesheet" href="https://unpkg.com/openmapembed@latest/dist/openmapembed.css">
 </head>
 <body>
   <div id="map" style="height: 600px;"></div>
 
-  <script src="https://unpkg.com/location-map-widget@latest/dist/location-map-widget.umd.js"></script>
+  <script src="https://unpkg.com/openmapembed@latest/dist/openmapembed.umd.js"></script>
   <script>
-    LocationMapWidget.init({
+    OpenMapEmbed.init({
       container: '#map',
       dataSource: {
         type: 'google-sheets-public',
@@ -231,14 +231,14 @@ This mode follows Google Maps' approach: client-side API key with restrictions.
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="https://unpkg.com/location-map-widget@latest/dist/location-map-widget.css">
+  <link rel="stylesheet" href="https://unpkg.com/openmapembed@latest/dist/openmapembed.css">
 </head>
 <body>
   <div id="map" style="height: 600px;"></div>
 
-  <script src="https://unpkg.com/location-map-widget@latest/dist/location-map-widget.umd.js"></script>
+  <script src="https://unpkg.com/openmapembed@latest/dist/openmapembed.umd.js"></script>
   <script>
-    LocationMapWidget.init({
+    OpenMapEmbed.init({
       container: '#map',
       dataSource: {
         type: 'google-sheets',
@@ -337,7 +337,7 @@ vercel env add GOOGLE_SHEETS_API_KEY
 
 ```html
 <script>
-  LocationMapWidget.init({
+  OpenMapEmbed.init({
     container: '#map',
     dataSource: {
       type: 'google-sheets-proxy',

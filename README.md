@@ -1,8 +1,8 @@
-# 📍 Location Map Widget
+# OpenMapEmbed
 
 An embeddable, customizable location map widget with dynamic category support and Google Sheets integration.
 
-[![Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://foobarnes.github.io/location-map-widget/)
+[![Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://foobarnes.github.io/openmapembed/)
 [![Bundle Size](https://img.shields.io/badge/bundle-218KB_gzipped-blue)](./dist)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
@@ -28,14 +28,14 @@ Hosted on GitHub Pages - automatically updated on every push to main:
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.css">
+  <link rel="stylesheet" href="https://foobarnes.github.io/openmapembed/dist/openmapembed.css">
 </head>
 <body>
   <div id="map" style="height: 600px;"></div>
 
-  <script src="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.umd.js"></script>
+  <script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"></script>
   <script>
-    LocationMapWidget.init({
+    OpenMapEmbed.init({
       container: '#map',
       dataSource: {
         type: 'google-sheets-public',
@@ -54,14 +54,14 @@ Hosted on GitHub Pages - automatically updated on every push to main:
 ### NPM
 
 ```bash
-npm install location-map-widget
+npm install openmapembed
 # or
-pnpm add location-map-widget
+pnpm add openmapembed
 ```
 
 ```javascript
-import { init } from 'location-map-widget';
-import 'location-map-widget/dist/location-map-widget.css';
+import { init } from 'openmapembed';
+import 'openmapembed/dist/openmapembed.css';
 
 init({
   container: '#map',
@@ -77,7 +77,7 @@ init({
 
 - **[Embedding Guide](./docs/embedding-guide.md)** - Complete integration guide with examples
 - **[Google Sheets Template](./docs/google-sheets-template.md)** - Set up your data source
-- **[Live Demo](https://foobarnes.github.io/location-map-widget/)** - See it in action
+- **[Live Demo](https://foobarnes.github.io/openmapembed/)** - See it in action
 
 ## 🎨 Category Customization
 
@@ -127,7 +127,7 @@ pnpm preview
 ## 📦 Project Structure
 
 ```
-location-map-widget/
+openmapembed/
 ├── src/
 │   ├── components/     # React components
 │   ├── adapters/       # Data source adapters
@@ -143,10 +143,10 @@ location-map-widget/
 
 This project uses GitHub Pages for both the demo site and as a CDN for the widget files:
 
-**Demo Site**: `https://foobarnes.github.io/location-map-widget/`
+**Demo Site**: `https://foobarnes.github.io/openmapembed/`
 **CDN URLs**:
-- CSS: `https://foobarnes.github.io/location-map-widget/dist/location-map-widget.css`
-- JS: `https://foobarnes.github.io/location-map-widget/dist/location-map-widget.umd.js`
+- CSS: `https://foobarnes.github.io/openmapembed/dist/openmapembed.css`
+- JS: `https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js`
 
 ### Setup
 
@@ -184,8 +184,8 @@ Built for [Ablebodied.org](https://ablebodied.org) to help connect adaptive cycl
 ## 💬 Support
 
 - 📖 [Documentation](./docs/)
-- 🐛 [Report Issues](https://github.com/foobarnes/location-map-widget/issues)
-- 💡 [Feature Requests](https://github.com/foobarnes/location-map-widget/issues)
+- 🐛 [Report Issues](https://github.com/foobarnes/openmapembed/issues)
+- 💡 [Feature Requests](https://github.com/foobarnes/openmapembed/issues)
 
 ---
 

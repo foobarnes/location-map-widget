@@ -47,18 +47,18 @@ The fastest way to get started with the Location Map Widget:
   <title>My Location Map</title>
 
   <!-- Widget CSS -->
-  <link rel="stylesheet" href="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.css">
+  <link rel="stylesheet" href="https://foobarnes.github.io/openmapembed/dist/openmapembed.css">
 </head>
 <body>
   <!-- Widget container -->
   <div id="map-widget" style="height: 600px;"></div>
 
   <!-- Widget JS -->
-  <script src="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.umd.js"></script>
+  <script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"></script>
 
   <!-- Initialize widget -->
   <script>
-    LocationMapWidget.init({
+    OpenMapEmbed.init({
       container: '#map-widget',
       dataSource: {
         type: 'google-sheets',
@@ -84,7 +84,7 @@ Best for static websites, WordPress sites, or quick prototypes.
 #### Step 1: Add CSS to your `<head>`
 
 ```html
-<link rel="stylesheet" href="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.css">
+<link rel="stylesheet" href="https://foobarnes.github.io/openmapembed/dist/openmapembed.css">
 ```
 
 #### Step 2: Add container element
@@ -96,9 +96,9 @@ Best for static websites, WordPress sites, or quick prototypes.
 #### Step 3: Add JavaScript before closing `</body>`
 
 ```html
-<script src="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.umd.js"></script>
+<script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"></script>
 <script>
-  LocationMapWidget.init({
+  OpenMapEmbed.init({
     container: '#map-widget',
     dataSource: {
       type: 'google-sheets',
@@ -120,10 +120,10 @@ The widget is hosted on GitHub Pages and automatically updated with every push:
 
 ```html
 <!-- CSS -->
-<link rel="stylesheet" href="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.css">
+<link rel="stylesheet" href="https://foobarnes.github.io/openmapembed/dist/openmapembed.css">
 
 <!-- JavaScript -->
-<script src="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.umd.js"></script>
+<script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"></script>
 ```
 
 These URLs always serve the latest version from the main branch.
@@ -137,15 +137,15 @@ Best for modern JavaScript frameworks and build tools.
 #### Installation
 
 ```bash
-npm install location-map-widget
+npm install openmapembed
 ```
 
 #### React Example
 
 ```jsx
 import { useEffect, useRef } from 'react';
-import { init } from 'location-map-widget';
-import 'location-map-widget/dist/location-map-widget.css';
+import { init } from 'openmapembed';
+import 'openmapembed/dist/openmapembed.css';
 
 function MapComponent() {
   const containerRef = useRef(null);
@@ -183,8 +183,8 @@ export default MapComponent;
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { init } from 'location-map-widget';
-import 'location-map-widget/dist/location-map-widget.css';
+import { init } from 'openmapembed';
+import 'openmapembed/dist/openmapembed.css';
 
 const mapContainer = ref(null);
 
@@ -209,7 +209,7 @@ onMounted(() => {
 
 ```typescript
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { init } from 'location-map-widget';
+import { init } from 'openmapembed';
 
 @Component({
   selector: 'app-map',
@@ -241,7 +241,7 @@ Don't forget to import the CSS in your `angular.json`:
 ```json
 {
   "styles": [
-    "node_modules/location-map-widget/dist/location-map-widget.css",
+    "node_modules/openmapembed/dist/openmapembed.css",
     "src/styles.css"
   ]
 }
@@ -259,13 +259,13 @@ Don't forget to import the CSS in your `angular.json`:
 
 ```html
 <!-- Widget CSS (add this once in your theme's header or here) -->
-<link rel="stylesheet" href="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.css">
+<link rel="stylesheet" href="https://foobarnes.github.io/openmapembed/dist/openmapembed.css">
 
 <!-- Widget container -->
-<div id="location-map-widget" style="height: 600px; margin: 20px 0;"></div>
+<div id="openmapembed" style="height: 600px; margin: 20px 0;"></div>
 
 <!-- Widget JS -->
-<script src="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.umd.js"></script>
+<script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"></script>
 <script>
   (function() {
     // Wait for DOM to be ready
@@ -276,8 +276,8 @@ Don't forget to import the CSS in your `angular.json`:
     }
 
     function initWidget() {
-      LocationMapWidget.init({
-        container: '#location-map-widget',
+      OpenMapEmbed.init({
+        container: '#openmapembed',
         dataSource: {
           type: 'google-sheets',
           sheetId: 'YOUR_SHEET_ID',
@@ -303,12 +303,12 @@ function enqueue_location_map_widget() {
     // Only load on specific pages
     if (is_page('locations')) {
         wp_enqueue_style(
-            'location-map-widget',
-            'https://foobarnes.github.io/location-map-widget/dist/location-map-widget.css'
+            'openmapembed',
+            'https://foobarnes.github.io/openmapembed/dist/openmapembed.css'
         );
         wp_enqueue_script(
-            'location-map-widget',
-            'https://foobarnes.github.io/location-map-widget/dist/location-map-widget.umd.js',
+            'openmapembed',
+            'https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js',
             array(),
             null,
             true
@@ -321,10 +321,10 @@ add_action('wp_enqueue_scripts', 'enqueue_location_map_widget');
 Then in your page template:
 
 ```php
-<div id="location-map-widget" style="height: 600px;"></div>
+<div id="openmapembed" style="height: 600px;"></div>
 <script>
-  LocationMapWidget.init({
-    container: '#location-map-widget',
+  OpenMapEmbed.init({
+    container: '#openmapembed',
     dataSource: {
       type: 'google-sheets',
       sheetId: '<?php echo get_option('map_widget_sheet_id'); ?>',
@@ -375,7 +375,7 @@ interface WidgetConfig {
 #### Minimal Configuration
 
 ```javascript
-LocationMapWidget.init({
+OpenMapEmbed.init({
   container: '#map-widget',
   dataSource: {
     type: 'google-sheets',
@@ -388,7 +388,7 @@ LocationMapWidget.init({
 #### Full Configuration
 
 ```javascript
-LocationMapWidget.init({
+OpenMapEmbed.init({
   container: '#map-widget',
   dataSource: {
     type: 'google-sheets',
@@ -588,7 +588,7 @@ images: "https://example.com/1.jpg,https://example.com/2.jpg,https://example.com
 
 ```html
 <script>
-  LocationMapWidget.init({
+  OpenMapEmbed.init({
     container: '#map',
     dataSource: {
       type: 'google-sheets-public',
@@ -700,7 +700,7 @@ Displays as:
 
 ```html
 <script>
-  LocationMapWidget.init({
+  OpenMapEmbed.init({
     container: '#map',
     dataSource: {
       type: 'google-sheets-public',
@@ -988,7 +988,7 @@ The widget respects the container's height. You have two options:
 ```
 
 ```javascript
-LocationMapWidget.init({
+OpenMapEmbed.init({
   container: '#map-widget',
   dataSource: { /* ... */ }
   // No height in config
@@ -1002,7 +1002,7 @@ LocationMapWidget.init({
 ```
 
 ```javascript
-LocationMapWidget.init({
+OpenMapEmbed.init({
   container: '#map-widget',
   dataSource: { /* ... */ },
   config: {
@@ -1073,15 +1073,15 @@ Minimal setup with default options:
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Basic Map Widget</title>
-  <link rel="stylesheet" href="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.css">
+  <link rel="stylesheet" href="https://foobarnes.github.io/openmapembed/dist/openmapembed.css">
 </head>
 <body>
   <h1>Our Locations</h1>
   <div id="map-widget" style="height: 600px; max-width: 1200px; margin: 0 auto;"></div>
 
-  <script src="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.umd.js"></script>
+  <script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"></script>
   <script>
-    LocationMapWidget.init({
+    OpenMapEmbed.init({
       container: '#map-widget',
       dataSource: {
         type: 'google-sheets',
@@ -1102,7 +1102,7 @@ Minimal setup with default options:
 <head>
   <meta charset="UTF-8">
   <title>Branded Map Widget</title>
-  <link rel="stylesheet" href="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.css">
+  <link rel="stylesheet" href="https://foobarnes.github.io/openmapembed/dist/openmapembed.css">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -1130,9 +1130,9 @@ Minimal setup with default options:
 
   <div id="map-widget"></div>
 
-  <script src="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.umd.js"></script>
+  <script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"></script>
   <script>
-    LocationMapWidget.init({
+    OpenMapEmbed.init({
       container: '#map-widget',
       dataSource: {
         type: 'google-sheets',
@@ -1182,7 +1182,7 @@ Minimal setup with default options:
 <head>
   <meta charset="UTF-8">
   <title>Dark Mode Map</title>
-  <link rel="stylesheet" href="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.css">
+  <link rel="stylesheet" href="https://foobarnes.github.io/openmapembed/dist/openmapembed.css">
   <style>
     body {
       background: #1a1a1a;
@@ -1201,9 +1201,9 @@ Minimal setup with default options:
   <h1 style="text-align: center;">Night Mode Location Finder</h1>
   <div id="map-widget"></div>
 
-  <script src="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.umd.js"></script>
+  <script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"></script>
   <script>
-    LocationMapWidget.init({
+    OpenMapEmbed.init({
       container: '#map-widget',
       dataSource: {
         type: 'google-sheets',
@@ -1231,7 +1231,7 @@ Minimal setup with default options:
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Responsive Map</title>
-  <link rel="stylesheet" href="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.css">
+  <link rel="stylesheet" href="https://foobarnes.github.io/openmapembed/dist/openmapembed.css">
   <style>
     body {
       margin: 0;
@@ -1270,9 +1270,9 @@ Minimal setup with default options:
     <div id="map-widget"></div>
   </div>
 
-  <script src="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.umd.js"></script>
+  <script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"></script>
   <script>
-    LocationMapWidget.init({
+    OpenMapEmbed.init({
       container: '#map-widget',
       dataSource: {
         type: 'google-sheets',
@@ -1297,7 +1297,7 @@ Minimal setup with default options:
 <head>
   <meta charset="UTF-8">
   <title>Multiple Maps</title>
-  <link rel="stylesheet" href="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.css">
+  <link rel="stylesheet" href="https://foobarnes.github.io/openmapembed/dist/openmapembed.css">
   <style>
     .map-container {
       height: 500px;
@@ -1319,10 +1319,10 @@ Minimal setup with default options:
     <div id="map-west" class="map-container"></div>
   </div>
 
-  <script src="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.umd.js"></script>
+  <script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"></script>
   <script>
     // East Coast Map
-    LocationMapWidget.init({
+    OpenMapEmbed.init({
       container: '#map-east',
       dataSource: {
         type: 'google-sheets',
@@ -1336,7 +1336,7 @@ Minimal setup with default options:
     });
 
     // West Coast Map
-    LocationMapWidget.init({
+    OpenMapEmbed.init({
       container: '#map-west',
       dataSource: {
         type: 'google-sheets',
@@ -1361,14 +1361,14 @@ Minimal setup with default options:
 <head>
   <meta charset="UTF-8">
   <title>Directory View</title>
-  <link rel="stylesheet" href="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.css">
+  <link rel="stylesheet" href="https://foobarnes.github.io/openmapembed/dist/openmapembed.css">
 </head>
 <body>
   <div id="map-widget" style="height: 700px; max-width: 1400px; margin: 0 auto;"></div>
 
-  <script src="https://foobarnes.github.io/location-map-widget/dist/location-map-widget.umd.js"></script>
+  <script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"></script>
   <script>
-    LocationMapWidget.init({
+    OpenMapEmbed.init({
       container: '#map-widget',
       dataSource: {
         type: 'google-sheets',
@@ -1402,7 +1402,7 @@ Minimal setup with default options:
 
 2. Verify CSS is loaded:
    ```html
-   <link rel="stylesheet" href="https://unpkg.com/location-map-widget@latest/dist/location-map-widget.css">
+   <link rel="stylesheet" href="https://unpkg.com/openmapembed@latest/dist/openmapembed.css">
    ```
 
 3. Check browser console for errors (F12)
@@ -1500,7 +1500,7 @@ Minimal setup with default options:
      }
 
      function initWidget() {
-       LocationMapWidget.init({ /* ... */ });
+       OpenMapEmbed.init({ /* ... */ });
      }
    })();
    ```
@@ -1512,7 +1512,7 @@ Minimal setup with default options:
 
 3. Ensure scripts are loading:
    - View page source
-   - Search for "location-map-widget"
+   - Search for "openmapembed"
    - Verify CSS and JS files are present
 
 ### Performance Issues
@@ -1639,7 +1639,7 @@ Minimal setup with default options:
 
 ## Additional Resources
 
-- **GitHub Repository:** [github.com/yourorg/location-map-widget](https://github.com)
+- **GitHub Repository:** [github.com/yourorg/openmapembed](https://github.com)
 - **API Documentation:** [Full TypeScript API Reference](./api-reference.md)
 - **Live Demo:** [demo.locationmapwidget.com](https://demo.example.com)
 - **Google Sheets Template:** [Sample Sheet Template](https://docs.google.com/spreadsheets/)

@@ -36,7 +36,7 @@ vercel env add GOOGLE_SHEETS_API_KEY
 
 **Use in Widget:**
 ```javascript
-LocationMapWidget.init({
+OpenMapEmbed.init({
   dataSource: {
     type: 'google-sheets-proxy',
     proxyUrl: 'https://your-app.vercel.app/api/sheets',
@@ -134,7 +134,7 @@ vercel --prod
 
 ```html
 <script>
-  LocationMapWidget.init({
+  OpenMapEmbed.init({
     container: '#map',
     dataSource: {
       type: 'google-sheets-proxy',
