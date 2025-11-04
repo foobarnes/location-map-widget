@@ -2,13 +2,13 @@
  * LocationMarker component - Individual marker with popup
  */
 
-import React, { useRef, useEffect, useState } from 'react';
-import { Marker, Popup, useMap } from 'react-leaflet';
-import L from 'leaflet';
-import type { Location } from '../../types';
-import { useWidgetStore } from '../../stores/widgetStore';
-import { formatDistance } from '../../utils/distance';
-import { ImageGallery, CustomFields } from '../shared';
+import React, { useRef, useEffect, useState } from "react";
+import { Marker, Popup, useMap } from "react-leaflet";
+import L from "leaflet";
+import type { Location } from "../../types";
+import { useWidgetStore } from "../../stores/widgetStore";
+import { formatDistance } from "../../utils/distance";
+import { ImageGallery, CustomFields } from "../shared";
 
 interface LocationMarkerProps {
   location: Location;
@@ -17,9 +17,11 @@ interface LocationMarkerProps {
 // Custom marker icons by category
 const getMarkerIcon = (category: string): L.Icon => {
   const { categories } = useWidgetStore.getState();
-  const categoryMeta = categories.find(c => c.name.toLowerCase() === category.toLowerCase());
+  const categoryMeta = categories.find(
+    (c) => c.name.toLowerCase() === category.toLowerCase()
+  );
 
-  const color = categoryMeta?.style.color || '#6B7280'; // Gray default
+  const color = categoryMeta?.style.color || "#6B7280"; // Gray default
 
   // Create custom colored marker SVG
   const svgIcon = `
@@ -31,7 +33,7 @@ const getMarkerIcon = (category: string): L.Icon => {
   `;
 
   return L.icon({
-    iconUrl: 'data:image/svg+xml;base64,' + btoa(svgIcon),
+    iconUrl: "data:image/svg+xml;base64," + btoa(svgIcon),
     iconSize: [25, 41],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34],
@@ -39,42 +41,43 @@ const getMarkerIcon = (category: string): L.Icon => {
 };
 
 export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
-  const { setSelectedLocation, selectedLocationId, isProgrammaticMove } = useWidgetStore();
+  const { setSelectedLocation, selectedLocationId, isProgrammaticMove } =
+    useWidgetStore();
   const markerRef = useRef<L.Marker>(null);
   const map = useMap();
   const [maxPopupHeight, setMaxPopupHeight] = useState(400);
 
   // Log component mount
   useEffect(() => {
-    console.log('[MARKER] Component mounted:', {
+    console.log("[MARKER] Component mounted:", {
       locationId: location.id,
       locationName: location.name,
       selectedLocationId,
       isProgrammaticMove,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleMarkerClick = () => {
-    console.log('[MARKER] Click handler called:', {
+    console.log("[MARKER] Click handler called:", {
       locationId: location.id,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
     // Pass 'marker-click' context - don't trigger map pan/zoom
-    setSelectedLocation(location.id, 'marker-click');
+    setSelectedLocation(location.id, "marker-click");
 
     // Directly open popup to handle both new selections and re-clicks of already-selected markers
     // Small delay to ensure state updates and any cluster spiderfy completes
     setTimeout(() => {
-      console.log('[MARKER] Attempting to open popup from click handler:', {
+      console.log("[MARKER] Attempting to open popup from click handler:", {
         locationId: location.id,
         markerRefExists: !!markerRef.current,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
-      if (markerRef.current) {
-        markerRef.current.openPopup();
-        console.log('[MARKER] openPopup() called from click handler');
-      }
+      openPopupWithPreCalculatedPosition();
+      console.log(
+        "[MARKER] openPopupWithPreCalculatedPosition() called from click handler"
+      );
     }, 50);
   };
 
@@ -84,54 +87,179 @@ export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
       const mapContainer = map.getContainer();
       const mapHeight = mapContainer.clientHeight;
       // Set max height to 80% of map height, with min of 300px and max of 600px
-      const calculatedHeight = Math.max(300, Math.min(600, Math.floor(mapHeight * 0.8)));
+      const calculatedHeight = Math.max(
+        300,
+        Math.min(600, Math.floor(mapHeight * 0.8))
+      );
       setMaxPopupHeight(calculatedHeight);
     };
 
     calculateMaxHeight();
 
     // Recalculate on window resize
-    window.addEventListener('resize', calculateMaxHeight);
-    return () => window.removeEventListener('resize', calculateMaxHeight);
+    window.addEventListener("resize", calculateMaxHeight);
+    return () => window.removeEventListener("resize", calculateMaxHeight);
   }, [map]);
+
+  /**
+   * Pre-calculate optimal map position and open popup
+   * This prevents the marker from shifting out of view on mobile when the popup opens
+   * Handles BOTH vertical and horizontal positioning
+   */
+  const openPopupWithPreCalculatedPosition = () => {
+    if (!markerRef.current) {
+      console.warn("[MARKER] markerRef.current is NULL, cannot open popup!");
+      return;
+    }
+
+    console.log(
+      "[MARKER] Pre-calculating optimal position before opening popup"
+    );
+
+    // Get map and marker details
+    const mapContainer = map.getContainer();
+    const mapWidth = mapContainer.clientWidth;
+    const mapHeight = mapContainer.clientHeight;
+    const markerLatLng = L.latLng(location.latitude, location.longitude);
+
+    const isMobile = mapWidth < 768;
+
+    // Use FULL maxPopupHeight instead of capping at 400px
+    // Add extra height if location has images (gallery adds ~150px)
+    const hasImages = location.images && location.images.length > 0;
+    const imageHeightEstimate = hasImages ? 150 : 0;
+    const estimatedPopupHeight = maxPopupHeight + imageHeightEstimate;
+
+    // Popup appears above the marker (popupAnchor is [1, -34])
+    const popupAnchorOffset = 34;
+
+    // Increase mobile padding significantly to account for:
+    // - Browser address bar/chrome (~60-100px)
+    // - Popup shadow/border (~10px)
+    // - Safe margin (~20px)
+    const verticalPadding = isMobile ? 80 : 50;
+
+    console.log("[MARKER] Space calculation:", {
+      maxPopupHeight,
+      estimatedPopupHeight,
+      hasImages,
+      imageHeightEstimate,
+      popupAnchorOffset,
+      verticalPadding,
+      isMobile,
+    });
+
+    // PROACTIVE POSITIONING STRATEGY:
+    // Position marker at optimal viewport location instead of reactively checking
+    // This ensures popup is fully visible in both dimensions
+
+    // VERTICAL: Position marker at 70% down on mobile (65% on desktop)
+    // This leaves plenty of space above for the popup
+    const targetMarkerY = mapHeight;
+
+    // HORIZONTAL: Center marker in viewport
+    // This ensures 300px popup can fit horizontally
+    const targetMarkerX = Math.floor(mapWidth * 0.5); // Center horizontally
+
+    // Get current marker position in viewport
+    const currentMarkerPoint = map.latLngToContainerPoint(markerLatLng);
+
+    // Calculate how many pixels to shift in each dimension
+    const pixelsToShiftY = targetMarkerY - currentMarkerPoint.y;
+    const pixelsToShiftX = targetMarkerX - currentMarkerPoint.x;
+
+    // Only pan if we need to shift more than 20px in either dimension
+    const needsPan =
+      Math.abs(pixelsToShiftY) > 20 || Math.abs(pixelsToShiftX) > 20;
+
+    if (needsPan) {
+      // Convert pixels to lat/lng offset
+      // To move marker DOWN/RIGHT in viewport, we pan map UP/LEFT (subtract from center coords)
+      // To move marker UP/LEFT in viewport, we pan map DOWN/RIGHT (add to center coords)
+      const centerPoint = map.latLngToContainerPoint(map.getCenter());
+      const newCenterPoint = L.point(
+        centerPoint.x - pixelsToShiftX, // Subtract to pan map opposite direction
+        centerPoint.y - pixelsToShiftY // Subtract to pan map opposite direction
+      );
+      const newCenter = map.containerPointToLatLng(newCenterPoint);
+
+      console.log("[MARKER] Adjusting map position:", {
+        mapWidth,
+        mapHeight,
+        targetMarkerY,
+        targetMarkerX,
+        currentMarkerY: currentMarkerPoint.y,
+        currentMarkerX: currentMarkerPoint.x,
+        pixelsToShiftY,
+        pixelsToShiftX,
+        isMobile,
+        originalCenter: map.getCenter(),
+        newCenter,
+      });
+
+      // Pan to the new center position
+      map.panTo(newCenter, { animate: true, duration: 0.25 });
+
+      // Wait for pan to complete, then open popup
+      setTimeout(() => {
+        if (markerRef.current) {
+          markerRef.current.openPopup();
+          console.log("[MARKER] Popup opened after position adjustment");
+        }
+      }, 300);
+    } else {
+      // Marker is already in optimal position, open popup immediately
+      console.log(
+        "[MARKER] Marker already in optimal position, opening popup immediately"
+      );
+      markerRef.current.openPopup();
+    }
+  };
 
   // Open popup when this location is selected via table click (programmatic navigation)
   // Direct marker clicks are handled in handleMarkerClick
   useEffect(() => {
-    console.log('[MARKER] Programmatic move effect running:', {
+    console.log("[MARKER] Programmatic move effect running:", {
       locationId: location.id,
       selectedLocationId,
       markerRefExists: !!markerRef.current,
       isProgrammaticMove,
-      conditionMet: selectedLocationId === location.id && markerRef.current && isProgrammaticMove,
-      timestamp: Date.now()
+      conditionMet:
+        selectedLocationId === location.id &&
+        markerRef.current &&
+        isProgrammaticMove,
+      timestamp: Date.now(),
     });
 
-    if (selectedLocationId === location.id && markerRef.current && isProgrammaticMove) {
-      console.log('[MARKER] Component mounted for programmatic move - opening popup after delay');
+    if (
+      selectedLocationId === location.id &&
+      markerRef.current &&
+      isProgrammaticMove
+    ) {
+      console.log(
+        "[MARKER] Component mounted for programmatic move - opening popup after delay"
+      );
 
       // Component just mounted after programmatic navigation
       // Don't rely on moveend (it fires before component mounts!)
       // Just wait for cluster animations to complete, then open popup
       const timer = setTimeout(() => {
-        console.log('[MARKER] Attempting to open popup after delay:', {
+        console.log("[MARKER] Attempting to open popup after delay:", {
           locationId: location.id,
           markerRefExists: !!markerRef.current,
-          timestamp: Date.now()
+          timestamp: Date.now(),
         });
-        if (markerRef.current) {
-          markerRef.current.openPopup();
-          console.log('[MARKER] openPopup() called from programmatic move');
-          // Reset isProgrammaticMove flag after successfully opening popup
-          useWidgetStore.setState({ isProgrammaticMove: false });
-          console.log('[MARKER] isProgrammaticMove reset to FALSE');
-        } else {
-          console.warn('[MARKER] markerRef.current is NULL, cannot open popup!');
-        }
+        openPopupWithPreCalculatedPosition();
+        console.log(
+          "[MARKER] openPopupWithPreCalculatedPosition() called from programmatic move"
+        );
+        // Reset isProgrammaticMove flag after successfully opening popup
+        useWidgetStore.setState({ isProgrammaticMove: false });
+        console.log("[MARKER] isProgrammaticMove reset to FALSE");
       }, 300); // 300ms delay for cluster animations
 
       return () => {
-        console.log('[MARKER] Cleanup: clearing timeout');
+        console.log("[MARKER] Cleanup: clearing timeout");
         clearTimeout(timer);
       };
     }
@@ -150,10 +278,8 @@ export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
         className="location-popup"
         maxWidth={300}
         minWidth={250}
-        autoPan={true}
-        autoPanPaddingTopLeft={[50, 50]}
-        autoPanPaddingBottomRight={[50, 50]}
-        autoPanPadding={[50, 50]}
+        autoPan={false}
+        closeOnClick={false}
       >
         <div
           className="lmw-p-2 lmw-overflow-y-auto"
@@ -171,7 +297,10 @@ export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
 
           {/* Images */}
           {location.images && location.images.length > 0 && (
-            <ImageGallery images={location.images} locationName={location.name} />
+            <ImageGallery
+              images={location.images}
+              locationName={location.name}
+            />
           )}
 
           {/* Distance (if calculated) */}
@@ -185,7 +314,7 @@ export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
           <div className="lmw-mb-2 lmw-text-sm lmw-text-gray-700 dark:lmw-text-gray-300">
             {location.address.street && <div>{location.address.street}</div>}
             <div>
-              {location.address.city}, {location.address.state}{' '}
+              {location.address.city}, {location.address.state}{" "}
               {location.address.zip}
             </div>
           </div>
@@ -202,7 +331,7 @@ export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
             <div className="lmw-mb-2 lmw-text-sm">
               <span className="lmw-font-semibold lmw-text-gray-700 dark:lmw-text-gray-300">
                 Hours:
-              </span>{' '}
+              </span>{" "}
               <span className="lmw-text-gray-600 dark:lmw-text-gray-400">
                 {location.hours}
               </span>
@@ -248,11 +377,12 @@ export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
           )}
 
           {/* Custom Fields */}
-          {location.customFields && Object.keys(location.customFields).length > 0 && (
-            <div className="lmw-mb-3">
-              <CustomFields customFields={location.customFields} />
-            </div>
-          )}
+          {location.customFields &&
+            Object.keys(location.customFields).length > 0 && (
+              <div className="lmw-mb-3">
+                <CustomFields customFields={location.customFields} />
+              </div>
+            )}
 
           {/* Main URL link */}
           {location.url && (
@@ -278,7 +408,9 @@ export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
  */
 const CategoryBadge: React.FC<{ category: string }> = ({ category }) => {
   const { categories } = useWidgetStore.getState();
-  const categoryMeta = categories.find(c => c.name.toLowerCase() === category.toLowerCase());
+  const categoryMeta = categories.find(
+    (c) => c.name.toLowerCase() === category.toLowerCase()
+  );
 
   if (!categoryMeta) {
     return (
