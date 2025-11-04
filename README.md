@@ -1,10 +1,29 @@
-# OpenMapEmbed
+<p align="center">
+  <img src="public/logo-icon.svg" alt="OpenMapEmbed" width="80" height="80" />
+</p>
 
+<h1 align="center">OpenMapEmbed</h1>
+
+<p align="center">
 An embeddable, customizable location map widget with dynamic category support and Google Sheets integration.
+</p>
 
-[![Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://foobarnes.github.io/openmapembed/)
-[![Bundle Size](https://img.shields.io/badge/bundle-218KB_gzipped-blue)](./dist)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+<p align="center">
+  <a href="https://foobarnes.github.io/openmapembed/">
+    <img src="https://img.shields.io/badge/demo-live-brightgreen" alt="Demo" />
+  </a>
+  <a href="./dist">
+    <img src="https://img.shields.io/badge/bundle-218KB_gzipped-blue" alt="Bundle Size" />
+  </a>
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License" />
+  </a>
+</p>
+
+<p align="center">
+  <img src="public/demo.png" alt="OpenMapEmbed Demo" width="600" />
+</p>
+
 
 ## ✨ Features
 
@@ -13,10 +32,10 @@ An embeddable, customizable location map widget with dynamic category support an
 - 🗺️ **Interactive Maps** - Leaflet-powered with clustering and geolocation
 - 🖼️ **Image Galleries** - Display location photos in tooltips and table view
 - 📱 **Fully Responsive** - Works on any device, height controlled by container
-- 🌓 **Dark Mode** - Full dark mode support with auto-detection
 - 🔍 **Powerful Filters** - Search, category, and distance-based filtering
 - 📋 **Table View** - Alternate view with pagination
 - ⚡ **Lightweight** - Only 218 KB gzipped
+- 🚀 **Easy Setup** - No API keys required, just 3 lines of code
 
 ## 🚀 Quick Start
 
@@ -168,6 +187,15 @@ The workflow (`.github/workflows/deploy.yml`) automatically:
 - Builds the library
 - Creates demo site with built assets
 - Deploys to GitHub Pages (serving as CDN)
+
+### PR Preview Builds
+
+Pull requests automatically trigger a preview build via `.github/workflows/pr-preview.yml`:
+- Builds the demo site for the PR
+- Uploads as a downloadable artifact (available for 7 days)
+- Posts a comment on the PR with download instructions
+
+This allows you to test changes before merging to main.
 
 ## 🤝 Contributing
 

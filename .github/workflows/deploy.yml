@@ -44,6 +44,7 @@ jobs:
           cp demo.html demo-site/index.html
           cp -r dist demo-site/
           cp -r docs demo-site/
+          cp -r public demo-site/
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

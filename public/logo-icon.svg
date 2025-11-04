@@ -1,0 +1,26 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Purple triangle (back layer) -->
+  <polygon
+    points="20,30 20,80 56.5,55"
+    fill="none"
+    stroke="#C4B5FD"
+    stroke-width="4"
+    stroke-linejoin="round"
+  />
+  <!-- Orange triangle (middle layer) -->
+  <polygon
+    points="30,25 30,75 66.5,50"
+    fill="none"
+    stroke="#FDBA74"
+    stroke-width="4"
+    stroke-linejoin="round"
+  />
+  <!-- Teal triangle (front layer) -->
+  <polygon
+    points="40,20 40,70 76.5,45"
+    fill="none"
+    stroke="#5EEAD4"
+    stroke-width="4"
+    stroke-linejoin="round"
+  />
+</svg>

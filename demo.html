@@ -1,14 +1,23 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>OpenMapEmbed - Beautiful Interactive Maps Made Simple</title>
-    <meta name="description" content="Embed beautiful, interactive maps in your website with just 3 lines of code. No API keys required. Powered by Google Sheets.">
-    <link rel="stylesheet" href="./dist/openmapembed.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Belanosima:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta
+      name="description"
+      content="Embed beautiful, interactive maps in your website with just 3 lines of code. No API keys required. Powered by Google Sheets."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Belanosima:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/logo-icon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/logo-icon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/logo-icon-180.png" />
     <style>
       * {
         margin: 0;
@@ -17,27 +26,29 @@
       }
 
       :root {
-        --purple: #9B6FFF;
-        --purple-dark: #7C3AED;
-        --purple-light: #C4B5FD;
-        --orange: #FF6B35;
-        --orange-dark: #F97316;
-        --orange-light: #FDBA74;
-        --teal: #5B9CAD;
-        --teal-dark: #0D9488;
-        --teal-light: #5EEAD4;
-        --cream: #F9FAFB;
+        --purple: #9b6fff;
+        --purple-dark: #7c3aed;
+        --purple-light: #c4b5fd;
+        --orange: #ff6b35;
+        --orange-dark: #f97316;
+        --orange-light: #fdba74;
+        --teal: #5b9cad;
+        --teal-dark: #0d9488;
+        --teal-light: #5eead4;
+        --cream: #f9fafb;
         --white: #ffffff;
-        --gray-100: #F3F4F6;
-        --gray-200: #E5E7EB;
-        --gray-300: #D1D5DB;
+        --gray-100: #f3f4f6;
+        --gray-200: #e5e7eb;
+        --gray-300: #d1d5db;
         --gray-700: #374151;
-        --gray-800: #1F2937;
+        --gray-800: #1f2937;
         --gray-900: #111827;
       }
 
       @media (prefers-reduced-motion: reduce) {
-        *, *::before, *::after {
+        *,
+        *::before,
+        *::after {
           animation-duration: 0.01ms !important;
           animation-iteration-count: 1 !important;
           transition-duration: 0.01ms !important;
@@ -45,7 +56,7 @@
       }
 
       body {
-        font-family: 'Belanosima', system-ui, -apple-system, sans-serif;
+        font-family: "Belanosima", system-ui, -apple-system, sans-serif;
         background: var(--cream);
         color: var(--gray-800);
         line-height: 1.6;
@@ -111,7 +122,7 @@
 
       .hero::before,
       .hero::after {
-        content: '';
+        content: "";
         position: absolute;
         width: 0;
         height: 0;
@@ -134,6 +145,42 @@
         opacity: 0.15;
       }
 
+      .hero-header-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 64px;
+        align-items: center;
+        margin-bottom: 32px;
+        max-width: 1400px;
+        width: 100%;
+      }
+
+      .hero-content {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .hero-image-container {
+        max-width: 600px;
+        width: 100%;
+        justify-self: center;
+      }
+
+      .hero-demo-image {
+        width: 100%;
+        height: auto;
+        border: 4px solid var(--orange);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease;
+      }
+
+      .hero-demo-image:hover {
+        transform: scale(1.02);
+      }
+
       .logo-container {
         margin-bottom: 32px;
         position: relative;
@@ -141,56 +188,32 @@
       }
 
       .logo-triangles {
-        position: relative;
         width: 160px;
-        height: 160px;
+        height: 100px;
         margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
-      .logo-triangle {
-        position: absolute;
-        width: 0;
-        height: 0;
-        border-style: solid;
-      }
-
-      .logo-triangle-1 {
-        top: 0;
-        left: 40px;
-        border-width: 0 60px 120px 60px;
-        border-color: transparent var(--purple-light) transparent transparent;
-        transform: rotate(30deg);
-      }
-
-      .logo-triangle-2 {
-        top: 20px;
-        left: 20px;
-        border-width: 0 60px 120px 60px;
-        border-color: transparent var(--orange-light) transparent transparent;
-        transform: rotate(-10deg);
-      }
-
-      .logo-triangle-3 {
-        top: 40px;
-        left: 60px;
-        border-width: 0 60px 120px 60px;
-        border-color: transparent var(--teal-light) transparent transparent;
-        transform: rotate(-50deg);
+      .logo-svg {
+        width: 100%;
+        height: 100%;
       }
 
       .hero h1 {
-        font-size: clamp(3.5rem, 10vw, 7rem);
+        font-size: clamp(2.5rem, 6vw, 5rem);
         font-weight: 700;
         color: white;
-        margin-bottom: 24px;
+        margin-bottom: 0;
         letter-spacing: -0.03em;
         line-height: 1;
-        max-width: 1000px;
+        width: 100%;
       }
 
       .hero-subtitle {
         font-size: clamp(1.25rem, 3vw, 1.75rem);
-        color: rgba(255,255,255,0.95);
+        color: rgba(255, 255, 255, 0.95);
         margin-bottom: 48px;
         max-width: 700px;
         font-weight: 400;
@@ -217,7 +240,7 @@
         transition: all 0.2s ease;
         cursor: pointer;
         border: none;
-        font-family: 'Belanosima', sans-serif;
+        font-family: "Belanosima", sans-serif;
         text-transform: uppercase;
         letter-spacing: 0.5px;
       }
@@ -244,7 +267,7 @@
       }
 
       .stats-bar {
-        background: rgba(255,255,255,0.15);
+        background: rgba(255, 255, 255, 0.15);
         backdrop-filter: blur(10px);
         padding: 24px 0;
         margin-top: 60px;
@@ -334,7 +357,7 @@
         font-weight: 700;
         cursor: pointer;
         transition: all 0.2s ease;
-        font-family: 'Belanosima', sans-serif;
+        font-family: "Belanosima", sans-serif;
         text-transform: uppercase;
       }
 
@@ -349,7 +372,7 @@
       pre {
         margin: 0;
         overflow-x: auto;
-        font-family: 'Monaco', 'Courier New', monospace;
+        font-family: "Monaco", "Courier New", monospace;
         font-size: 15px;
         line-height: 1.8;
       }
@@ -358,12 +381,24 @@
         color: #e5e7eb;
       }
 
-      .code-comment { color: #9CA3AF; }
-      .code-tag { color: var(--orange-light); }
-      .code-attr { color: var(--teal-light); }
-      .code-value { color: var(--purple-light); }
-      .code-function { color: #FCD34D; }
-      .code-string { color: var(--purple-light); }
+      .code-comment {
+        color: #9ca3af;
+      }
+      .code-tag {
+        color: var(--orange-light);
+      }
+      .code-attr {
+        color: var(--teal-light);
+      }
+      .code-value {
+        color: var(--purple-light);
+      }
+      .code-function {
+        color: #fcd34d;
+      }
+      .code-string {
+        color: var(--purple-light);
+      }
 
       .code-features {
         display: flex;
@@ -404,53 +439,6 @@
         margin-bottom: 32px;
       }
 
-      .theme-switcher {
-        display: flex;
-        justify-content: center;
-        gap: 0;
-        margin-bottom: 32px;
-        flex-wrap: wrap;
-      }
-
-      .theme-btn {
-        padding: 16px 32px;
-        border: none;
-        background: var(--gray-300);
-        color: var(--gray-900);
-        font-size: 16px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        font-family: 'Belanosima', sans-serif;
-        text-transform: uppercase;
-      }
-
-      .theme-btn:first-child {
-        background: var(--orange);
-        color: white;
-      }
-
-      .theme-btn:nth-child(2) {
-        background: var(--purple);
-        color: white;
-      }
-
-      .theme-btn:last-child {
-        background: var(--teal);
-        color: white;
-      }
-
-      .theme-btn:hover {
-        transform: translateY(-2px);
-        filter: brightness(1.1);
-      }
-
-      .theme-btn.active {
-        transform: translateY(-4px);
-        filter: brightness(1.2);
-        box-shadow: 0 4px 0 rgba(0,0,0,0.2);
-      }
-
       .widget-container {
         background: white;
         overflow: hidden;
@@ -485,17 +473,17 @@
         position: relative;
       }
 
-      .feature-card:nth-child(4n+1) {
+      .feature-card:nth-child(4n + 1) {
         background: var(--purple);
         color: white;
       }
 
-      .feature-card:nth-child(4n+2) {
+      .feature-card:nth-child(4n + 2) {
         background: var(--orange);
         color: white;
       }
 
-      .feature-card:nth-child(4n+3) {
+      .feature-card:nth-child(4n + 3) {
         background: var(--teal);
         color: white;
       }
@@ -571,11 +559,11 @@
         border: 3px solid var(--orange);
       }
 
-      .benefit-item:nth-child(3n+1) {
+      .benefit-item:nth-child(3n + 1) {
         border-color: var(--purple);
       }
 
-      .benefit-item:nth-child(3n+2) {
+      .benefit-item:nth-child(3n + 2) {
         border-color: var(--orange);
       }
 
@@ -624,7 +612,7 @@
         align-items: center;
         gap: 12px;
         transition: all 0.2s ease;
-        font-family: 'Belanosima', sans-serif;
+        font-family: "Belanosima", sans-serif;
         text-transform: uppercase;
         border: none;
       }
@@ -646,7 +634,7 @@
         align-items: center;
         gap: 12px;
         transition: all 0.2s ease;
-        font-family: 'Belanosima', sans-serif;
+        font-family: "Belanosima", sans-serif;
         text-transform: uppercase;
       }
 
@@ -673,7 +661,7 @@
       }
 
       .cta-checklist-item::before {
-        content: '';
+        content: "";
         width: 24px;
         height: 24px;
         background: var(--orange);
@@ -682,7 +670,7 @@
       /* Footer */
       footer {
         background: var(--gray-900);
-        color: rgba(255,255,255,0.8);
+        color: rgba(255, 255, 255, 0.8);
         text-align: center;
         padding: 48px 20px;
         border-top: 4px solid var(--purple);
@@ -704,6 +692,22 @@
         color: var(--orange-light);
       }
 
+      /* Tablet Responsive */
+      @media (max-width: 1024px) and (min-width: 769px) {
+        .hero-header-wrapper {
+          grid-template-columns: 1fr;
+          gap: 48px;
+        }
+
+        .hero-image-container {
+          max-width: 500px;
+        }
+
+        .hero h1 {
+          font-size: clamp(2.5rem, 7vw, 4rem);
+        }
+      }
+
       /* Mobile Responsive */
       @media (max-width: 768px) {
         .section {
@@ -712,6 +716,20 @@
 
         .hero {
           min-height: 90vh;
+        }
+
+        .hero-header-wrapper {
+          grid-template-columns: 1fr;
+          gap: 32px;
+        }
+
+        .hero-image-container {
+          max-width: 100%;
+          padding: 0 20px;
+        }
+
+        .hero-demo-image {
+          border-width: 3px;
         }
 
         .hero-cta {
@@ -770,23 +788,58 @@
   <body>
     <!-- Hero Section -->
     <section class="hero">
-      <div class="logo-container">
-        <div class="logo-triangles">
-          <div class="logo-triangle logo-triangle-1"></div>
-          <div class="logo-triangle logo-triangle-2"></div>
-          <div class="logo-triangle logo-triangle-3"></div>
+      <div class="hero-header-wrapper">
+        <div class="hero-content">
+          <div class="logo-container">
+            <div class="logo-triangles">
+              <img
+                src="/logo.svg"
+                alt="OpenMapEmbed Logo"
+                class="logo-svg"
+              />
+            </div>
+          </div>
+          <h1>OpenMapEmbed</h1>
+        </div>
+        <div class="hero-image-container">
+          <img
+            src="/demo.png"
+            alt="OpenMapEmbed Demo"
+            class="hero-demo-image"
+          />
         </div>
       </div>
-      <h1>OpenMapEmbed</h1>
       <p class="hero-subtitle">
-        Embed beautiful, interactive maps in your website with just 3 lines of code.
-        No API keys required. Powered by Google Sheets.
+        Embed beautiful, interactive maps in your website with just 3 lines of
+        code. No API keys required. Powered by Google Sheets.
       </p>
       <div class="hero-cta">
         <a href="#demo" class="btn btn-primary">
           Try Live Demo
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <polyline points="19 12 12 19 5 12"></polyline>
+          </svg>
         </a>
-        <a href="https://github.com/foobarnes/openmapembed" class="btn btn-secondary" target="_blank">
+        <a
+          href="https://github.com/foobarnes/openmapembed"
+          class="btn btn-secondary"
+          target="_blank"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+            />
+          </svg>
           View on GitHub
         </a>
       </div>
@@ -815,8 +868,8 @@
       <div class="container">
         <h2>Just 3 Lines of Code</h2>
         <p class="subtitle">
-          The simplest way to add interactive maps to any website.
-          No complex setup, no backend required.
+          The simplest way to add interactive maps to any website. No complex
+          setup, no backend required.
         </p>
 
         <div class="code-container">
@@ -830,7 +883,7 @@
 <span class="code-tag">&lt;div</span> <span class="code-attr">id</span>=<span class="code-value">"map-widget"</span><span class="code-tag">&gt;&lt;/div&gt;</span>
 
 <span class="code-comment">&lt;!-- 2. Load script --&gt;</span>
-<span class="code-tag">&lt;script</span> <span class="code-attr">src</span>=<span class="code-value">"openmapembed.js"</span><span class="code-tag">&gt;&lt;/script&gt;</span>
+<span class="code-tag">&lt;script</span> <span class="code-attr">src</span>=<span class="code-value">"https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"</span><span class="code-tag">&gt;&lt;/script&gt;</span>
 
 <span class="code-comment">&lt;!-- 3. Initialize --&gt;</span>
 <span class="code-tag">&lt;script&gt;</span>
@@ -857,20 +910,8 @@
       <div class="container">
         <h2>Try It Live</h2>
         <p class="demo-subtitle">
-          Interact with a fully functional widget. Try switching themes!
+          Interact with a fully functional widget below.
         </p>
-
-        <div class="theme-switcher">
-          <button class="theme-btn active" onclick="setTheme('light')" id="light-btn">
-            Light
-          </button>
-          <button class="theme-btn" onclick="setTheme('dark')" id="dark-btn">
-            Dark
-          </button>
-          <button class="theme-btn" onclick="setTheme('auto')" id="auto-btn">
-            Auto
-          </button>
-        </div>
 
         <div id="location-widget" class="widget-container"></div>
       </div>
@@ -885,82 +926,181 @@
           <div class="feature-card">
             <svg class="feature-icon" viewBox="0 0 100 100">
               <rect class="icon-palette" x="10" y="10" width="30" height="30" />
-              <rect class="icon-palette" x="45" y="10" width="30" height="30" fill="var(--orange)" />
-              <rect class="icon-palette" x="10" y="45" width="30" height="30" fill="var(--teal)" />
-              <rect class="icon-palette" x="45" y="45" width="30" height="30" fill="var(--purple)" />
+              <rect
+                class="icon-palette"
+                x="45"
+                y="10"
+                width="30"
+                height="30"
+                fill="var(--orange)"
+              />
+              <rect
+                class="icon-palette"
+                x="10"
+                y="45"
+                width="30"
+                height="30"
+                fill="var(--teal)"
+              />
+              <rect
+                class="icon-palette"
+                x="45"
+                y="45"
+                width="30"
+                height="30"
+                fill="var(--purple)"
+              />
             </svg>
             <h3>Dynamic Categories</h3>
-            <p>Auto-discovers categories from your data with an 8-color palette. Fully customizable via config.</p>
+            <p>
+              Auto-discovers categories from your data with an 8-color palette.
+              Fully customizable via config.
+            </p>
           </div>
 
           <div class="feature-card">
             <svg class="feature-icon" viewBox="0 0 100 100">
               <rect class="icon-sheets" x="15" y="15" width="70" height="70" />
-              <line x1="15" y1="35" x2="85" y2="35" stroke="white" stroke-width="3"/>
-              <line x1="15" y1="50" x2="85" y2="50" stroke="white" stroke-width="3"/>
-              <line x1="15" y1="65" x2="85" y2="65" stroke="white" stroke-width="3"/>
-              <line x1="40" y1="15" x2="40" y2="85" stroke="white" stroke-width="3"/>
-              <line x1="65" y1="15" x2="65" y2="85" stroke="white" stroke-width="3"/>
+              <line
+                x1="15"
+                y1="35"
+                x2="85"
+                y2="35"
+                stroke="white"
+                stroke-width="3"
+              />
+              <line
+                x1="15"
+                y1="50"
+                x2="85"
+                y2="50"
+                stroke="white"
+                stroke-width="3"
+              />
+              <line
+                x1="15"
+                y1="65"
+                x2="85"
+                y2="65"
+                stroke="white"
+                stroke-width="3"
+              />
+              <line
+                x1="40"
+                y1="15"
+                x2="40"
+                y2="85"
+                stroke="white"
+                stroke-width="3"
+              />
+              <line
+                x1="65"
+                y1="15"
+                x2="65"
+                y2="85"
+                stroke="white"
+                stroke-width="3"
+              />
             </svg>
             <h3>Google Sheets</h3>
-            <p>Connect to any public Google Sheet as your data source. Update data without redeploying.</p>
+            <p>
+              Connect to any public Google Sheet as your data source. Update
+              data without redeploying.
+            </p>
           </div>
 
           <div class="feature-card">
             <svg class="feature-icon" viewBox="0 0 100 100">
               <circle class="icon-map" cx="50" cy="50" r="35" />
-              <path class="icon-map" d="M 50 25 L 50 45 M 50 55 L 50 75 M 25 50 L 45 50 M 55 50 L 75 50" />
-              <circle class="icon-map" cx="50" cy="50" r="8" fill="currentColor" />
+              <path
+                class="icon-map"
+                d="M 50 25 L 50 45 M 50 55 L 50 75 M 25 50 L 45 50 M 55 50 L 75 50"
+              />
+              <circle
+                class="icon-map"
+                cx="50"
+                cy="50"
+                r="8"
+                fill="currentColor"
+              />
             </svg>
             <h3>Interactive Maps</h3>
-            <p>Leaflet-powered maps with clustering, geolocation, custom markers, and smooth interactions.</p>
+            <p>
+              Leaflet-powered maps with clustering, geolocation, custom markers,
+              and smooth interactions.
+            </p>
           </div>
 
           <div class="feature-card">
             <svg class="feature-icon" viewBox="0 0 100 100">
-              <rect x="20" y="10" width="50" height="80" stroke="currentColor" stroke-width="6" fill="none"/>
-              <rect x="25" y="20" width="40" height="50" fill="currentColor"/>
-              <circle cx="45" cy="80" r="4" fill="currentColor"/>
+              <rect
+                x="20"
+                y="10"
+                width="50"
+                height="80"
+                stroke="currentColor"
+                stroke-width="6"
+                fill="none"
+              />
+              <rect x="25" y="20" width="40" height="50" fill="currentColor" />
+              <circle cx="45" cy="80" r="4" fill="currentColor" />
             </svg>
             <h3>Fully Responsive</h3>
-            <p>Works flawlessly on any device. Height controlled by container for perfect integration.</p>
+            <p>
+              Works flawlessly on any device. Height controlled by container for
+              perfect integration.
+            </p>
           </div>
 
           <div class="feature-card">
             <svg class="feature-icon" viewBox="0 0 100 100">
-              <circle cx="50" cy="50" r="35" fill="currentColor"/>
-              <path d="M 50 15 A 35 35 0 0 1 50 85" fill="white"/>
-            </svg>
-            <h3>Dark Mode</h3>
-            <p>Beautiful dark mode support with automatic system preference detection built-in.</p>
-          </div>
-
-          <div class="feature-card">
-            <svg class="feature-icon" viewBox="0 0 100 100">
-              <circle cx="50" cy="40" r="25" stroke="currentColor" stroke-width="6" fill="none"/>
-              <line x1="68" y1="58" x2="85" y2="75" stroke="currentColor" stroke-width="8"/>
+              <circle
+                cx="50"
+                cy="40"
+                r="25"
+                stroke="currentColor"
+                stroke-width="6"
+                fill="none"
+              />
+              <line
+                x1="68"
+                y1="58"
+                x2="85"
+                y2="75"
+                stroke="currentColor"
+                stroke-width="8"
+              />
             </svg>
             <h3>Smart Filtering</h3>
-            <p>Search by name, filter by category, and find locations within a specific distance.</p>
+            <p>
+              Search by name, filter by category, and find locations within a
+              specific distance.
+            </p>
           </div>
 
           <div class="feature-card">
             <svg class="feature-icon" viewBox="0 0 100 100">
-              <rect x="15" y="15" width="70" height="15" fill="currentColor"/>
-              <rect x="15" y="40" width="70" height="10" fill="currentColor"/>
-              <rect x="15" y="60" width="70" height="10" fill="currentColor"/>
-              <rect x="15" y="80" width="70" height="10" fill="currentColor"/>
+              <rect x="15" y="15" width="70" height="15" fill="currentColor" />
+              <rect x="15" y="40" width="70" height="10" fill="currentColor" />
+              <rect x="15" y="60" width="70" height="10" fill="currentColor" />
+              <rect x="15" y="80" width="70" height="10" fill="currentColor" />
             </svg>
             <h3>Table View</h3>
-            <p>Alternate table view with pagination, sorting, and expandable location details.</p>
+            <p>
+              Alternate table view with pagination, sorting, and expandable
+              location details.
+            </p>
           </div>
 
           <div class="feature-card">
             <svg class="feature-icon" viewBox="0 0 100 100">
-              <polygon points="50,10 90,90 10,90" fill="currentColor"/>
+              <polygon points="50,10 90,90 10,90" fill="currentColor" />
             </svg>
             <h3>Lightweight</h3>
-            <p>Only 218 KB gzipped. Built with Vite, React, and Tailwind CSS for optimal performance.</p>
+            <p>
+              Only 218 KB gzipped. Built with Vite, React, and Tailwind CSS for
+              optimal performance.
+            </p>
           </div>
         </div>
       </div>
@@ -972,9 +1112,9 @@
         <div class="benefit-item">218KB Gzipped</div>
         <div class="benefit-item">No API Keys</div>
         <div class="benefit-item">Google Sheets</div>
-        <div class="benefit-item">Dark Mode</div>
         <div class="benefit-item">Mobile First</div>
         <div class="benefit-item">Auto Categories</div>
+        <div class="benefit-item">Smart Filtering</div>
         <div class="benefit-item">Open Source</div>
         <div class="benefit-item">Free Forever</div>
       </div>
@@ -985,15 +1125,28 @@
       <div class="container">
         <h2>Ready to Get Started?</h2>
         <p class="subtitle">
-          Add beautiful, interactive maps to your website in minutes.
-          Free forever, open source, and incredibly easy to use.
+          Add beautiful, interactive maps to your website in minutes. Free
+          forever, open source, and incredibly easy to use.
         </p>
 
         <div class="cta-buttons">
-          <a href="https://github.com/foobarnes/openmapembed" class="btn-cta-primary" target="_blank">
-            View on GitHub
+          <a
+            href="https://github.com/foobarnes/openmapembed"
+            class="btn-cta-primary leading-tight tracking-tight flex flex-row items-center"
+            target="_blank"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+              />
+            </svg>
+            <span>View on GitHub</span>
           </a>
-          <a href="./docs/embedding-guide.md" class="btn-cta-secondary" target="_blank">
+          <a
+            href="./docs/embedding-guide.md"
+            class="btn-cta-secondary"
+            target="_blank"
+          >
             Read Documentation
           </a>
         </div>
@@ -1010,14 +1163,21 @@
     <footer>
       <div class="container">
         <p>
-          Built for <a href="https://ablebodied.org" target="_blank">Ablebodied.org</a>
+          Built for
+          <a href="https://ablebodied.org" target="_blank">Ablebodied.org</a>
         </p>
         <p>
-          <a href="https://github.com/foobarnes/openmapembed" target="_blank">GitHub</a> •
-          <a href="./docs/embedding-guide.md" target="_blank">Documentation</a> •
-          <a href="./docs/google-sheets-template.md" target="_blank">Google Sheets Setup</a>
+          <a href="https://github.com/foobarnes/openmapembed" target="_blank"
+            >GitHub</a
+          >
+          •
+          <a href="./docs/embedding-guide.md" target="_blank">Documentation</a>
+          •
+          <a href="./docs/google-sheets-template.md" target="_blank"
+            >Google Sheets Setup</a
+          >
         </p>
-        <p style="margin-top: 20px; font-size: 14px;">
+        <p style="margin-top: 20px; font-size: 14px">
           Open source under MIT License
         </p>
       </div>
@@ -1029,12 +1189,12 @@
       let widgetInstance = null;
 
       // Copy code function
-      window.copyCode = function() {
+      window.copyCode = function () {
         const codeText = `<!-- 1. Add container -->
 <div id="map-widget"></div>
 
 <!-- 2. Load script -->
-<script src="openmapembed.js"><\/script>
+<script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"><\/script>
 
 <!-- 3. Initialize -->
 <script>
@@ -1048,59 +1208,50 @@
 <\/script>`;
 
         navigator.clipboard.writeText(codeText).then(() => {
-          const btn = document.querySelector('.copy-btn');
-          const text = document.getElementById('copy-text');
-          text.textContent = 'Copied!';
-          btn.classList.add('copied');
+          const btn = document.querySelector(".copy-btn");
+          const text = document.getElementById("copy-text");
+          text.textContent = "Copied!";
+          btn.classList.add("copied");
 
           setTimeout(() => {
-            text.textContent = 'Copy';
-            btn.classList.remove('copied');
+            text.textContent = "Copy";
+            btn.classList.remove("copied");
           }, 2000);
         });
       };
 
-      // Theme switcher
-      window.setTheme = function(theme) {
-        document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
-        document.getElementById(`${theme}-btn`).classList.add('active');
-
-        document.getElementById('location-widget').innerHTML = '';
-        initWidget(theme);
-      };
-
-      function initWidget(theme = 'light') {
+      function initWidget() {
         // Initialize with real published Google Sheets data
         widgetInstance = OpenMapEmbed.init({
-          container: '#location-widget',
+          container: "#location-widget",
           dataSource: {
-            type: 'google-sheets-public',
-            sheetId: '2PACX-1vQv1jSRY0gTFmVaSXufZ0SQ0cH0Wd9XjFNySoUXsrQpFeWMWbgT10HeK8GXq7z2aV-P5gOnTqaaXX6H'
+            type: "google-sheets-public",
+            sheetId:
+              "2PACX-1vQv1jSRY0gTFmVaSXufZ0SQ0cH0Wd9XjFNySoUXsrQpFeWMWbgT10HeK8GXq7z2aV-P5gOnTqaaXX6H",
           },
           config: {
-            theme: theme,
-            defaultView: 'map',
+            defaultView: "map",
             defaultCenter: [39.8283, -98.5795],
             defaultZoom: 4,
             enableGeolocation: true,
-            enableClustering: true
-          }
+            enableClustering: true,
+          },
         });
       }
 
       // Smooth scroll for anchor links
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
           e.preventDefault();
-          const target = document.querySelector(this.getAttribute('href'));
+          const target = document.querySelector(this.getAttribute("href"));
           if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
           }
         });
       });
 
       // Initialize widget on load
-      initWidget('light');
+      initWidget();
     </script>
   </body>
 </html>

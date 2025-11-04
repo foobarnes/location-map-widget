@@ -45,15 +45,12 @@ The fastest way to get started with the Location Map Widget:
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Location Map</title>
-
-  <!-- Widget CSS -->
-  <link rel="stylesheet" href="https://foobarnes.github.io/openmapembed/dist/openmapembed.css">
 </head>
 <body>
   <!-- Widget container -->
   <div id="map-widget" style="height: 600px;"></div>
 
-  <!-- Widget JS -->
+  <!-- Widget JS (CSS is automatically included) -->
   <script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"></script>
 
   <!-- Initialize widget -->
@@ -81,21 +78,16 @@ Best for static websites, WordPress sites, or quick prototypes.
 
 **CDN hosted on GitHub Pages** - automatically updated with every push to main branch.
 
-#### Step 1: Add CSS to your `<head>`
-
-```html
-<link rel="stylesheet" href="https://foobarnes.github.io/openmapembed/dist/openmapembed.css">
-```
-
-#### Step 2: Add container element
+#### Step 1: Add container element
 
 ```html
 <div id="map-widget" style="height: 600px;"></div>
 ```
 
-#### Step 3: Add JavaScript before closing `</body>`
+#### Step 2: Add JavaScript before closing `</body>`
 
 ```html
+<!-- JavaScript (includes CSS automatically) -->
 <script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"></script>
 <script>
   OpenMapEmbed.init({
@@ -114,19 +106,16 @@ Best for static websites, WordPress sites, or quick prototypes.
 </script>
 ```
 
-#### CDN URLs
+#### CDN URL
 
 The widget is hosted on GitHub Pages and automatically updated with every push:
 
 ```html
-<!-- CSS -->
-<link rel="stylesheet" href="https://foobarnes.github.io/openmapembed/dist/openmapembed.css">
-
-<!-- JavaScript -->
+<!-- JavaScript (CSS is inlined automatically) -->
 <script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"></script>
 ```
 
-These URLs always serve the latest version from the main branch.
+This URL always serves the latest version from the main branch.
 
 ---
 
@@ -145,7 +134,7 @@ npm install openmapembed
 ```jsx
 import { useEffect, useRef } from 'react';
 import { init } from 'openmapembed';
-import 'openmapembed/dist/openmapembed.css';
+// CSS is automatically injected - no import needed!
 
 function MapComponent() {
   const containerRef = useRef(null);
@@ -184,7 +173,7 @@ export default MapComponent;
 <script setup>
 import { ref, onMounted } from 'vue';
 import { init } from 'openmapembed';
-import 'openmapembed/dist/openmapembed.css';
+// CSS is automatically injected - no import needed!
 
 const mapContainer = ref(null);
 
@@ -210,6 +199,7 @@ onMounted(() => {
 ```typescript
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { init } from 'openmapembed';
+// CSS is automatically injected - no setup needed!
 
 @Component({
   selector: 'app-map',
@@ -236,16 +226,7 @@ export class MapComponent implements AfterViewInit {
 }
 ```
 
-Don't forget to import the CSS in your `angular.json`:
-
-```json
-{
-  "styles": [
-    "node_modules/openmapembed/dist/openmapembed.css",
-    "src/styles.css"
-  ]
-}
-```
+**Note:** CSS is now automatically included in the JavaScript bundle - no need to add it to `angular.json`!
 
 ---
 
@@ -258,13 +239,10 @@ Don't forget to import the CSS in your `angular.json`:
 3. Paste the following code:
 
 ```html
-<!-- Widget CSS (add this once in your theme's header or here) -->
-<link rel="stylesheet" href="https://foobarnes.github.io/openmapembed/dist/openmapembed.css">
-
 <!-- Widget container -->
 <div id="openmapembed" style="height: 600px; margin: 20px 0;"></div>
 
-<!-- Widget JS -->
+<!-- Widget JS (CSS is automatically included) -->
 <script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"></script>
 <script>
   (function() {
@@ -302,10 +280,7 @@ Add to your theme's `functions.php`:
 function enqueue_location_map_widget() {
     // Only load on specific pages
     if (is_page('locations')) {
-        wp_enqueue_style(
-            'openmapembed',
-            'https://foobarnes.github.io/openmapembed/dist/openmapembed.css'
-        );
+        // CSS is automatically included in the JS bundle
         wp_enqueue_script(
             'openmapembed',
             'https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js',
@@ -1073,12 +1048,12 @@ Minimal setup with default options:
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Basic Map Widget</title>
-  <link rel="stylesheet" href="https://foobarnes.github.io/openmapembed/dist/openmapembed.css">
 </head>
 <body>
   <h1>Our Locations</h1>
   <div id="map-widget" style="height: 600px; max-width: 1200px; margin: 0 auto;"></div>
 
+  <!-- CSS is automatically included in the JS bundle -->
   <script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"></script>
   <script>
     OpenMapEmbed.init({
@@ -1102,7 +1077,6 @@ Minimal setup with default options:
 <head>
   <meta charset="UTF-8">
   <title>Branded Map Widget</title>
-  <link rel="stylesheet" href="https://foobarnes.github.io/openmapembed/dist/openmapembed.css">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -1182,7 +1156,6 @@ Minimal setup with default options:
 <head>
   <meta charset="UTF-8">
   <title>Dark Mode Map</title>
-  <link rel="stylesheet" href="https://foobarnes.github.io/openmapembed/dist/openmapembed.css">
   <style>
     body {
       background: #1a1a1a;
@@ -1231,7 +1204,6 @@ Minimal setup with default options:
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Responsive Map</title>
-  <link rel="stylesheet" href="https://foobarnes.github.io/openmapembed/dist/openmapembed.css">
   <style>
     body {
       margin: 0;
@@ -1297,7 +1269,6 @@ Minimal setup with default options:
 <head>
   <meta charset="UTF-8">
   <title>Multiple Maps</title>
-  <link rel="stylesheet" href="https://foobarnes.github.io/openmapembed/dist/openmapembed.css">
   <style>
     .map-container {
       height: 500px;
@@ -1361,7 +1332,6 @@ Minimal setup with default options:
 <head>
   <meta charset="UTF-8">
   <title>Directory View</title>
-  <link rel="stylesheet" href="https://foobarnes.github.io/openmapembed/dist/openmapembed.css">
 </head>
 <body>
   <div id="map-widget" style="height: 700px; max-width: 1400px; margin: 0 auto;"></div>
@@ -1400,9 +1370,9 @@ Minimal setup with default options:
    <div id="map-widget" style="height: 600px;"></div>
    ```
 
-2. Verify CSS is loaded:
+2. Verify JavaScript is loaded:
    ```html
-   <link rel="stylesheet" href="https://unpkg.com/openmapembed@latest/dist/openmapembed.css">
+   <script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"></script>
    ```
 
 3. Check browser console for errors (F12)

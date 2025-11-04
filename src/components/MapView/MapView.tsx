@@ -110,7 +110,7 @@ export const MapView: React.FC<MapViewProps> = ({
           <MarkerClusterGroup
             chunkedLoading
             maxClusterRadius={50}
-            spiderfyOnMaxZoom={true}
+            spiderfyOnMaxZoom={false}
             showCoverageOnHover={false}
             zoomToBoundsOnClick={true}
             disableClusteringAtZoom={13}
