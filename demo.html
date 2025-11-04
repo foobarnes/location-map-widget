@@ -404,53 +404,6 @@
         margin-bottom: 32px;
       }
 
-      .theme-switcher {
-        display: flex;
-        justify-content: center;
-        gap: 0;
-        margin-bottom: 32px;
-        flex-wrap: wrap;
-      }
-
-      .theme-btn {
-        padding: 16px 32px;
-        border: none;
-        background: var(--gray-300);
-        color: var(--gray-900);
-        font-size: 16px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        font-family: 'Belanosima', sans-serif;
-        text-transform: uppercase;
-      }
-
-      .theme-btn:first-child {
-        background: var(--orange);
-        color: white;
-      }
-
-      .theme-btn:nth-child(2) {
-        background: var(--purple);
-        color: white;
-      }
-
-      .theme-btn:last-child {
-        background: var(--teal);
-        color: white;
-      }
-
-      .theme-btn:hover {
-        transform: translateY(-2px);
-        filter: brightness(1.1);
-      }
-
-      .theme-btn.active {
-        transform: translateY(-4px);
-        filter: brightness(1.2);
-        box-shadow: 0 4px 0 rgba(0,0,0,0.2);
-      }
-
       .widget-container {
         background: white;
         overflow: hidden;
@@ -857,20 +810,8 @@
       <div class="container">
         <h2>Try It Live</h2>
         <p class="demo-subtitle">
-          Interact with a fully functional widget. Try switching themes!
+          Interact with a fully functional widget below.
         </p>
-
-        <div class="theme-switcher">
-          <button class="theme-btn active" onclick="setTheme('light')" id="light-btn">
-            Light
-          </button>
-          <button class="theme-btn" onclick="setTheme('dark')" id="dark-btn">
-            Dark
-          </button>
-          <button class="theme-btn" onclick="setTheme('auto')" id="auto-btn">
-            Auto
-          </button>
-        </div>
 
         <div id="location-widget" class="widget-container"></div>
       </div>
@@ -928,15 +869,6 @@
 
           <div class="feature-card">
             <svg class="feature-icon" viewBox="0 0 100 100">
-              <circle cx="50" cy="50" r="35" fill="currentColor"/>
-              <path d="M 50 15 A 35 35 0 0 1 50 85" fill="white"/>
-            </svg>
-            <h3>Dark Mode</h3>
-            <p>Beautiful dark mode support with automatic system preference detection built-in.</p>
-          </div>
-
-          <div class="feature-card">
-            <svg class="feature-icon" viewBox="0 0 100 100">
               <circle cx="50" cy="40" r="25" stroke="currentColor" stroke-width="6" fill="none"/>
               <line x1="68" y1="58" x2="85" y2="75" stroke="currentColor" stroke-width="8"/>
             </svg>
@@ -972,9 +904,9 @@
         <div class="benefit-item">218KB Gzipped</div>
         <div class="benefit-item">No API Keys</div>
         <div class="benefit-item">Google Sheets</div>
-        <div class="benefit-item">Dark Mode</div>
         <div class="benefit-item">Mobile First</div>
         <div class="benefit-item">Auto Categories</div>
+        <div class="benefit-item">Smart Filtering</div>
         <div class="benefit-item">Open Source</div>
         <div class="benefit-item">Free Forever</div>
       </div>
@@ -1060,16 +992,7 @@
         });
       };
 
-      // Theme switcher
-      window.setTheme = function(theme) {
-        document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
-        document.getElementById(`${theme}-btn`).classList.add('active');
-
-        document.getElementById('location-widget').innerHTML = '';
-        initWidget(theme);
-      };
-
-      function initWidget(theme = 'light') {
+      function initWidget() {
         // Initialize with real published Google Sheets data
         widgetInstance = OpenMapEmbed.init({
           container: '#location-widget',
@@ -1078,7 +1001,6 @@
             sheetId: '2PACX-1vQv1jSRY0gTFmVaSXufZ0SQ0cH0Wd9XjFNySoUXsrQpFeWMWbgT10HeK8GXq7z2aV-P5gOnTqaaXX6H'
           },
           config: {
-            theme: theme,
             defaultView: 'map',
             defaultCenter: [39.8283, -98.5795],
             defaultZoom: 4,
@@ -1100,7 +1022,7 @@
       });
 
       // Initialize widget on load
-      initWidget('light');
+      initWidget();
     </script>
   </body>
 </html>

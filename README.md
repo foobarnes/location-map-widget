@@ -13,10 +13,10 @@ An embeddable, customizable location map widget with dynamic category support an
 - 🗺️ **Interactive Maps** - Leaflet-powered with clustering and geolocation
 - 🖼️ **Image Galleries** - Display location photos in tooltips and table view
 - 📱 **Fully Responsive** - Works on any device, height controlled by container
-- 🌓 **Dark Mode** - Full dark mode support with auto-detection
 - 🔍 **Powerful Filters** - Search, category, and distance-based filtering
 - 📋 **Table View** - Alternate view with pagination
 - ⚡ **Lightweight** - Only 218 KB gzipped
+- 🚀 **Easy Setup** - No API keys required, just 3 lines of code
 
 ## 🚀 Quick Start
 
