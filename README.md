@@ -169,6 +169,15 @@ The workflow (`.github/workflows/deploy.yml`) automatically:
 - Creates demo site with built assets
 - Deploys to GitHub Pages (serving as CDN)
 
+### PR Preview Builds
+
+Pull requests automatically trigger a preview build via `.github/workflows/pr-preview.yml`:
+- Builds the demo site for the PR
+- Uploads as a downloadable artifact (available for 7 days)
+- Posts a comment on the PR with download instructions
+
+This allows you to test changes before merging to main.
+
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
