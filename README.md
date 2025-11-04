@@ -2,13 +2,23 @@
   <img src="public/logo-icon.svg" alt="OpenMapEmbed" width="80" height="80" />
 </p>
 
-# OpenMapEmbed
+<h1 align="center">OpenMapEmbed</h1>
 
+<p align="center">
 An embeddable, customizable location map widget with dynamic category support and Google Sheets integration.
+</p>
 
-[![Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://foobarnes.github.io/openmapembed/)
-[![Bundle Size](https://img.shields.io/badge/bundle-218KB_gzipped-blue)](./dist)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+<p align="center">
+  <a href="https://foobarnes.github.io/openmapembed/">
+    <img src="https://img.shields.io/badge/demo-live-brightgreen" alt="Demo" />
+  </a>
+  <a href="./dist">
+    <img src="https://img.shields.io/badge/bundle-218KB_gzipped-blue" alt="Bundle Size" />
+  </a>
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License" />
+  </a>
+</p>
 
 <p align="center">
   <img src="public/demo.png" alt="OpenMapEmbed Demo" width="600" />
