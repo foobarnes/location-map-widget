@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="public/logo-icon.svg" alt="OpenMapEmbed" width="80" height="80" />
+</p>
+
 # OpenMapEmbed
 
 An embeddable, customizable location map widget with dynamic category support and Google Sheets integration.
