@@ -6,6 +6,11 @@ An embeddable, customizable location map widget with dynamic category support an
 [![Bundle Size](https://img.shields.io/badge/bundle-218KB_gzipped-blue)](./dist)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
+<p align="center">
+  <img src="public/demo.png" alt="OpenMapEmbed Demo" width="600" />
+</p>
+
+
 ## ✨ Features
 
 - 🎨 **Dynamic Categories** - Auto-discovers categories from data with 8-color palette
