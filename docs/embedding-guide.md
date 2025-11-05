@@ -51,7 +51,7 @@ The fastest way to get started with the Location Map Widget:
   <div id="map-widget" style="height: 600px;"></div>
 
   <!-- Widget JS (CSS is automatically included) -->
-  <script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"></script>
+  <script src="https://foobarnes.github.io/open-map-embed/dist/open-map-embed.umd.js"></script>
 
   <!-- Initialize widget -->
   <script>
@@ -88,7 +88,7 @@ Best for static websites, WordPress sites, or quick prototypes.
 
 ```html
 <!-- JavaScript (includes CSS automatically) -->
-<script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"></script>
+<script src="https://foobarnes.github.io/open-map-embed/dist/open-map-embed.umd.js"></script>
 <script>
   OpenMapEmbed.init({
     container: '#map-widget',
@@ -112,7 +112,7 @@ The widget is hosted on GitHub Pages and automatically updated with every push:
 
 ```html
 <!-- JavaScript (CSS is inlined automatically) -->
-<script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"></script>
+<script src="https://foobarnes.github.io/open-map-embed/dist/open-map-embed.umd.js"></script>
 ```
 
 This URL always serves the latest version from the main branch.
@@ -126,14 +126,14 @@ Best for modern JavaScript frameworks and build tools.
 #### Installation
 
 ```bash
-npm install openmapembed
+npm install open-map-embed
 ```
 
 #### React Example
 
 ```jsx
 import { useEffect, useRef } from 'react';
-import { init } from 'openmapembed';
+import { init } from 'open-map-embed';
 // CSS is automatically injected - no import needed!
 
 function MapComponent() {
@@ -172,7 +172,7 @@ export default MapComponent;
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { init } from 'openmapembed';
+import { init } from 'open-map-embed';
 // CSS is automatically injected - no import needed!
 
 const mapContainer = ref(null);
@@ -198,7 +198,7 @@ onMounted(() => {
 
 ```typescript
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { init } from 'openmapembed';
+import { init } from 'open-map-embed';
 // CSS is automatically injected - no setup needed!
 
 @Component({
@@ -240,10 +240,10 @@ export class MapComponent implements AfterViewInit {
 
 ```html
 <!-- Widget container -->
-<div id="openmapembed" style="height: 600px; margin: 20px 0;"></div>
+<div id="open-map-embed" style="height: 600px; margin: 20px 0;"></div>
 
 <!-- Widget JS (CSS is automatically included) -->
-<script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"></script>
+<script src="https://foobarnes.github.io/open-map-embed/dist/open-map-embed.umd.js"></script>
 <script>
   (function() {
     // Wait for DOM to be ready
@@ -255,7 +255,7 @@ export class MapComponent implements AfterViewInit {
 
     function initWidget() {
       OpenMapEmbed.init({
-        container: '#openmapembed',
+        container: '#open-map-embed',
         dataSource: {
           type: 'google-sheets',
           sheetId: 'YOUR_SHEET_ID',
@@ -282,8 +282,8 @@ function enqueue_location_map_widget() {
     if (is_page('locations')) {
         // CSS is automatically included in the JS bundle
         wp_enqueue_script(
-            'openmapembed',
-            'https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js',
+            'open-map-embed',
+            'https://foobarnes.github.io/open-map-embed/dist/open-map-embed.umd.js',
             array(),
             null,
             true
@@ -296,10 +296,10 @@ add_action('wp_enqueue_scripts', 'enqueue_location_map_widget');
 Then in your page template:
 
 ```php
-<div id="openmapembed" style="height: 600px;"></div>
+<div id="open-map-embed" style="height: 600px;"></div>
 <script>
   OpenMapEmbed.init({
-    container: '#openmapembed',
+    container: '#open-map-embed',
     dataSource: {
       type: 'google-sheets',
       sheetId: '<?php echo get_option('map_widget_sheet_id'); ?>',
@@ -1054,7 +1054,7 @@ Minimal setup with default options:
   <div id="map-widget" style="height: 600px; max-width: 1200px; margin: 0 auto;"></div>
 
   <!-- CSS is automatically included in the JS bundle -->
-  <script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"></script>
+  <script src="https://foobarnes.github.io/open-map-embed/dist/open-map-embed.umd.js"></script>
   <script>
     OpenMapEmbed.init({
       container: '#map-widget',
@@ -1104,7 +1104,7 @@ Minimal setup with default options:
 
   <div id="map-widget"></div>
 
-  <script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"></script>
+  <script src="https://foobarnes.github.io/open-map-embed/dist/open-map-embed.umd.js"></script>
   <script>
     OpenMapEmbed.init({
       container: '#map-widget',
@@ -1174,7 +1174,7 @@ Minimal setup with default options:
   <h1 style="text-align: center;">Night Mode Location Finder</h1>
   <div id="map-widget"></div>
 
-  <script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"></script>
+  <script src="https://foobarnes.github.io/open-map-embed/dist/open-map-embed.umd.js"></script>
   <script>
     OpenMapEmbed.init({
       container: '#map-widget',
@@ -1242,7 +1242,7 @@ Minimal setup with default options:
     <div id="map-widget"></div>
   </div>
 
-  <script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"></script>
+  <script src="https://foobarnes.github.io/open-map-embed/dist/open-map-embed.umd.js"></script>
   <script>
     OpenMapEmbed.init({
       container: '#map-widget',
@@ -1290,7 +1290,7 @@ Minimal setup with default options:
     <div id="map-west" class="map-container"></div>
   </div>
 
-  <script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"></script>
+  <script src="https://foobarnes.github.io/open-map-embed/dist/open-map-embed.umd.js"></script>
   <script>
     // East Coast Map
     OpenMapEmbed.init({
@@ -1336,7 +1336,7 @@ Minimal setup with default options:
 <body>
   <div id="map-widget" style="height: 700px; max-width: 1400px; margin: 0 auto;"></div>
 
-  <script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"></script>
+  <script src="https://foobarnes.github.io/open-map-embed/dist/open-map-embed.umd.js"></script>
   <script>
     OpenMapEmbed.init({
       container: '#map-widget',
@@ -1372,7 +1372,7 @@ Minimal setup with default options:
 
 2. Verify JavaScript is loaded:
    ```html
-   <script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"></script>
+   <script src="https://foobarnes.github.io/open-map-embed/dist/open-map-embed.umd.js"></script>
    ```
 
 3. Check browser console for errors (F12)
@@ -1482,7 +1482,7 @@ Minimal setup with default options:
 
 3. Ensure scripts are loading:
    - View page source
-   - Search for "openmapembed"
+   - Search for "open-map-embed"
    - Verify CSS and JS files are present
 
 ### Performance Issues
@@ -1609,7 +1609,7 @@ Minimal setup with default options:
 
 ## Additional Resources
 
-- **GitHub Repository:** [github.com/yourorg/openmapembed](https://github.com)
+- **GitHub Repository:** [github.com/yourorg/open-map-embed](https://github.com)
 - **API Documentation:** [Full TypeScript API Reference](./api-reference.md)
 - **Live Demo:** [demo.locationmapwidget.com](https://demo.example.com)
 - **Google Sheets Template:** [Sample Sheet Template](https://docs.google.com/spreadsheets/)

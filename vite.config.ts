@@ -10,7 +10,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/main.tsx'),
       name: 'OpenMapEmbed',
-      fileName: (format) => `openmapembed.${format}.js`,
+      fileName: (format) => `open-map-embed.${format}.js`,
       formats: ['umd', 'es']
     },
     rollupOptions: {
@@ -20,7 +20,7 @@ export default defineConfig({
         globals: {},
         // Ensure styles are inlined
         assetFileNames: (assetInfo) => {
-          if (assetInfo.name === 'style.css') return 'openmapembed.css';
+          if (assetInfo.name === 'style.css') return 'open-map-embed.css';
           return assetInfo.name as string;
         }
       }

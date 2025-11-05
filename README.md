@@ -9,7 +9,7 @@ An embeddable, customizable location map widget with dynamic category support an
 </p>
 
 <p align="center">
-  <a href="https://foobarnes.github.io/openmapembed/">
+  <a href="https://foobarnes.github.io/open-map-embed/">
     <img src="https://img.shields.io/badge/demo-live-brightgreen" alt="Demo" />
   </a>
   <a href="./dist">
@@ -47,12 +47,12 @@ Hosted on GitHub Pages - automatically updated on every push to main:
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="https://foobarnes.github.io/openmapembed/dist/openmapembed.css">
+  <link rel="stylesheet" href="https://foobarnes.github.io/open-map-embed/dist/openmapembed.css">
 </head>
 <body>
   <div id="map" style="height: 600px;"></div>
 
-  <script src="https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js"></script>
+  <script src="https://foobarnes.github.io/open-map-embed/dist/openmapembed.umd.js"></script>
   <script>
     OpenMapEmbed.init({
       container: '#map',
@@ -73,14 +73,14 @@ Hosted on GitHub Pages - automatically updated on every push to main:
 ### NPM
 
 ```bash
-npm install openmapembed
+npm install open-map-embed
 # or
-pnpm add openmapembed
+pnpm add open-map-embed
 ```
 
 ```javascript
-import { init } from 'openmapembed';
-import 'openmapembed/dist/openmapembed.css';
+import { init } from 'open-map-embed';
+import 'open-map-embed/dist/open-map-embed.css';
 
 init({
   container: '#map',
@@ -96,7 +96,7 @@ init({
 
 - **[Embedding Guide](./docs/embedding-guide.md)** - Complete integration guide with examples
 - **[Google Sheets Template](./docs/google-sheets-template.md)** - Set up your data source
-- **[Live Demo](https://foobarnes.github.io/openmapembed/)** - See it in action
+- **[Live Demo](https://foobarnes.github.io/open-map-embed/)** - See it in action
 
 ## 🎨 Category Customization
 
@@ -146,7 +146,7 @@ pnpm preview
 ## 📦 Project Structure
 
 ```
-openmapembed/
+open-map-embed/
 ├── src/
 │   ├── components/     # React components
 │   ├── adapters/       # Data source adapters
@@ -162,10 +162,10 @@ openmapembed/
 
 This project uses GitHub Pages for both the demo site and as a CDN for the widget files:
 
-**Demo Site**: `https://foobarnes.github.io/openmapembed/`
+**Demo Site**: `https://foobarnes.github.io/open-map-embed/`
 **CDN URLs**:
-- CSS: `https://foobarnes.github.io/openmapembed/dist/openmapembed.css`
-- JS: `https://foobarnes.github.io/openmapembed/dist/openmapembed.umd.js`
+- CSS: `https://foobarnes.github.io/open-map-embed/dist/openmapembed.css`
+- JS: `https://foobarnes.github.io/open-map-embed/dist/openmapembed.umd.js`
 
 ### Setup
 
@@ -212,8 +212,8 @@ Built for [Ablebodied.org](https://ablebodied.org) to help connect adaptive cycl
 ## 💬 Support
 
 - 📖 [Documentation](./docs/)
-- 🐛 [Report Issues](https://github.com/foobarnes/openmapembed/issues)
-- 💡 [Feature Requests](https://github.com/foobarnes/openmapembed/issues)
+- 🐛 [Report Issues](https://github.com/foobarnes/open-map-embed/issues)
+- 💡 [Feature Requests](https://github.com/foobarnes/open-map-embed/issues)
 
 ---
 

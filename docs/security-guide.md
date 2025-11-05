@@ -143,12 +143,12 @@ API key hidden in backend proxy, never exposed to client.
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="https://unpkg.com/openmapembed@latest/dist/openmapembed.css">
+  <link rel="stylesheet" href="https://unpkg.com/open-map-embed@latest/dist/open-map-embed.css">
 </head>
 <body>
   <div id="map" style="height: 600px;"></div>
 
-  <script src="https://unpkg.com/openmapembed@latest/dist/openmapembed.umd.js"></script>
+  <script src="https://unpkg.com/open-map-embed@latest/dist/open-map-embed.umd.js"></script>
   <script>
     OpenMapEmbed.init({
       container: '#map',
@@ -231,12 +231,12 @@ This mode follows Google Maps' approach: client-side API key with restrictions.
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="https://unpkg.com/openmapembed@latest/dist/openmapembed.css">
+  <link rel="stylesheet" href="https://unpkg.com/open-map-embed@latest/dist/open-map-embed.css">
 </head>
 <body>
   <div id="map" style="height: 600px;"></div>
 
-  <script src="https://unpkg.com/openmapembed@latest/dist/openmapembed.umd.js"></script>
+  <script src="https://unpkg.com/open-map-embed@latest/dist/open-map-embed.umd.js"></script>
   <script>
     OpenMapEmbed.init({
       container: '#map',
