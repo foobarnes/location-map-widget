@@ -5,11 +5,16 @@
 import React, { useState } from 'react';
 import { useMap } from 'react-leaflet';
 import { getUserLocation } from '../../utils/distance';
-import { useWidgetStore } from '../../stores/widgetStore';
+import { useWidgetState } from '../../contexts/StoreContext';
 
 export const GeolocationButton: React.FC = () => {
   const map = useMap();
-  const { setFilters, filters, setMapCenter, setMapZoom } = useWidgetStore();
+  const { setFilters, filters, setMapCenter, setMapZoom } = useWidgetState((state) => ({
+    setFilters: state.setFilters,
+    filters: state.filters,
+    setMapCenter: state.setMapCenter,
+    setMapZoom: state.setMapZoom,
+  }));
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

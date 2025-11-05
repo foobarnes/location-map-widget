@@ -5,7 +5,7 @@
 import React, { useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, useMap } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
-import { useWidgetStore } from '../../stores/widgetStore';
+import { useWidgetState, useStore } from '../../contexts/StoreContext';
 import { LocationMarker } from './LocationMarker';
 import { GeolocationButton } from './GeolocationButton';
 import 'leaflet/dist/leaflet.css';
@@ -82,7 +82,11 @@ export const MapView: React.FC<MapViewProps> = ({
   enableGeolocation = true,
   enableClustering = true,
 }) => {
-  const { filteredLocations, mapCenter, mapZoom } = useWidgetStore();
+  const { filteredLocations, mapCenter, mapZoom } = useWidgetState((state) => ({
+    filteredLocations: state.filteredLocations,
+    mapCenter: state.mapCenter,
+    mapZoom: state.mapZoom,
+  }));
 
   return (
     <div className="map-container">
@@ -137,7 +141,14 @@ export const MapView: React.FC<MapViewProps> = ({
  */
 const MapController: React.FC = () => {
   const map = useMap();
-  const { mapCenter, mapZoom, filteredLocations, selectedLocationId, isProgrammaticMove } = useWidgetStore();
+  const { mapCenter, mapZoom, filteredLocations, selectedLocationId, isProgrammaticMove } = useWidgetState((state) => ({
+    mapCenter: state.mapCenter,
+    mapZoom: state.mapZoom,
+    filteredLocations: state.filteredLocations,
+    selectedLocationId: state.selectedLocationId,
+    isProgrammaticMove: state.isProgrammaticMove,
+  }));
+  const store = useStore();
   const prevCenter = useRef(mapCenter);
   const prevZoom = useRef(mapZoom);
   const prevFilteredCount = useRef(filteredLocations.length);
@@ -181,7 +192,7 @@ const MapController: React.FC = () => {
 
   // Auto-fit bounds when filtered locations change (but not when selecting a specific location)
   useEffect(() => {
-    const { locations, filters } = useWidgetStore.getState();
+    const { locations, filters } = store.getState();
 
     // Don't auto-zoom during programmatic navigation or when a specific location is selected
     if (isProgrammaticMove || selectedLocationId) {

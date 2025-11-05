@@ -6,7 +6,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import type { Location } from "../../types";
-import { useWidgetStore } from "../../stores/widgetStore";
+import { useWidgetState, useStore } from "../../contexts/StoreContext";
 import { formatDistance } from "../../utils/distance";
 import { ImageGallery, CustomFields } from "../shared";
 
@@ -15,8 +15,8 @@ interface LocationMarkerProps {
 }
 
 // Custom marker icons by category
-const getMarkerIcon = (category: string): L.Icon => {
-  const { categories } = useWidgetStore.getState();
+const getMarkerIcon = (category: string, store: any): L.Icon => {
+  const { categories } = store.getState();
   const categoryMeta = categories.find(
     (c) => c.name.toLowerCase() === category.toLowerCase()
   );
@@ -42,7 +42,12 @@ const getMarkerIcon = (category: string): L.Icon => {
 
 export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
   const { setSelectedLocation, selectedLocationId, isProgrammaticMove } =
-    useWidgetStore();
+    useWidgetState((state) => ({
+      setSelectedLocation: state.setSelectedLocation,
+      selectedLocationId: state.selectedLocationId,
+      isProgrammaticMove: state.isProgrammaticMove,
+    }));
+  const store = useStore();
   const markerRef = useRef<L.Marker>(null);
   const map = useMap();
   const [maxPopupHeight, setMaxPopupHeight] = useState(400);
@@ -254,7 +259,7 @@ export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
           "[MARKER] openPopupWithPreCalculatedPosition() called from programmatic move"
         );
         // Reset isProgrammaticMove flag after successfully opening popup
-        useWidgetStore.setState({ isProgrammaticMove: false });
+        store.setState({ isProgrammaticMove: false });
         console.log("[MARKER] isProgrammaticMove reset to FALSE");
       }, 300); // 300ms delay for cluster animations
 
@@ -269,7 +274,7 @@ export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
     <Marker
       ref={markerRef}
       position={[location.latitude, location.longitude]}
-      icon={getMarkerIcon(location.category)}
+      icon={getMarkerIcon(location.category, store)}
       eventHandlers={{
         click: handleMarkerClick,
       }}
@@ -407,7 +412,8 @@ export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
  * Category badge component with dynamic styling
  */
 const CategoryBadge: React.FC<{ category: string }> = ({ category }) => {
-  const { categories } = useWidgetStore.getState();
+  const store = useStore();
+  const { categories } = store.getState();
   const categoryMeta = categories.find(
     (c) => c.name.toLowerCase() === category.toLowerCase()
   );

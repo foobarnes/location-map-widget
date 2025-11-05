@@ -4,7 +4,7 @@
 
 import React, { useState } from 'react';
 import type { Location } from '../../types';
-import { useWidgetStore } from '../../stores/widgetStore';
+import { useWidgetState, useStore } from '../../contexts/StoreContext';
 import { formatDistance } from '../../utils/distance';
 import { ImageGallery, CustomFields } from '../shared';
 
@@ -16,7 +16,14 @@ export const DataTable: React.FC = () => {
     setCurrentPage,
     setSelectedLocation,
     selectedLocationId,
-  } = useWidgetStore();
+  } = useWidgetState((state) => ({
+    filteredLocations: state.filteredLocations,
+    currentPage: state.currentPage,
+    itemsPerPage: state.itemsPerPage,
+    setCurrentPage: state.setCurrentPage,
+    setSelectedLocation: state.setSelectedLocation,
+    selectedLocationId: state.selectedLocationId,
+  }));
 
   const [expandedRowId, setExpandedRowId] = useState<string | null>(null);
 
@@ -121,8 +128,9 @@ interface TableRowProps {
 }
 
 const TableRow: React.FC<TableRowProps> = ({ location, isExpanded, isSelected, onClick }) => {
+  const store = useStore();
   const getCategoryColor = (category: string) => {
-    const { categories } = useWidgetStore.getState();
+    const { categories } = store.getState();
     const categoryMeta = categories.find(c => c.name.toLowerCase() === category.toLowerCase());
 
     if (categoryMeta) {

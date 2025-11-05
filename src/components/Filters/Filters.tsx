@@ -3,12 +3,16 @@
  */
 
 import React, { useState } from 'react';
-import { useWidgetStore } from '../../stores/widgetStore';
+import { useWidgetState } from '../../contexts/StoreContext';
 import { getUserLocation } from '../../utils/distance';
 import type { LocationCategory } from '../../types';
 
 export const Filters: React.FC = () => {
-  const { filters, setFilters, setSelectedLocation } = useWidgetStore();
+  const { filters, setFilters, setSelectedLocation } = useWidgetState((state) => ({
+    filters: state.filters,
+    setFilters: state.setFilters,
+    setSelectedLocation: state.setSelectedLocation,
+  }));
   const [isLoadingLocation, setIsLoadingLocation] = useState(false);
 
   // Handle search query change
@@ -104,7 +108,9 @@ export const Filters: React.FC = () => {
     filters.distanceFilter.enabled;
 
   // Get categories from store (auto-discovered from data)
-  const { categories: categoryMetadata } = useWidgetStore();
+  const { categories: categoryMetadata } = useWidgetState((state) => ({
+    categories: state.categories,
+  }));
 
   // Transform to format needed for rendering
   const categories = categoryMetadata.map(cat => ({

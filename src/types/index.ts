@@ -261,6 +261,43 @@ export interface GoogleSheetsResponse {
 }
 
 /**
+ * URL Embed Configuration Types
+ */
+
+// Visual customization options for embeds
+export interface EmbedVisualOptions {
+  height?: string; // CSS height value (e.g., '600px', '100vh')
+  width?: string; // CSS width value (e.g., '100%', '800px')
+  theme?: Theme; // Light/dark theme
+}
+
+// Feature toggle options for embeds
+export interface EmbedFeatureOptions {
+  hideSearch?: boolean; // Hide search bar
+  hideTable?: boolean; // Hide table view toggle
+  hideFilters?: boolean; // Hide category filters
+  hideGeolocation?: boolean; // Hide "Find Near Me" button
+  defaultView?: ViewMode; // Default view on load (map or table)
+}
+
+// Initial state options for embeds
+export interface EmbedInitialState {
+  lat?: number; // Initial map center latitude
+  lng?: number; // Initial map center longitude
+  zoom?: number; // Initial map zoom level
+  category?: string; // Pre-selected category filter
+}
+
+// Complete embed configuration
+export interface EmbedOptions extends EmbedVisualOptions, EmbedFeatureOptions, EmbedInitialState {}
+
+// Parsed URL configuration
+export interface URLConfig {
+  dataSource?: DataSourceConfig; // Data source parsed from URL params
+  embedOptions?: EmbedOptions; // Embed customization options
+}
+
+/**
  * Utility types
  */
 

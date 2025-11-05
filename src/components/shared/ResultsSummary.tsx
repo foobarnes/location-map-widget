@@ -3,10 +3,14 @@
  */
 
 import React from 'react';
-import { useWidgetStore } from '../../stores/widgetStore';
+import { useWidgetState } from '../../contexts/StoreContext';
 
 export const ResultsSummary: React.FC = () => {
-  const { locations, filteredLocations, filters } = useWidgetStore();
+  const { locations, filteredLocations, filters } = useWidgetState((state) => ({
+    locations: state.locations,
+    filteredLocations: state.filteredLocations,
+    filters: state.filters,
+  }));
 
   // Check if any filters are active
   const hasActiveFilters =

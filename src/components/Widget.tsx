@@ -3,7 +3,8 @@
  */
 
 import React, { useEffect } from 'react';
-import { useWidgetStore, initializeTheme } from '../stores/widgetStore';
+import { initializeTheme } from '../stores/widgetStore';
+import { useWidgetState, useStore } from '../contexts/StoreContext';
 import { createDataAdapter } from '../adapters';
 import type { WidgetConfig } from '../types';
 import { MapView } from './MapView';
@@ -16,15 +17,23 @@ interface WidgetProps {
 }
 
 export const Widget: React.FC<WidgetProps> = ({ config }) => {
-  const { setLocations, setLoading, setError, setTheme } = useWidgetStore();
+  const store = useStore();
+  const { setLocations, setLoading, setError, setTheme } = useWidgetState(
+    (state) => ({
+      setLocations: state.setLocations,
+      setLoading: state.setLoading,
+      setError: state.setError,
+      setTheme: state.setTheme,
+    })
+  );
 
   // Initialize theme on mount
   useEffect(() => {
-    initializeTheme();
+    initializeTheme(store);
     if (config.theme) {
       setTheme(config.theme);
     }
-  }, [config.theme, setTheme]);
+  }, [config.theme, setTheme, store]);
 
   // Fetch data on mount
   useEffect(() => {
@@ -42,8 +51,8 @@ export const Widget: React.FC<WidgetProps> = ({ config }) => {
           setLocations(locations);
 
           // Extract and store category metadata
-          const store = useWidgetStore.getState();
-          store.setCategoriesFromLocations(locations, config.categoryConfig);
+          const state = store.getState();
+          state.setCategoriesFromLocations(locations, config.categoryConfig);
         }
       } catch (err) {
         console.error('Error fetching locations:', err);
@@ -55,28 +64,28 @@ export const Widget: React.FC<WidgetProps> = ({ config }) => {
     };
 
     fetchData();
-  }, [config.dataSource, config.categoryConfig, setLocations, setLoading, setError]);
+  }, [config.dataSource, config.categoryConfig, setLocations, setLoading, setError, store]);
 
   // Set initial config values
   useEffect(() => {
-    const store = useWidgetStore.getState();
+    const state = store.getState();
 
     if (config.defaultView) {
-      store.setCurrentView(config.defaultView);
+      state.setCurrentView(config.defaultView);
     }
 
     if (config.defaultCenter) {
-      store.setMapCenter(config.defaultCenter);
+      state.setMapCenter(config.defaultCenter);
     }
 
     if (config.defaultZoom) {
-      store.setMapZoom(config.defaultZoom);
+      state.setMapZoom(config.defaultZoom);
     }
 
     if (config.itemsPerPage) {
-      useWidgetStore.setState({ itemsPerPage: config.itemsPerPage });
+      store.setState({ itemsPerPage: config.itemsPerPage });
     }
-  }, [config]);
+  }, [config, store]);
 
   return (
     <div
@@ -92,7 +101,11 @@ export const Widget: React.FC<WidgetProps> = ({ config }) => {
  * Widget content with loading and error states
  */
 const WidgetContent: React.FC<{ config: WidgetConfig }> = ({ config }) => {
-  const { loading, error, currentView } = useWidgetStore();
+  const { loading, error, currentView } = useWidgetState((state) => ({
+    loading: state.loading,
+    error: state.error,
+    currentView: state.currentView,
+  }));
 
   if (loading) {
     return <LoadingState />;
@@ -171,7 +184,7 @@ const LoadingState: React.FC = () => {
  * Error state component
  */
 const ErrorState: React.FC<{ message: string }> = ({ message }) => {
-  const { setError } = useWidgetStore();
+  const setError = useWidgetState((state) => state.setError);
 
   const handleRetry = () => {
     // Trigger a re-fetch by clearing error

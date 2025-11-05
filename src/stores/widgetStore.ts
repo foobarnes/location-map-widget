@@ -1,13 +1,20 @@
 /**
  * Zustand store for widget state management
+ * Factory pattern for instance-scoped stores to support multiple independent widgets
  */
 
 import { create } from 'zustand';
+import type { StoreApi } from 'zustand';
 import type { WidgetState, Location, ViewMode, Theme, FilterState, CategoryConfig } from '../types';
 import { calculateDistance } from '../utils/distance';
 import { extractCategories } from '../utils/category';
 
-export const useWidgetStore = create<WidgetState>((set, get) => ({
+/**
+ * Create a new widget store instance
+ * Each widget instance gets its own isolated state
+ */
+export function createWidgetStore() {
+  return create<WidgetState>((set, get) => ({
   // Data state
   locations: [],
   filteredLocations: [],
@@ -176,7 +183,8 @@ export const useWidgetStore = create<WidgetState>((set, get) => ({
     const categories = extractCategories(locations, config);
     set({ categories });
   },
-}));
+  }));
+}
 
 /**
  * Apply theme to document
@@ -201,8 +209,9 @@ function applyTheme(theme: Theme): void {
 
 /**
  * Initialize theme based on system preference
+ * @param store - Widget store instance to check theme setting
  */
-export function initializeTheme(): void {
+export function initializeTheme(store: StoreApi<WidgetState>): void {
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   if (prefersDark) {
     document.documentElement.classList.add('dark');
@@ -210,8 +219,8 @@ export function initializeTheme(): void {
 
   // Listen for system theme changes
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    const store = useWidgetStore.getState();
-    if (store.theme === 'auto') {
+    const state = store.getState();
+    if (state.theme === 'auto') {
       if (e.matches) {
         document.documentElement.classList.add('dark');
       } else {
@@ -220,3 +229,8 @@ export function initializeTheme(): void {
     }
   });
 }
+
+/**
+ * Export type for store instances
+ */
+export type WidgetStore = ReturnType<typeof createWidgetStore>;

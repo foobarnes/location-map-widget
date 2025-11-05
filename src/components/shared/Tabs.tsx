@@ -4,7 +4,7 @@
 
 import React from 'react';
 import type { ViewMode } from '../../types';
-import { useWidgetStore } from '../../stores/widgetStore';
+import { useWidgetState } from '../../contexts/StoreContext';
 
 interface Tab {
   id: ViewMode;
@@ -44,7 +44,10 @@ const tabs: Tab[] = [
 ];
 
 export const Tabs: React.FC = () => {
-  const { currentView, setCurrentView } = useWidgetStore();
+  const { currentView, setCurrentView } = useWidgetState((state) => ({
+    currentView: state.currentView,
+    setCurrentView: state.setCurrentView,
+  }));
 
   return (
     <div
