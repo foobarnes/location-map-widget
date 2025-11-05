@@ -47,11 +47,15 @@ Hosted on GitHub Pages - automatically updated on every push to main:
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="https://foobarnes.github.io/open-map-embed/dist/openmapembed.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Location Map</title>
 </head>
 <body>
+  <!-- Container for the map widget -->
   <div id="map" style="height: 600px;"></div>
 
+  <!-- Load widget script (CSS is automatically included) -->
   <script src="https://foobarnes.github.io/open-map-embed/dist/openmapembed.umd.js"></script>
   <script>
     OpenMapEmbed.init({
@@ -80,7 +84,7 @@ pnpm add open-map-embed
 
 ```javascript
 import { init } from 'open-map-embed';
-import 'open-map-embed/dist/open-map-embed.css';
+// CSS is automatically included - no import needed!
 
 init({
   container: '#map',

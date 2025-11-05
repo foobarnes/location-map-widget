@@ -237,9 +237,10 @@ https://docs.google.com/spreadsheets/d/SHEET_ID_HERE/edit#gid=0
 #### Step 4: Embed the Widget
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/open-map-embed@latest/dist/open-map-embed.css">
+<!-- Container for the map widget -->
 <div id="map" style="height: 600px;"></div>
 
+<!-- Load widget script (CSS is automatically included) -->
 <script src="https://unpkg.com/open-map-embed@latest/dist/open-map-embed.umd.js"></script>
 <script>
   OpenMapEmbed.init({
@@ -299,9 +300,10 @@ https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2u
 #### Step 5: Embed the Widget
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/open-map-embed@latest/dist/open-map-embed.css">
+<!-- Container for the map widget -->
 <div id="map" style="height: 600px;"></div>
 
+<!-- Load widget script (CSS is automatically included) -->
 <script src="https://unpkg.com/open-map-embed@latest/dist/open-map-embed.umd.js"></script>
 <script>
   OpenMapEmbed.init({
@@ -350,9 +352,10 @@ export default async function handler(req, res) {
 #### Step 3: Embed the Widget
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/open-map-embed@latest/dist/open-map-embed.css">
+<!-- Container for the map widget -->
 <div id="map" style="height: 600px;"></div>
 
+<!-- Load widget script (CSS is automatically included) -->
 <script src="https://unpkg.com/open-map-embed@latest/dist/open-map-embed.umd.js"></script>
 <script>
   OpenMapEmbed.init({

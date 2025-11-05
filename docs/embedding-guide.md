@@ -50,7 +50,7 @@ The fastest way to get started with the Location Map Widget:
   <!-- Widget container -->
   <div id="map-widget" style="height: 600px;"></div>
 
-  <!-- Widget JS (CSS is automatically included) -->
+  <!-- Load widget script (CSS is automatically included) -->
   <script src="https://foobarnes.github.io/open-map-embed/dist/open-map-embed.umd.js"></script>
 
   <!-- Initialize widget -->
@@ -87,7 +87,7 @@ Best for static websites, WordPress sites, or quick prototypes.
 #### Step 2: Add JavaScript before closing `</body>`
 
 ```html
-<!-- JavaScript (includes CSS automatically) -->
+<!-- Load widget script (CSS is automatically included) -->
 <script src="https://foobarnes.github.io/open-map-embed/dist/open-map-embed.umd.js"></script>
 <script>
   OpenMapEmbed.init({
@@ -108,10 +108,10 @@ Best for static websites, WordPress sites, or quick prototypes.
 
 #### CDN URL
 
-The widget is hosted on GitHub Pages and automatically updated with every push:
+The widget is hosted on GitHub Pages and automatically updated with every push. The CSS is automatically included in the JavaScript bundle - no separate stylesheet needed:
 
 ```html
-<!-- JavaScript (CSS is inlined automatically) -->
+<!-- Load widget script (CSS is automatically included) -->
 <script src="https://foobarnes.github.io/open-map-embed/dist/open-map-embed.umd.js"></script>
 ```
 
@@ -242,7 +242,7 @@ export class MapComponent implements AfterViewInit {
 <!-- Widget container -->
 <div id="open-map-embed" style="height: 600px; margin: 20px 0;"></div>
 
-<!-- Widget JS (CSS is automatically included) -->
+<!-- Load widget script (CSS is automatically included) -->
 <script src="https://foobarnes.github.io/open-map-embed/dist/open-map-embed.umd.js"></script>
 <script>
   (function() {
@@ -280,7 +280,7 @@ Add to your theme's `functions.php`:
 function enqueue_location_map_widget() {
     // Only load on specific pages
     if (is_page('locations')) {
-        // CSS is automatically included in the JS bundle
+        // Enqueue the widget script (CSS is automatically included)
         wp_enqueue_script(
             'open-map-embed',
             'https://foobarnes.github.io/open-map-embed/dist/open-map-embed.umd.js',
@@ -1053,7 +1053,7 @@ Minimal setup with default options:
   <h1>Our Locations</h1>
   <div id="map-widget" style="height: 600px; max-width: 1200px; margin: 0 auto;"></div>
 
-  <!-- CSS is automatically included in the JS bundle -->
+  <!-- Load widget script (CSS is automatically included) -->
   <script src="https://foobarnes.github.io/open-map-embed/dist/open-map-embed.umd.js"></script>
   <script>
     OpenMapEmbed.init({
