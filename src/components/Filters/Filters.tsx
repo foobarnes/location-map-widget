@@ -183,7 +183,7 @@ export const Filters: React.FC = () => {
             <button
               key={category.value}
               onClick={() => handleCategoryToggle(category.value)}
-              className={`lmw-px-3 lmw-py-1.5 lmw-rounded-full lmw-text-sm lmw-font-medium lmw-transition-all lmw-duration-200 lmw-border-2 lmw-select-none lmw-cursor-pointer focus-visible:lmw-outline-none focus-visible:lmw-ring-2 focus-visible:lmw-ring-primary focus-visible:lmw-ring-offset-2 ${
+              className={`lmw-px-3 lmw-py-1.5 lmw-rounded-full lmw-text-sm lmw-font-medium lmw-transition-all lmw-duration-200 lmw-border-2 lmw-select-none lmw-cursor-pointer lmw-whitespace-nowrap focus-visible:lmw-outline-none focus-visible:lmw-ring-2 focus-visible:lmw-ring-primary focus-visible:lmw-ring-offset-2 ${
                 isSelected
                   ? `${category.color} lmw-border-current hover:lmw-opacity-90 active:lmw-scale-95`
                   : 'lmw-bg-white dark:lmw-bg-gray-700 lmw-text-gray-700 dark:lmw-text-gray-300 lmw-border-gray-300 dark:lmw-border-gray-600 hover:lmw-border-gray-400 dark:hover:lmw-border-gray-500 hover:lmw-bg-gray-50 dark:hover:lmw-bg-gray-600 active:lmw-scale-95'
@@ -198,7 +198,7 @@ export const Filters: React.FC = () => {
         {hasActiveFilters && (
           <button
             onClick={handleClearAll}
-            className="lmw-ml-auto lmw-px-3 lmw-py-1.5 lmw-text-sm lmw-font-medium lmw-text-gray-700 dark:lmw-text-gray-300 lmw-bg-white dark:lmw-bg-gray-700 lmw-border lmw-border-gray-300 dark:lmw-border-gray-600 lmw-rounded-md hover:lmw-bg-gray-50 dark:hover:lmw-bg-gray-600 active:lmw-bg-gray-100 dark:active:lmw-bg-gray-500 lmw-cursor-pointer lmw-transition-all lmw-duration-200 focus-visible:lmw-outline-none focus-visible:lmw-ring-2 focus-visible:lmw-ring-primary focus-visible:lmw-ring-offset-2"
+            className="lmw-ml-auto lmw-px-3 lmw-py-1.5 lmw-text-sm lmw-font-medium lmw-text-gray-700 dark:lmw-text-gray-300 lmw-bg-white dark:lmw-bg-gray-700 lmw-border lmw-border-gray-300 dark:lmw-border-gray-600 lmw-rounded-md lmw-whitespace-nowrap hover:lmw-bg-gray-50 dark:hover:lmw-bg-gray-600 active:lmw-bg-gray-100 dark:active:lmw-bg-gray-500 lmw-cursor-pointer lmw-transition-all lmw-duration-200 focus-visible:lmw-outline-none focus-visible:lmw-ring-2 focus-visible:lmw-ring-primary focus-visible:lmw-ring-offset-2"
           >
             Clear All
           </button>
