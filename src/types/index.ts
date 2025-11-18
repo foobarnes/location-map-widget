@@ -2,6 +2,9 @@
  * Location data model for the widget
  */
 
+import type { FieldRenderersConfig } from '../renderers/types';
+import type { FieldRendererRegistry } from '../renderers/FieldRendererRegistry';
+
 /**
  * Category configuration types
  */
@@ -169,6 +172,10 @@ export interface WidgetConfig {
   // Customization
   markerIcons?: Partial<Record<LocationCategory, string>>; // Custom marker icons per category
   categoryConfig?: CategoryConfig; // User-provided category customization
+
+  // Field rendering
+  fieldRenderers?: FieldRenderersConfig; // Custom field renderer configuration
+  autoDetectFieldTypes?: boolean; // Enable auto-detection of field types (default: true)
 }
 
 /**
@@ -229,6 +236,9 @@ export interface WidgetState {
   mapZoom: number;
   isProgrammaticMove: boolean; // Flag to track programmatic navigation
 
+  // Field rendering
+  fieldRendererRegistry: FieldRendererRegistry | null;
+
   // Actions
   setLocations: (locations: Location[]) => void;
   setLoading: (loading: boolean) => void;
@@ -242,6 +252,7 @@ export interface WidgetState {
   setMapZoom: (zoom: number) => void;
   applyFilters: () => void;
   setCategoriesFromLocations: (locations: Location[], config?: CategoryConfig) => void;
+  setFieldRendererRegistry: (registry: FieldRendererRegistry | null) => void;
 }
 
 /**

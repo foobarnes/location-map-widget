@@ -6,6 +6,7 @@
 import { create } from 'zustand';
 import type { StoreApi } from 'zustand';
 import type { WidgetState, Location, ViewMode, Theme, FilterState, CategoryConfig } from '../types';
+import type { FieldRendererRegistry } from '../renderers/FieldRendererRegistry';
 import { calculateDistance } from '../utils/distance';
 import { extractCategories } from '../utils/category';
 
@@ -48,6 +49,9 @@ export function createWidgetStore() {
   mapCenter: [39.8283, -98.5795], // Center of USA as default
   mapZoom: 4,
   isProgrammaticMove: false, // Track when we're programmatically navigating
+
+  // Field rendering
+  fieldRendererRegistry: null,
 
   // Actions
   setLocations: (locations: Location[]) => {
@@ -182,6 +186,10 @@ export function createWidgetStore() {
   setCategoriesFromLocations: (locations: Location[], config?: CategoryConfig) => {
     const categories = extractCategories(locations, config);
     set({ categories });
+  },
+
+  setFieldRendererRegistry: (registry: FieldRendererRegistry | null) => {
+    set({ fieldRendererRegistry: registry });
   },
   }));
 }

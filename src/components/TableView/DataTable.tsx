@@ -284,7 +284,7 @@ const ExpandedRowDetails: React.FC<{ location: Location }> = ({ location }) => {
       {/* Custom Fields */}
       {location.customFields && Object.keys(location.customFields).length > 0 && (
         <div className="md:lmw-col-span-2">
-          <CustomFields customFields={location.customFields} />
+          <CustomFields customFields={location.customFields} location={location} />
         </div>
       )}
 

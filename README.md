@@ -168,8 +168,8 @@ This project uses GitHub Pages for both the demo site and as a CDN for the widge
 
 **Demo Site**: `https://foobarnes.github.io/open-map-embed/`
 **CDN URLs**:
-- CSS: `https://foobarnes.github.io/open-map-embed/dist/openmapembed.css`
-- JS: `https://foobarnes.github.io/open-map-embed/dist/openmapembed.umd.js`
+- CSS: `https://foobarnes.github.io/open-map-embed/dist/open-map-embed.css`
+- JS: `https://foobarnes.github.io/open-map-embed/dist/open-map-embed.umd.js`
 
 ### Setup
 

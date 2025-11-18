@@ -1,15 +1,25 @@
 /**
  * CustomFields component - Display custom key-value fields
- * Converts snake_case keys to Title Case for display
+ * Uses the field renderer registry for extensible field rendering
  */
 
 import React from 'react';
+import type { Location } from '../../types';
+import { useWidgetState } from '../../contexts/StoreContext';
 
 interface CustomFieldsProps {
   customFields: Record<string, string | number | boolean>;
+  location: Location;
 }
 
-export const CustomFields: React.FC<CustomFieldsProps> = ({ customFields }) => {
+export const CustomFields: React.FC<CustomFieldsProps> = ({
+  customFields,
+  location,
+}) => {
+  const { fieldRendererRegistry } = useWidgetState((state) => ({
+    fieldRendererRegistry: state.fieldRendererRegistry,
+  }));
+
   if (!customFields || Object.keys(customFields).length === 0) {
     return null;
   }
@@ -29,18 +39,31 @@ export const CustomFields: React.FC<CustomFieldsProps> = ({ customFields }) => {
       .trim()
       // Capitalize first letter of each word
       .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
       .join(' ');
   };
 
   /**
-   * Format field value for display
+   * Format field value for display (fallback when no registry)
    */
   const formatValue = (value: string | number | boolean): string => {
     if (typeof value === 'boolean') {
       return value ? 'Yes' : 'No';
     }
     return String(value);
+  };
+
+  /**
+   * Render a field value using the registry or fallback
+   */
+  const renderValue = (
+    key: string,
+    value: string | number | boolean
+  ): React.ReactNode => {
+    if (fieldRendererRegistry) {
+      return fieldRendererRegistry.render(key, value, location);
+    }
+    return formatValue(value);
   };
 
   return (
@@ -59,7 +82,7 @@ export const CustomFields: React.FC<CustomFieldsProps> = ({ customFields }) => {
               <span className="lmw-font-medium lmw-text-gray-700 dark:lmw-text-gray-300">
                 {formatKey(key)}:
               </span>{' '}
-              {formatValue(value)}
+              {renderValue(key, value)}
             </span>
           </div>
         ))}

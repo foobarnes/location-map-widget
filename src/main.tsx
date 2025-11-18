@@ -8,6 +8,7 @@ import { createRoot } from 'react-dom/client';
 import { Widget } from './components/Widget';
 import { createWidgetStore } from './stores/widgetStore';
 import { StoreProvider } from './contexts/StoreContext';
+import { createFieldRendererRegistry } from './renderers';
 import type { WidgetInitParams, WidgetConfig } from './types';
 import './style.css';
 
@@ -42,10 +43,19 @@ function init(params: WidgetInitParams): void {
     enableDistanceFilter: params.config?.enableDistanceFilter ?? true,
     itemsPerPage: params.config?.itemsPerPage || 10,
     markerIcons: params.config?.markerIcons,
+    fieldRenderers: params.config?.fieldRenderers,
+    autoDetectFieldTypes: params.config?.autoDetectFieldTypes ?? true,
   };
 
   // Create widget store instance
   const store = createWidgetStore();
+
+  // Create field renderer registry and set in store
+  const fieldRendererRegistry = createFieldRendererRegistry({
+    renderers: config.fieldRenderers,
+    autoDetect: config.autoDetectFieldTypes,
+  });
+  store.getState().setFieldRendererRegistry(fieldRendererRegistry);
 
   // Create React root and render widget
   const root = createRoot(container);

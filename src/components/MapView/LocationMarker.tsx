@@ -385,7 +385,7 @@ export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
           {location.customFields &&
             Object.keys(location.customFields).length > 0 && (
               <div className="lmw-mb-3">
-                <CustomFields customFields={location.customFields} />
+                <CustomFields customFields={location.customFields} location={location} />
               </div>
             )}
 
