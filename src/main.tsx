@@ -1,11 +1,13 @@
 /**
  * Main entry point for the embeddable widget
- * Exposes the LocationMapWidget global object for embedding
+ * Exposes the OpenMapEmbed global object for embedding
  */
 
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Widget } from './components/Widget';
+import { createWidgetStore } from './stores/widgetStore';
+import { StoreProvider } from './contexts/StoreContext';
 import type { WidgetInitParams, WidgetConfig } from './types';
 import './style.css';
 
@@ -42,11 +44,16 @@ function init(params: WidgetInitParams): void {
     markerIcons: params.config?.markerIcons,
   };
 
+  // Create widget store instance
+  const store = createWidgetStore();
+
   // Create React root and render widget
   const root = createRoot(container);
   root.render(
     <React.StrictMode>
-      <Widget config={config} />
+      <StoreProvider store={store}>
+        <Widget config={config} />
+      </StoreProvider>
     </React.StrictMode>
   );
 }
@@ -55,7 +62,7 @@ function init(params: WidgetInitParams): void {
  * Expose global API for embedding
  */
 if (typeof window !== 'undefined') {
-  (window as any).LocationMapWidget = {
+  (window as any).OpenMapEmbed = {
     init,
     version: '1.0.0',
   };

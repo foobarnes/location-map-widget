@@ -164,7 +164,22 @@ export function validateLocations(data: unknown[]): Location[] {
     }
   }
 
-  console.log(`Validated ${validLocations.length} of ${data.length} locations`);
+  // Enhanced validation summary
+  const invalidCount = data.length - validLocations.length;
+  const successRate = data.length > 0 ? ((validLocations.length / data.length) * 100).toFixed(1) : '0.0';
+
+  console.log(
+    `📋 Validation Summary:\n` +
+    `  Total items: ${data.length}\n` +
+    `  Valid: ${validLocations.length}\n` +
+    `  Invalid: ${invalidCount}\n` +
+    `  Success rate: ${successRate}%`
+  );
+
+  if (invalidCount > 0) {
+    console.warn(`⚠ ${invalidCount} location(s) failed validation (see warnings above for details)`);
+  }
+
   return validLocations;
 }
 

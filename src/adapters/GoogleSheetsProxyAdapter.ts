@@ -28,6 +28,7 @@ import { validateLocations } from '../utils/validation';
 export class GoogleSheetsProxyAdapter implements DataAdapter {
   private proxyUrl: string;
   private sheetId: string;
+  private debug: boolean;
   private range: string;
   private cache: Location[] | null = null;
   private cacheTime: number = 0;
@@ -38,15 +39,20 @@ export class GoogleSheetsProxyAdapter implements DataAdapter {
     this.proxyUrl = config.proxyUrl.replace(/\/$/, '');
     this.sheetId = config.sheetId;
     this.range = config.range || 'Sheet1';
+    // Enable debug mode via config or URL parameter
+    this.debug = config.debug || (typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('debug'));
   }
 
   /**
    * Fetch locations from Google Sheets via proxy
    */
   async fetchLocations(): Promise<Location[]> {
+    const startTime = Date.now();
+
     // Return cached data if still valid
     if (this.cache && Date.now() - this.cacheTime < this.CACHE_DURATION) {
-      console.log('Returning cached location data');
+      const cacheAge = Math.round((Date.now() - this.cacheTime) / 1000);
+      console.log(`📦 Returning cached location data (${this.cache.length} locations, cached ${cacheAge}s ago)`);
       return this.cache;
     }
 
@@ -60,7 +66,7 @@ export class GoogleSheetsProxyAdapter implements DataAdapter {
 
       const fullUrl = params.toString() ? `${url}?${params.toString()}` : url;
 
-      console.log(`Fetching from proxy: ${fullUrl}`);
+      console.log(`📊 Fetching from proxy: ${fullUrl}`);
 
       const response = await axios.get<GoogleSheetsResponse>(fullUrl, {
         headers: {
@@ -73,8 +79,21 @@ export class GoogleSheetsProxyAdapter implements DataAdapter {
         throw new Error('No data returned from proxy');
       }
 
+      if (this.debug) {
+        console.log(`[DEBUG] Received ${response.data.values.length} rows from proxy`);
+      }
+
       const rawLocations = this.parseSheetData(response.data.values);
       const validatedLocations = this.validateSchema(rawLocations);
+
+      const timeElapsed = Date.now() - startTime;
+      console.log(
+        `✓ Successfully loaded data:\n` +
+        `  Total rows parsed: ${rawLocations.length}\n` +
+        `  Valid locations: ${validatedLocations.length}\n` +
+        `  Failed validation: ${rawLocations.length - validatedLocations.length}\n` +
+        `  Time taken: ${timeElapsed}ms`
+      );
 
       // Update cache
       this.cache = validatedLocations;
@@ -115,19 +134,52 @@ export class GoogleSheetsProxyAdapter implements DataAdapter {
    */
   private parseSheetData(values: string[][]): Partial<Location>[] {
     if (values.length < 2) {
-      console.warn('Sheet has no data rows');
+      console.warn('⚠ Sheet has no data rows (only header or empty)');
       return [];
     }
 
     const [headers, ...rows] = values;
     const headerMap = this.createHeaderMap(headers);
 
+    // Log header information
+    const requiredColumns = {
+      id: headerMap.id !== undefined,
+      name: headerMap.name !== undefined,
+      'latitude/lat': headerMap.latitude !== undefined || headerMap.lat !== undefined,
+      'longitude/lng/lon': headerMap.longitude !== undefined || headerMap.lng !== undefined || headerMap.lon !== undefined,
+      'category/type': headerMap.category !== undefined || headerMap.type !== undefined,
+    };
+
+    const allRequiredPresent = Object.values(requiredColumns).every(present => present);
+
+    if (this.debug) {
+      console.log(
+        `[DEBUG] Detected ${headers.length} columns:\n` +
+        `  Original headers: [${headers.join(', ')}]\n` +
+        `  Required columns status:\n` +
+        `    - id: ${requiredColumns.id ? '✓' : '✗'}\n` +
+        `    - name: ${requiredColumns.name ? '✓' : '✗'}\n` +
+        `    - latitude/lat: ${requiredColumns['latitude/lat'] ? '✓' : '✗'}\n` +
+        `    - longitude/lng/lon: ${requiredColumns['longitude/lng/lon'] ? '✓' : '✗'}\n` +
+        `    - category/type: ${requiredColumns['category/type'] ? '✓' : '✗'}`
+      );
+    } else {
+      console.log(`📋 Detected ${headers.length} columns${allRequiredPresent ? ', all required fields present ✓' : ' - some required fields may be missing!'}`);
+    }
+
+    if (!allRequiredPresent) {
+      const missing = Object.entries(requiredColumns)
+        .filter(([_, present]) => !present)
+        .map(([name, _]) => name);
+      console.warn(`⚠ Missing required column(s): ${missing.join(', ')}`);
+    }
+
     return rows
       .map((row, index) => {
         try {
-          return this.parseRow(row, headerMap);
+          return this.parseRow(row, headerMap, index + 2); // +2 because row 1 is header, index starts at 0
         } catch (error) {
-          console.warn(`Error parsing row ${index + 2}:`, error);
+          console.warn(`⚠ Error parsing row ${index + 2}:`, error);
           return null;
         }
       })
@@ -152,7 +204,8 @@ export class GoogleSheetsProxyAdapter implements DataAdapter {
    */
   private parseRow(
     row: string[],
-    headerMap: Record<string, number>
+    headerMap: Record<string, number>,
+    rowNumber?: number
   ): Partial<Location> | null {
     const getValue = (key: string): string | undefined => {
       const index = headerMap[key];
@@ -174,7 +227,27 @@ export class GoogleSheetsProxyAdapter implements DataAdapter {
     const category = getValue('category') ?? getValue('type');
 
     if (!id || !name || latitude === undefined || longitude === undefined || !category) {
-      console.warn('Row missing required fields');
+      // Determine which specific fields are missing
+      const missingFields: string[] = [];
+      if (!id) missingFields.push('id');
+      if (!name) missingFields.push('name');
+      if (latitude === undefined) missingFields.push('latitude/lat');
+      if (longitude === undefined) missingFields.push('longitude/lng/lon');
+      if (!category) missingFields.push('category/type');
+
+      const rowLabel = rowNumber ? `Row ${rowNumber}` : 'Row';
+
+      if (this.debug) {
+        console.warn(
+          `⚠ ${rowLabel} missing required fields: ${missingFields.join(', ')}\n` +
+          `  Found values: ${JSON.stringify({ id, name, latitude, longitude, category })}\n` +
+          `  Available columns: ${Object.keys(headerMap).join(', ')}\n` +
+          `  Row data: [${row.slice(0, 5).join(', ')}${row.length > 5 ? '...' : ''}]`
+        );
+      } else {
+        console.warn(`⚠ ${rowLabel} missing required fields: ${missingFields.join(', ')}`);
+      }
+
       return null;
     }
 

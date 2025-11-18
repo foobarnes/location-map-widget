@@ -18,7 +18,7 @@ interface LocationMarkerProps {
 const getMarkerIcon = (category: string, store: any): L.Icon => {
   const { categories } = store.getState();
   const categoryMeta = categories.find(
-    (c) => c.name.toLowerCase() === category.toLowerCase()
+    (c: any) => c.name.toLowerCase() === category.toLowerCase()
   );
 
   const color = categoryMeta?.style.color || "#6B7280"; // Gray default

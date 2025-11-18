@@ -1,4 +1,5 @@
 import React, { createContext, useContext } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 import type { WidgetStore } from '../stores/widgetStore';
 import type { WidgetState } from '../types';
 
@@ -35,6 +36,7 @@ export function useStore(): WidgetStore {
 
 /**
  * Hook to access widget state with selector
+ * Uses shallow equality to prevent infinite loops when selecting objects
  * @param selector - Function to select specific state slice
  * @returns Selected state
  *
@@ -44,7 +46,7 @@ export function useStore(): WidgetStore {
  */
 export function useWidgetState<T>(selector: (state: WidgetState) => T): T {
   const store = useStore();
-  return store(selector);
+  return store(useShallow(selector));
 }
 
 /**

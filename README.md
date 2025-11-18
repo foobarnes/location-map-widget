@@ -56,7 +56,7 @@ Hosted on GitHub Pages - automatically updated on every push to main:
   <div id="map" style="height: 600px;"></div>
 
   <!-- Load widget script (CSS is automatically included) -->
-  <script src="https://foobarnes.github.io/open-map-embed/dist/openmapembed.umd.js"></script>
+  <script src="https://foobarnes.github.io/open-map-embed/dist/open-map-embed.umd.js"></script>
   <script>
     OpenMapEmbed.init({
       container: '#map',

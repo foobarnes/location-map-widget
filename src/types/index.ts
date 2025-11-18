@@ -89,6 +89,7 @@ export interface GoogleSheetsDataSource {
   sheetId: string;
   apiKey: string;
   range?: string; // Optional range, defaults to first sheet
+  debug?: boolean; // Enable detailed logging for troubleshooting
 }
 
 // Google Sheets published/public data source (No API key required)
@@ -97,6 +98,7 @@ export interface GoogleSheetsPublicDataSource {
   sheetId: string;
   gid?: string; // Optional sheet tab ID (gid parameter)
   range?: string; // Optional range notation (e.g., 'A1:Z1000')
+  debug?: boolean; // Enable detailed logging for troubleshooting
 }
 
 // Google Sheets proxy data source (Secure - API key hidden in backend)
@@ -105,6 +107,7 @@ export interface GoogleSheetsProxyDataSource {
   proxyUrl: string; // URL to user's proxy endpoint
   sheetId: string;
   range?: string; // Optional range, defaults to first sheet
+  debug?: boolean; // Enable detailed logging for troubleshooting
 }
 
 // CSV data source config
