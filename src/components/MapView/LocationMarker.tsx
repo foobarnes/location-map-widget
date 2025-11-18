@@ -9,6 +9,7 @@ import type { Location } from "../../types";
 import { useWidgetState, useStore } from "../../contexts/StoreContext";
 import { formatDistance } from "../../utils/distance";
 import { ImageGallery, CustomFields } from "../shared";
+import { ExpandableText } from "../common/ExpandableText";
 
 interface LocationMarkerProps {
   location: Location;
@@ -326,9 +327,10 @@ export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
 
           {/* Description */}
           {location.description && (
-            <p className="lmw-text-sm lmw-text-gray-600 dark:lmw-text-gray-400 lmw-mb-3 lmw-line-clamp-3">
-              {location.description}
-            </p>
+            <ExpandableText
+              text={location.description}
+              className="lmw-text-sm lmw-text-gray-600 dark:lmw-text-gray-400 lmw-mb-3"
+            />
           )}
 
           {/* Hours */}

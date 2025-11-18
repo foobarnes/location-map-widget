@@ -261,3 +261,66 @@ body {
 .custom-cluster-icon:hover div {
   transform: scale(1.1);
 }
+
+/* Expandable text component */
+.lmw-expandable-text {
+  position: relative;
+}
+
+.lmw-expandable-collapsed {
+  /* Ensure space for the overlay button */
+}
+
+.lmw-expand-toggle {
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 10px;
+  font-family: inherit;
+  color: rgb(59 130 246);
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.lmw-expand-toggle:hover {
+  color: rgb(37 99 235);
+  text-decoration: underline;
+}
+
+.lmw-expand-toggle:focus {
+  outline: none;
+  text-decoration: underline;
+}
+
+.lmw-expand-toggle:focus-visible {
+  outline: 2px solid rgb(59 130 246);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Inline toggle (for "less" when expanded) */
+.lmw-expand-toggle-inline {
+  margin-left: 4px;
+}
+
+/* Overlay toggle (for "more" when collapsed) - positioned at end of truncated text */
+.lmw-expand-toggle-overlay {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding-left: 24px;
+  background: linear-gradient(to right, transparent, rgb(255 255 255) 40%);
+}
+
+/* Dark mode for expand toggle */
+.dark .lmw-expand-toggle {
+  color: rgb(96 165 250);
+}
+
+.dark .lmw-expand-toggle:hover {
+  color: rgb(147 197 253);
+}
+
+.dark .lmw-expand-toggle-overlay {
+  background: linear-gradient(to right, transparent, rgb(31 41 55) 40%);
+}
