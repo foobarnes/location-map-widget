@@ -156,7 +156,7 @@ export function createWidgetStore() {
     // Apply category filter
     if (filters.selectedCategories.length > 0) {
       filtered = filtered.filter((loc) =>
-        filters.selectedCategories.includes(loc.category)
+        filters.selectedCategories.includes(loc.category.toLowerCase())
       );
     }
 
