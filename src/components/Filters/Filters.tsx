@@ -128,7 +128,7 @@ export const Filters: React.FC = () => {
         {/* Search Bar (60%) */}
         <div className="lmw-flex-1 lmw-relative">
           <div className="lmw-absolute lmw-inset-y-0 lmw-left-0 lmw-pl-3 lmw-flex lmw-items-center lmw-pointer-events-none">
-            <svg className="lmw-h-4 lmw-w-4 lmw-text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="lmw-h-4 lmw-w-4 lmw-text-gray-400 dark:lmw-text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </div>

@@ -2,7 +2,7 @@
  * MapView component - Leaflet map with clustering and markers
  */
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { MapContainer, TileLayer, useMap } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import { useWidgetState, useStore } from '../../contexts/StoreContext';
@@ -23,6 +23,18 @@ let DefaultIcon = L.icon({
 });
 
 L.Marker.prototype.options.icon = DefaultIcon;
+
+// Tile layer configurations for light/dark modes
+const TILE_CONFIGS = {
+  light: {
+    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  },
+  dark: {
+    url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+  }
+};
 
 /**
  * Create custom cluster icon with improved visuals
@@ -82,11 +94,57 @@ export const MapView: React.FC<MapViewProps> = ({
   enableGeolocation = true,
   enableClustering = true,
 }) => {
-  const { filteredLocations, mapCenter, mapZoom } = useWidgetState((state) => ({
+  const { filteredLocations, mapCenter, mapZoom, theme } = useWidgetState((state) => ({
     filteredLocations: state.filteredLocations,
     mapCenter: state.mapCenter,
     mapZoom: state.mapZoom,
+    theme: state.theme,
   }));
+
+  // Determine if dark mode is active
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    if (theme === 'dark') return true;
+    if (theme === 'light') return false;
+    return document.documentElement.classList.contains('dark');
+  });
+
+  // Update dark mode state when theme changes or system preference changes
+  useEffect(() => {
+    if (theme === 'dark') {
+      setIsDarkMode(true);
+      return;
+    }
+    if (theme === 'light') {
+      setIsDarkMode(false);
+      return;
+    }
+
+    // For 'auto' theme, watch for class changes on documentElement
+    const checkDarkMode = () => {
+      setIsDarkMode(document.documentElement.classList.contains('dark'));
+    };
+
+    // Initial check
+    checkDarkMode();
+
+    // Watch for class changes
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          checkDarkMode();
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+
+    return () => observer.disconnect();
+  }, [theme]);
+
+  const tileConfig = isDarkMode ? TILE_CONFIGS.dark : TILE_CONFIGS.light;
 
   return (
     <div className="map-container">
@@ -97,10 +155,11 @@ export const MapView: React.FC<MapViewProps> = ({
         style={{ height: '100%', width: '100%', minHeight: '400px' }}
         className="lmw-z-0"
       >
-        {/* OpenStreetMap tiles */}
+        {/* Map tiles - key forces reload on theme change */}
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          key={isDarkMode ? 'dark' : 'light'}
+          attribution={tileConfig.attribution}
+          url={tileConfig.url}
         />
 
         {/* Map controller for centering */}

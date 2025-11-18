@@ -364,7 +364,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, totalI
             >
               1
             </button>
-            {startPage > 2 && <span className="lmw-px-2 lmw-py-1 lmw-text-gray-500">...</span>}
+            {startPage > 2 && <span className="lmw-px-2 lmw-py-1 lmw-text-gray-500 dark:lmw-text-gray-400">...</span>}
           </>
         )}
 
@@ -387,7 +387,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, totalI
 
         {endPage < totalPages && (
           <>
-            {endPage < totalPages - 1 && <span className="lmw-px-2 lmw-py-1 lmw-text-gray-500">...</span>}
+            {endPage < totalPages - 1 && <span className="lmw-px-2 lmw-py-1 lmw-text-gray-500 dark:lmw-text-gray-400">...</span>}
             <button
               onClick={() => onPageChange(totalPages)}
               className="lmw-px-3 lmw-py-1 lmw-text-sm lmw-font-medium lmw-text-gray-700 dark:lmw-text-gray-300 lmw-bg-white dark:lmw-bg-gray-800 lmw-border lmw-border-gray-300 dark:lmw-border-gray-600 lmw-rounded-md hover:lmw-bg-gray-50 dark:hover:lmw-bg-gray-700 active:lmw-bg-gray-100 dark:active:lmw-bg-gray-600 lmw-cursor-pointer lmw-transition-all lmw-duration-200 focus-visible:lmw-outline-none focus-visible:lmw-ring-2 focus-visible:lmw-ring-primary focus-visible:lmw-ring-offset-2"

@@ -8,6 +8,8 @@ export default {
   prefix: 'lmw-',
   // Enable class-based dark mode
   darkMode: 'class',
+  // Ensure dark mode styles have enough specificity to override
+  important: true,
   theme: {
     extend: {
       colors: {
