@@ -137,7 +137,7 @@ export const Filters: React.FC = () => {
             value={filters.searchQuery}
             onChange={handleSearchChange}
             placeholder="Search locations..."
-            className="lmw-block lmw-w-full lmw-pl-9 lmw-pr-3 lmw-py-2 lmw-text-sm lmw-border lmw-border-gray-300 dark:lmw-border-gray-600 lmw-rounded-md lmw-leading-5 lmw-bg-white dark:lmw-bg-gray-700 lmw-text-gray-900 dark:lmw-text-gray-100 placeholder:lmw-text-gray-500 dark:placeholder:lmw-text-gray-400 focus:lmw-outline-none focus:lmw-ring-2 focus:lmw-ring-primary focus:lmw-border-transparent"
+            className="lmw-block lmw-w-full lmw-pl-9 lmw-pr-4 lmw-py-2 lmw-text-sm lmw-border-2 lmw-border-gray-300 dark:lmw-border-gray-600 lmw-rounded-full lmw-leading-5 lmw-bg-white dark:lmw-bg-gray-700 lmw-text-gray-900 dark:lmw-text-gray-100 placeholder:lmw-text-gray-500 dark:placeholder:lmw-text-gray-400 lmw-shadow-sm focus:lmw-outline-none focus:lmw-ring-2 focus:lmw-ring-primary focus:lmw-border-primary lmw-transition-all lmw-duration-200"
           />
         </div>
 
