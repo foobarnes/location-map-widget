@@ -146,32 +146,27 @@ export const Filters: React.FC = () => {
           <button
             onClick={handleFindNearMe}
             disabled={isLoadingLocation}
-            className="lmw-flex lmw-items-center lmw-gap-1.5 lmw-px-4 lmw-py-2 lmw-text-sm lmw-font-medium lmw-text-white lmw-bg-primary lmw-rounded-md hover:lmw-bg-blue-600 active:lmw-bg-blue-700 disabled:lmw-opacity-50 disabled:lmw-cursor-not-allowed lmw-cursor-pointer lmw-transition-all lmw-duration-200 lmw-whitespace-nowrap focus-visible:lmw-outline-none focus-visible:lmw-ring-2 focus-visible:lmw-ring-primary focus-visible:lmw-ring-offset-2"
+            className="lmw-flex lmw-items-center lmw-justify-center lmw-w-10 lmw-h-10 lmw-text-white lmw-bg-primary lmw-rounded-full lmw-shadow-md hover:lmw-bg-blue-600 hover:lmw-shadow-lg active:lmw-bg-blue-700 disabled:lmw-opacity-50 disabled:lmw-cursor-not-allowed lmw-cursor-pointer lmw-transition-all lmw-duration-200 lmw-border-2 lmw-border-white dark:lmw-border-gray-600 lmw-shrink-0 focus-visible:lmw-outline-none focus-visible:lmw-ring-2 focus-visible:lmw-ring-primary focus-visible:lmw-ring-offset-2"
+            title="Find locations near me"
           >
             {isLoadingLocation ? (
-              <>
-                <svg className="lmw-animate-spin lmw-h-4 lmw-w-4" fill="none" viewBox="0 0 24 24">
-                  <circle className="lmw-opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                  <path className="lmw-opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                </svg>
-                <span>Finding...</span>
-              </>
+              <div className="lmw-w-5 lmw-h-5 lmw-border-2 lmw-border-white lmw-border-t-transparent lmw-rounded-full lmw-animate-spin"></div>
             ) : (
-              <>
-                <svg className="lmw-h-4 lmw-w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                <span className="lmw-hidden lg:lmw-inline">Find Near Me</span>
-              </>
+              <svg className="lmw-h-5 lmw-w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
             )}
           </button>
         ) : (
           <button
             onClick={handleClearDistance}
-            className="lmw-px-4 lmw-py-2 lmw-text-sm lmw-font-medium lmw-text-gray-700 dark:lmw-text-gray-300 lmw-bg-white dark:lmw-bg-gray-700 lmw-border lmw-border-gray-300 dark:lmw-border-gray-600 lmw-rounded-md hover:lmw-bg-gray-50 dark:hover:lmw-bg-gray-600 active:lmw-bg-gray-100 dark:active:lmw-bg-gray-500 lmw-cursor-pointer lmw-transition-all lmw-duration-200 lmw-whitespace-nowrap focus-visible:lmw-outline-none focus-visible:lmw-ring-2 focus-visible:lmw-ring-primary focus-visible:lmw-ring-offset-2"
+            className="lmw-flex lmw-items-center lmw-justify-center lmw-w-10 lmw-h-10 lmw-text-gray-600 dark:lmw-text-gray-400 lmw-bg-white dark:lmw-bg-gray-700 lmw-border-2 lmw-border-gray-300 dark:lmw-border-gray-600 lmw-rounded-full lmw-shadow-md hover:lmw-bg-gray-50 dark:hover:lmw-bg-gray-600 hover:lmw-shadow-lg active:lmw-bg-gray-100 dark:active:lmw-bg-gray-500 lmw-cursor-pointer lmw-transition-all lmw-duration-200 lmw-shrink-0 focus-visible:lmw-outline-none focus-visible:lmw-ring-2 focus-visible:lmw-ring-primary focus-visible:lmw-ring-offset-2"
+            title="Clear distance filter"
           >
-            Clear Distance
+            <svg className="lmw-h-5 lmw-w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
           </button>
         )}
       </div>
