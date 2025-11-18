@@ -9,7 +9,6 @@ import { createDataAdapter } from '../adapters';
 import type { WidgetConfig } from '../types';
 import { MapView } from './MapView';
 import { TableView } from './TableView';
-import { Tabs } from './shared';
 import { Filters } from './Filters';
 
 interface WidgetProps {
@@ -120,9 +119,6 @@ const WidgetContent: React.FC<{ config: WidgetConfig }> = ({ config }) => {
 
       {/* Filters Section */}
       <Filters />
-
-      {/* Tabs */}
-      <Tabs />
 
       {/* Main Content Area */}
       <div

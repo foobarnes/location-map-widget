@@ -8,10 +8,12 @@ import { getUserLocation } from '../../utils/distance';
 import type { LocationCategory } from '../../types';
 
 export const Filters: React.FC = () => {
-  const { filters, setFilters, setSelectedLocation } = useWidgetState((state) => ({
+  const { filters, setFilters, setSelectedLocation, currentView, setCurrentView } = useWidgetState((state) => ({
     filters: state.filters,
     setFilters: state.setFilters,
     setSelectedLocation: state.setSelectedLocation,
+    currentView: state.currentView,
+    setCurrentView: state.setCurrentView,
   }));
   const [isLoadingLocation, setIsLoadingLocation] = useState(false);
 
@@ -174,8 +176,66 @@ export const Filters: React.FC = () => {
         )}
       </div>
 
-      {/* Row 2: Category Chips + Clear All Button */}
+      {/* Row 2: View Switcher + Category Chips + Clear All Button */}
       <div className="lmw-flex lmw-flex-nowrap lmw-overflow-x-auto lmw-items-center lmw-gap-2 lmw-pb-1">
+        {/* View Switcher Toggle - Mobile: single toggle button */}
+        <button
+          onClick={() => setCurrentView(currentView === 'map' ? 'table' : 'map')}
+          className="sm:lmw-hidden lmw-flex lmw-items-center lmw-gap-1.5 lmw-px-3 lmw-py-1.5 lmw-text-sm lmw-font-medium lmw-rounded-full lmw-border-2 lmw-bg-white dark:lmw-bg-gray-700 lmw-text-gray-700 dark:lmw-text-gray-300 lmw-border-gray-300 dark:lmw-border-gray-600 hover:lmw-border-gray-400 dark:hover:lmw-border-gray-500 hover:lmw-bg-gray-50 dark:hover:lmw-bg-gray-600 lmw-transition-all lmw-duration-200 lmw-cursor-pointer lmw-select-none lmw-whitespace-nowrap lmw-shrink-0 focus-visible:lmw-outline-none focus-visible:lmw-ring-2 focus-visible:lmw-ring-primary focus-visible:lmw-ring-offset-2 active:lmw-scale-95"
+          aria-label={`Switch to ${currentView === 'map' ? 'table' : 'map'} view`}
+        >
+          {currentView === 'map' ? (
+            <>
+              <svg className="lmw-w-4 lmw-h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+              <span>Table</span>
+            </>
+          ) : (
+            <>
+              <svg className="lmw-w-4 lmw-h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+              </svg>
+              <span>Map</span>
+            </>
+          )}
+        </button>
+
+        {/* View Switcher Toggle - Desktop: dual button design */}
+        <div className="lmw-hidden sm:lmw-flex lmw-items-center lmw-shrink-0">
+          <button
+            onClick={() => setCurrentView('map')}
+            className={`lmw-flex lmw-items-center lmw-gap-1.5 lmw-px-3 lmw-py-1.5 lmw-text-sm lmw-font-medium lmw-rounded-l-full lmw-border-2 lmw-border-r lmw-transition-all lmw-duration-200 lmw-cursor-pointer lmw-select-none focus-visible:lmw-outline-none focus-visible:lmw-ring-2 focus-visible:lmw-ring-primary focus-visible:lmw-ring-offset-2 ${
+              currentView === 'map'
+                ? 'lmw-bg-primary lmw-text-white lmw-border-primary hover:lmw-bg-blue-600 hover:lmw-border-blue-600'
+                : 'lmw-bg-white dark:lmw-bg-gray-700 lmw-text-gray-600 dark:lmw-text-gray-400 lmw-border-gray-300 dark:lmw-border-gray-600 hover:lmw-text-gray-900 dark:hover:lmw-text-gray-200 hover:lmw-border-gray-400 dark:hover:lmw-border-gray-500'
+            }`}
+            aria-label="Map view"
+          >
+            <svg className="lmw-w-4 lmw-h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+            </svg>
+            <span>Map</span>
+          </button>
+          <button
+            onClick={() => setCurrentView('table')}
+            className={`lmw-flex lmw-items-center lmw-gap-1.5 lmw-px-3 lmw-py-1.5 lmw-text-sm lmw-font-medium lmw-rounded-r-full lmw-border-2 lmw-border-l-0 lmw-transition-all lmw-duration-200 lmw-cursor-pointer lmw-select-none focus-visible:lmw-outline-none focus-visible:lmw-ring-2 focus-visible:lmw-ring-primary focus-visible:lmw-ring-offset-2 ${
+              currentView === 'table'
+                ? 'lmw-bg-primary lmw-text-white lmw-border-primary hover:lmw-bg-blue-600 hover:lmw-border-blue-600'
+                : 'lmw-bg-white dark:lmw-bg-gray-700 lmw-text-gray-600 dark:lmw-text-gray-400 lmw-border-gray-300 dark:lmw-border-gray-600 hover:lmw-text-gray-900 dark:hover:lmw-text-gray-200 hover:lmw-border-gray-400 dark:hover:lmw-border-gray-500'
+            }`}
+            aria-label="Table view"
+          >
+            <svg className="lmw-w-4 lmw-h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+            <span>Table</span>
+          </button>
+        </div>
+
+        {/* Separator */}
+        <div className="lmw-h-6 lmw-w-px lmw-bg-gray-300 dark:lmw-bg-gray-600 lmw-shrink-0"></div>
+
         {/* Category Chips */}
         {categories.map((category) => {
           const isSelected = filters.selectedCategories.includes(category.value);
