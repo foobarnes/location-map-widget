@@ -87,15 +87,20 @@ export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
     }, 50);
   };
 
-  // Calculate max popup height as 80% of map container height
+  // Calculate max popup height as 70% on desktop, 80% on mobile
   useEffect(() => {
     const calculateMaxHeight = () => {
       const mapContainer = map.getContainer();
       const mapHeight = mapContainer.clientHeight;
-      // Set max height to 80% of map height, with min of 300px and max of 600px
+      const mapWidth = mapContainer.clientWidth;
+      const isMobile = mapWidth < 768;
+
+      // Desktop: 70% of map height, Mobile: 80% of map height
+      // Both with min of 300px and max of 600px
+      const heightPercentage = isMobile ? 0.8 : 0.7;
       const calculatedHeight = Math.max(
         300,
-        Math.min(600, Math.floor(mapHeight * 0.8))
+        Math.min(600, Math.floor(mapHeight * heightPercentage))
       );
       setMaxPopupHeight(calculatedHeight);
     };
@@ -161,7 +166,7 @@ export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
 
     // VERTICAL: Position marker at 70% down on mobile (65% on desktop)
     // This leaves plenty of space above for the popup
-    const targetMarkerY = mapHeight;
+    const targetMarkerY = isMobile ? mapHeight * 0.95 : mapHeight * 0.9;
 
     // HORIZONTAL: Center marker in viewport
     // This ensures 300px popup can fit horizontally
@@ -271,6 +276,20 @@ export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
     }
   }, [selectedLocationId, location.id, isProgrammaticMove]);
 
+  // Close popup when this location is deselected
+  useEffect(() => {
+    if (selectedLocationId !== location.id && markerRef.current) {
+      const popup = markerRef.current.getPopup();
+      if (popup && popup.isOpen()) {
+        console.log("[MARKER] Closing popup - location deselected:", {
+          locationId: location.id,
+          selectedLocationId,
+        });
+        markerRef.current.closePopup();
+      }
+    }
+  }, [selectedLocationId, location.id]);
+
   return (
     <Marker
       ref={markerRef}
@@ -278,6 +297,16 @@ export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
       icon={getMarkerIcon(location.category, store)}
       eventHandlers={{
         click: handleMarkerClick,
+        popupclose: () => {
+          // Clear selected location when popup's X button is clicked
+          // Use setTimeout to ensure we get the latest state
+          setTimeout(() => {
+            const currentSelectedId = store.getState().selectedLocationId;
+            if (currentSelectedId === location.id) {
+              store.getState().setSelectedLocation(null);
+            }
+          }, 0);
+        },
       }}
     >
       <Popup
@@ -290,6 +319,10 @@ export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
         <div
           className="lmw-p-2 lmw-overflow-y-auto"
           style={{ maxHeight: `${maxPopupHeight}px` }}
+          onClick={(e) => {
+            // Stop click propagation to prevent map click handler from closing popup
+            e.stopPropagation();
+          }}
         >
           {/* Category badge */}
           <div className="lmw-mb-2">

@@ -3,7 +3,7 @@
  */
 
 import React, { useEffect, useRef, useState } from 'react';
-import { MapContainer, TileLayer, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, useMap, useMapEvents } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import { useWidgetState, useStore } from '../../contexts/StoreContext';
 import { LocationMarker } from './LocationMarker';
@@ -166,6 +166,9 @@ export const MapView: React.FC<MapViewProps> = ({
         {/* Map controller for centering */}
         <MapController />
 
+        {/* Popup close handler */}
+        <PopupCloseHandler />
+
         {/* Geolocation button */}
         {enableGeolocation && <GeolocationButton />}
 
@@ -292,6 +295,43 @@ const MapController: React.FC = () => {
       prevFilteredCount.current = filteredLocations.length;
     }
   }, [map, filteredLocations, selectedLocationId]);
+
+  return null;
+};
+
+/**
+ * Popup close handler - closes popup when clicking outside of it
+ */
+const PopupCloseHandler: React.FC = () => {
+  const store = useStore();
+  const { selectedLocationId } = useWidgetState((state) => ({
+    selectedLocationId: state.selectedLocationId,
+  }));
+
+  useMapEvents({
+    click: (event) => {
+      // Check if click was on a marker or inside a popup
+      const target = event.originalEvent.target as HTMLElement;
+
+      // Check for marker clicks
+      const clickedMarker = target.closest('.leaflet-marker-icon');
+      const clickedCluster = target.closest('.marker-cluster');
+
+      // Check for popup clicks - be comprehensive about popup structure
+      const clickedPopup = target.closest('.leaflet-popup') ||
+                          target.closest('.leaflet-popup-content-wrapper') ||
+                          target.closest('.leaflet-popup-content') ||
+                          target.closest('.location-popup');
+
+      // Only close popup if clicking on the map itself (not on markers, popups, or clusters)
+      if (!clickedMarker && !clickedPopup && !clickedCluster && selectedLocationId) {
+        console.log('[POPUP CLOSE] Closing popup - clicked outside');
+        store.getState().setSelectedLocation(null);
+      } else if (clickedPopup) {
+        console.log('[POPUP CLOSE] Click inside popup - not closing');
+      }
+    },
+  });
 
   return null;
 };
