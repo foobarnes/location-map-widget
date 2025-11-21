@@ -103,17 +103,18 @@ export const MapView: React.FC<MapViewProps> = ({
 
   // Determine if dark mode is active
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    if (theme === 'dark') return true;
-    if (theme === 'light') return false;
-    return document.documentElement.classList.contains('dark');
+    // if (theme === 'dark') return true;
+    // if (theme === 'light') return false;
+    // return document.documentElement.classList.contains('dark');
+    return false;
   });
 
   // Update dark mode state when theme changes or system preference changes
   useEffect(() => {
-    if (theme === 'dark') {
-      setIsDarkMode(true);
-      return;
-    }
+    // if (theme === 'dark') {
+    //   setIsDarkMode(true);
+    //   return;
+    // }
     if (theme === 'light') {
       setIsDarkMode(false);
       return;
@@ -121,7 +122,7 @@ export const MapView: React.FC<MapViewProps> = ({
 
     // For 'auto' theme, watch for class changes on documentElement
     const checkDarkMode = () => {
-      setIsDarkMode(document.documentElement.classList.contains('dark'));
+      // setIsDarkMode(document.documentElement.classList.contains('dark'));
     };
 
     // Initial check
