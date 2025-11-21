@@ -165,6 +165,7 @@ export interface WidgetConfig {
   enableSearch?: boolean; // Enable search bar
   enableFilters?: boolean; // Enable category filters
   enableDistanceFilter?: boolean; // Enable distance-based filtering
+  showFullscreenButton?: boolean; // Show fullscreen toggle button (default: true)
 
   // Pagination
   itemsPerPage?: number; // Items per page in table view
@@ -291,6 +292,7 @@ export interface EmbedFeatureOptions {
   hideTable?: boolean; // Hide table view toggle
   hideFilters?: boolean; // Hide category filters
   hideGeolocation?: boolean; // Hide "Find Near Me" button
+  hideFullscreen?: boolean; // Hide fullscreen button
   defaultView?: ViewMode; // Default view on load (map or table)
 }
 

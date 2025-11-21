@@ -132,6 +132,7 @@ const WidgetContent: React.FC<{ config: WidgetConfig }> = ({ config }) => {
           <MapView
             enableGeolocation={config.enableGeolocation}
             enableClustering={config.enableClustering}
+            showFullscreenButton={config.showFullscreenButton}
           />
         ) : (
           <TableView />

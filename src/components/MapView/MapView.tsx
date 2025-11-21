@@ -8,6 +8,7 @@ import MarkerClusterGroup from 'react-leaflet-cluster';
 import { useWidgetState, useStore } from '../../contexts/StoreContext';
 import { LocationMarker } from './LocationMarker';
 import { GeolocationButton } from './GeolocationButton';
+import { FullscreenButton } from './FullscreenButton';
 import 'leaflet/dist/leaflet.css';
 
 // Fix Leaflet default icon issue with bundlers
@@ -88,12 +89,15 @@ const createClusterCustomIcon = (cluster: any) => {
 interface MapViewProps {
   enableGeolocation?: boolean;
   enableClustering?: boolean;
+  showFullscreenButton?: boolean;
 }
 
 export const MapView: React.FC<MapViewProps> = ({
   enableGeolocation = true,
   enableClustering = true,
+  showFullscreenButton = true,
 }) => {
+  const mapContainerRef = useRef<HTMLDivElement>(null);
   const { filteredLocations, mapCenter, mapZoom, theme } = useWidgetState((state) => ({
     filteredLocations: state.filteredLocations,
     mapCenter: state.mapCenter,
@@ -148,7 +152,7 @@ export const MapView: React.FC<MapViewProps> = ({
   const tileConfig = isDarkMode ? TILE_CONFIGS.dark : TILE_CONFIGS.light;
 
   return (
-    <div className="map-container">
+    <div className="map-container" ref={mapContainerRef}>
       <MapContainer
         center={mapCenter}
         zoom={mapZoom}
@@ -168,6 +172,9 @@ export const MapView: React.FC<MapViewProps> = ({
 
         {/* Popup close handler */}
         <PopupCloseHandler />
+
+        {/* Fullscreen button */}
+        {showFullscreenButton && <FullscreenButton mapContainerRef={mapContainerRef} />}
 
         {/* Geolocation button */}
         {enableGeolocation && <GeolocationButton />}
