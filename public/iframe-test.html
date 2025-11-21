@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iframe Embed Testing - OpenMapEmbed</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+      color: #1f2937;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: #6b7280;
+      margin-bottom: 40px;
+    }
+
+    .test-section {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 32px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .test-section h2 {
+      font-size: 24px;
+      color: #1f2937;
+      margin-bottom: 8px;
+    }
+
+    .test-section p {
+      color: #6b7280;
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+
+    .code-block {
+      background: #1f2937;
+      color: #e5e7eb;
+      padding: 16px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      margin-bottom: 16px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .iframe-container {
+      width: 100%;
+      height: 600px;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      overflow: hidden;
+      background: white;
+    }
+
+    .iframe-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .info-box {
+      background: #dbeafe;
+      border-left: 4px solid #3b82f6;
+      padding: 16px;
+      margin-bottom: 16px;
+      border-radius: 4px;
+    }
+
+    .info-box h3 {
+      font-size: 16px;
+      color: #1e40af;
+      margin-bottom: 8px;
+    }
+
+    .info-box p {
+      color: #1e3a8a;
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .warning-box {
+      background: #fef3c7;
+      border-left: 4px solid #f59e0b;
+      padding: 16px;
+      margin-bottom: 16px;
+      border-radius: 4px;
+    }
+
+    .warning-box h3 {
+      font-size: 16px;
+      color: #92400e;
+      margin-bottom: 8px;
+    }
+
+    .warning-box p {
+      color: #78350f;
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .url-display {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      color: #374151;
+      word-break: break-all;
+    }
+
+    .test-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 32px;
+    }
+
+    @media (max-width: 1024px) {
+      .test-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧪 iframe Embed Testing</h1>
+    <p class="subtitle">Local testing environment for OpenMapEmbed iframe embeddings</p>
+
+    <div class="info-box">
+      <h3>📝 How to Use This Page</h3>
+      <p>This page tests various iframe embedding scenarios locally. Each example below loads embed.html with different URL parameters. Make sure you've run <code>pnpm build</code> first to generate the UMD bundle.</p>
+    </div>
+
+    <div class="warning-box">
+      <h3>⚠️ Important for Local Testing</h3>
+      <p>The embed.html file references <code>./dist/open-map-embed.umd.js</code>. Make sure to:</p>
+      <ol style="margin: 8px 0 0 20px; color: #78350f;">
+        <li>Run <code>pnpm build</code> to generate the UMD bundle</li>
+        <li>Use a local server (like <code>pnpm preview</code> or <code>python -m http.server</code>)</li>
+        <li>Access this page via the server (not file:// protocol)</li>
+      </ol>
+    </div>
+
+    <!-- Test 1: Basic Public Google Sheet -->
+    <div class="test-section">
+      <h2>Test 1: Basic Public Google Sheet</h2>
+      <p>Simplest configuration - just type and sheetId parameters.</p>
+
+      <div class="url-display">
+        embed.html?type=google-sheets-public&sheetId=2PACX-1vQv1jSRY0gTFmVaSXufZ0SQ0cH0Wd9XjFNySoUXsrQpFeWMWbgT10HeK8GXq7z2aV-P5gOnTqaaXX6H
+      </div>
+
+      <div class="iframe-container">
+        <iframe
+          src="./embed.html?type=google-sheets-public&sheetId=2PACX-1vQv1jSRY0gTFmVaSXufZ0SQ0cH0Wd9XjFNySoUXsrQpFeWMWbgT10HeK8GXq7z2aV-P5gOnTqaaXX6H"
+          title="Test 1: Basic embed"
+        ></iframe>
+      </div>
+    </div>
+
+    <!-- Test 2: Dark Theme -->
+    <div class="test-section">
+      <h2>Test 2: Dark Theme</h2>
+      <p>Testing theme parameter with dark mode.</p>
+
+      <div class="url-display">
+        embed.html?type=google-sheets-public&sheetId=2PACX-1vQv1jSRY0gTFmVaSXufZ0SQ0cH0Wd9XjFNySoUXsrQpFeWMWbgT10HeK8GXq7z2aV-P5gOnTqaaXX6H&theme=dark
+      </div>
+
+      <div class="iframe-container">
+        <iframe
+          src="./embed.html?type=google-sheets-public&sheetId=2PACX-1vQv1jSRY0gTFmVaSXufZ0SQ0cH0Wd9XjFNySoUXsrQpFeWMWbgT10HeK8GXq7z2aV-P5gOnTqaaXX6H&theme=dark"
+          title="Test 2: Dark theme"
+        ></iframe>
+      </div>
+    </div>
+
+    <!-- Test 3: Custom Position (NYC) -->
+    <div class="test-section">
+      <h2>Test 3: Custom Initial Position</h2>
+      <p>Testing custom map center (New York City) and zoom level.</p>
+
+      <div class="url-display">
+        embed.html?type=google-sheets-public&sheetId=2PACX-1vQv1jSRY0gTFmVaSXufZ0SQ0cH0Wd9XjFNySoUXsrQpFeWMWbgT10HeK8GXq7z2aV-P5gOnTqaaXX6H&lat=40.7128&lng=-74.0060&zoom=12
+      </div>
+
+      <div class="iframe-container">
+        <iframe
+          src="./embed.html?type=google-sheets-public&sheetId=2PACX-1vQv1jSRY0gTFmVaSXufZ0SQ0cH0Wd9XjFNySoUXsrQpFeWMWbgT10HeK8GXq7z2aV-P5gOnTqaaXX6H&lat=40.7128&lng=-74.0060&zoom=12"
+          title="Test 3: Custom position"
+        ></iframe>
+      </div>
+    </div>
+
+    <!-- Test 4: Table View with Hidden Search -->
+    <div class="test-section">
+      <h2>Test 4: Table View + Hidden Search</h2>
+      <p>Testing defaultView=table and hideSearch=true parameters.</p>
+
+      <div class="url-display">
+        embed.html?type=google-sheets-public&sheetId=2PACX-1vQv1jSRY0gTFmVaSXufZ0SQ0cH0Wd9XjFNySoUXsrQpFeWMWbgT10HeK8GXq7z2aV-P5gOnTqaaXX6H&defaultView=table&hideSearch=true
+      </div>
+
+      <div class="iframe-container">
+        <iframe
+          src="./embed.html?type=google-sheets-public&sheetId=2PACX-1vQv1jSRY0gTFmVaSXufZ0SQ0cH0Wd9XjFNySoUXsrQpFeWMWbgT10HeK8GXq7z2aV-P5gOnTqaaXX6H&defaultView=table&hideSearch=true"
+          title="Test 4: Table view with hidden search"
+        ></iframe>
+      </div>
+    </div>
+
+    <!-- Test 5: All Options Combined -->
+    <div class="test-section">
+      <h2>Test 5: All Options Combined</h2>
+      <p>Testing multiple parameters: dark theme, custom position, and UI toggles.</p>
+
+      <div class="url-display">
+        embed.html?type=google-sheets-public&sheetId=2PACX-1vQv1jSRY0gTFmVaSXufZ0SQ0cH0Wd9XjFNySoUXsrQpFeWMWbgT10HeK8GXq7z2aV-P5gOnTqaaXX6H&theme=dark&lat=34.0522&lng=-118.2437&zoom=11&hideSearch=true&hideFilters=false&defaultView=map
+      </div>
+
+      <div class="iframe-container">
+        <iframe
+          src="./embed.html?type=google-sheets-public&sheetId=2PACX-1vQv1jSRY0gTFmVaSXufZ0SQ0cH0Wd9XjFNySoUXsrQpFeWMWbgT10HeK8GXq7z2aV-P5gOnTqaaXX6H&theme=dark&lat=34.0522&lng=-118.2437&zoom=11&hideSearch=true&hideFilters=false&defaultView=map"
+          title="Test 5: All options"
+        ></iframe>
+      </div>
+    </div>
+
+    <!-- Test 6: Mock Data Source -->
+    <div class="test-section">
+      <h2>Test 6: Mock Data Source</h2>
+      <p>Testing with built-in mock data (no external dependencies).</p>
+
+      <div class="url-display">
+        embed.html?type=mock&theme=light
+      </div>
+
+      <div class="iframe-container">
+        <iframe
+          src="./embed.html?type=mock&theme=light"
+          title="Test 6: Mock data"
+        ></iframe>
+      </div>
+    </div>
+
+    <!-- Test 7: Error Handling - Missing Parameters -->
+    <div class="test-section">
+      <h2>Test 7: Error Handling - Missing Parameters</h2>
+      <p>Testing error display when required parameters are missing.</p>
+
+      <div class="url-display">
+        embed.html (no parameters)
+      </div>
+
+      <div class="iframe-container">
+        <iframe
+          src="./embed.html"
+          title="Test 7: Missing parameters"
+        ></iframe>
+      </div>
+    </div>
+
+    <!-- Side-by-side comparison -->
+    <div class="test-section">
+      <h2>Test 8: Side-by-Side Theme Comparison</h2>
+      <p>Light theme vs Dark theme - same data, different styling.</p>
+
+      <div class="test-grid">
+        <div>
+          <h3 style="margin-bottom: 12px; color: #374151;">Light Theme</h3>
+          <div class="url-display">
+            embed.html?type=mock&theme=light
+          </div>
+          <div class="iframe-container" style="height: 500px;">
+            <iframe
+              src="./embed.html?type=mock&theme=light"
+              title="Light theme"
+            ></iframe>
+          </div>
+        </div>
+        <div>
+          <h3 style="margin-bottom: 12px; color: #374151;">Dark Theme</h3>
+          <div class="url-display">
+            embed.html?type=mock&theme=dark
+          </div>
+          <div class="iframe-container" style="height: 500px;">
+            <iframe
+              src="./embed.html?type=mock&theme=dark"
+              title="Dark theme"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Testing Instructions -->
+    <div class="info-box" style="margin-top: 40px;">
+      <h3>🧰 Local Testing Workflow</h3>
+      <div class="code-block" style="margin-top: 12px;">
+# 1. Build the project (generates dist/open-map-embed.umd.js)
+pnpm build
+
+# 2. Start local server (choose one):
+
+# Option A: Use Vite preview (recommended)
+pnpm preview
+# Opens at http://localhost:4173
+
+# Option B: Use Python HTTP server
+python3 -m http.server 8000
+# Opens at http://localhost:8000
+
+# 3. Open this test page in your browser:
+# http://localhost:4173/iframe-test.html
+# or
+# http://localhost:8000/public/iframe-test.html
+
+# 4. To test your own parameters, you can:
+# - Directly open: http://localhost:4173/embed.html?type=mock&theme=dark
+# - Or create your own test iframe on this page
+      </div>
+    </div>
+
+    <div class="warning-box" style="margin-top: 20px;">
+      <h3>🔧 Troubleshooting</h3>
+      <p><strong>If you see a blank iframe or errors:</strong></p>
+      <ol style="margin: 8px 0 0 20px; color: #78350f;">
+        <li>Check that <code>dist/open-map-embed.umd.js</code> exists (run <code>pnpm build</code>)</li>
+        <li>Make sure you're using a local server (not opening file:// directly)</li>
+        <li>Open browser DevTools (F12) and check Console for errors</li>
+        <li>Try opening the embed URL directly: <code>http://localhost:4173/embed.html?type=mock</code></li>
+        <li>Check Network tab to see if UMD bundle is loading</li>
+      </ol>
+    </div>
+
+  </div>
+</body>
+</html>

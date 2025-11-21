@@ -36,6 +36,7 @@ An embeddable, customizable location map widget with dynamic category support an
 - 📋 **Table View** - Alternate view with pagination
 - ⚡ **Lightweight** - Only 218 KB gzipped
 - 🚀 **Easy Setup** - No API keys required, just 3 lines of code
+- 🖼️ **iframe Embedding** - Single-URL iframe embedding with URL parameter configuration
 
 ## 🚀 Quick Start
 
@@ -74,7 +75,7 @@ Hosted on GitHub Pages - automatically updated on every push to main:
 </html>
 ```
 
-### NPM
+<!-- ### NPM
 
 ```bash
 npm install open-map-embed
@@ -94,7 +95,33 @@ init({
     apiKey: 'YOUR_API_KEY'
   }
 });
+``` -->
+
+### iframe Embedding (No JavaScript Required)
+
+The simplest embedding method - perfect for no-code platforms, CMSs, or when you want users to customize embeds via URL parameters:
+
+```html
+<iframe
+  src="https://foobarnes.github.io/open-map-embed/embed.html?type=google-sheets-public&sheetId=YOUR_SHEET_ID"
+  width="100%"
+  height="600"
+  frameborder="0"
+></iframe>
 ```
+
+**Customize via URL parameters:**
+```html
+<!-- Dark theme with custom position -->
+<iframe
+  src="https://foobarnes.github.io/open-map-embed/embed.html?type=google-sheets-public&sheetId=YOUR_SHEET_ID&theme=dark&lat=40.7128&lng=-74.0060&zoom=12"
+  width="100%"
+  height="600"
+  frameborder="0"
+></iframe>
+```
+
+See the **[iframe Embedding Guide](./docs/embedding-guide.md#iframe-embedding---single-url)** for complete URL parameter reference and examples.
 
 ## 📚 Documentation
 
@@ -170,6 +197,7 @@ This project uses GitHub Pages for both the demo site and as a CDN for the widge
 **CDN URLs**:
 - CSS: `https://foobarnes.github.io/open-map-embed/dist/open-map-embed.css`
 - JS: `https://foobarnes.github.io/open-map-embed/dist/open-map-embed.umd.js`
+- iframe Embed: `https://foobarnes.github.io/open-map-embed/embed.html`
 
 ### Setup
 

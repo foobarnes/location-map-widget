@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OpenMapEmbed - iframe Embed</title>
+    <meta
+      name="description"
+      content="Embeddable interactive map widget powered by OpenMapEmbed"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html, body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+      }
+
+      #map-container {
+        width: 100%;
+        height: 100%;
+      }
+
+      /* Error message styling */
+      .error-message {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        padding: 20px;
+        background: #fff;
+        color: #dc2626;
+      }
+
+      .error-content {
+        text-align: center;
+        max-width: 600px;
+      }
+
+      .error-title {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: #991b1b;
+      }
+
+      .error-description {
+        font-size: 14px;
+        color: #6b7280;
+        margin-bottom: 16px;
+        line-height: 1.5;
+      }
+
+      .error-code {
+        margin-top: 16px;
+        padding: 16px;
+        background: #f3f4f6;
+        border-radius: 8px;
+        border-left: 4px solid #dc2626;
+        font-family: 'Courier New', monospace;
+        font-size: 12px;
+        color: #374151;
+        text-align: left;
+        overflow-x: auto;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+
+      .error-examples {
+        margin-top: 20px;
+        text-align: left;
+      }
+
+      .error-examples-title {
+        font-weight: 600;
+        font-size: 14px;
+        color: #374151;
+        margin-bottom: 8px;
+      }
+
+      .error-example {
+        padding: 8px 12px;
+        background: #f9fafb;
+        border-radius: 4px;
+        margin-bottom: 8px;
+        font-family: 'Courier New', monospace;
+        font-size: 11px;
+        color: #4b5563;
+        word-break: break-all;
+      }
+
+      /* Loading indicator */
+      .loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        background: #f9fafb;
+      }
+
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #e5e7eb;
+        border-top-color: #8b5cf6;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map-container">
+      <div class="loading">
+        <div class="loading-spinner"></div>
+      </div>
+    </div>
+
+    <!-- Load OpenMapEmbed library -->
+    <script src="./dist/open-map-embed.umd.js"></script>
+    <script>
+      (function() {
+        'use strict';
+
+        /**
+         * Show error message in the container
+         */
+        function showError(title, description, details) {
+          const container = document.getElementById('map-container');
+
+          let detailsHTML = '';
+          if (details) {
+            detailsHTML = `<div class="error-code">${details}</div>`;
+          }
+
+          container.innerHTML = `
+            <div class="error-message">
+              <div class="error-content">
+                <div class="error-title">${title}</div>
+                <div class="error-description">${description}</div>
+                ${detailsHTML}
+                <div class="error-examples">
+                  <div class="error-examples-title">Example URLs:</div>
+                  <div class="error-example">
+                    ?type=google-sheets-public&sheetId=YOUR_SHEET_ID
+                  </div>
+                  <div class="error-example">
+                    ?type=google-sheets-public&sheetId=YOUR_SHEET_ID&theme=dark&lat=40.7128&lng=-74.0060&zoom=12
+                  </div>
+                  <div class="error-example">
+                    ?type=google-sheets-public&sheetId=YOUR_SHEET_ID&hideSearch=true&defaultView=table
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        /**
+         * Initialize the widget from URL parameters
+         */
+        function initializeWidget() {
+          try {
+            // Check if OpenMapEmbed library is loaded
+            if (!window.OpenMapEmbed) {
+              throw new Error('OpenMapEmbed library not loaded. Please ensure the script is loaded correctly.');
+            }
+
+            // Check if required functions are available
+            if (!window.OpenMapEmbed.init) {
+              throw new Error('OpenMapEmbed.init is not available.');
+            }
+
+            if (!window.OpenMapEmbed.parseURLConfig) {
+              throw new Error('OpenMapEmbed.parseURLConfig is not available. Please update to the latest version.');
+            }
+
+            if (!window.OpenMapEmbed.embedOptionsToWidgetConfig) {
+              throw new Error('OpenMapEmbed.embedOptionsToWidgetConfig is not available. Please update to the latest version.');
+            }
+
+            // Parse URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlConfig = window.OpenMapEmbed.parseURLConfig(urlParams);
+
+            // Check if data source was provided
+            if (!urlConfig.dataSource) {
+              showError(
+                'Missing Data Source',
+                'No data source type specified in URL parameters. Please provide at least the "type" parameter.',
+                'Required parameter: type\n\nSupported types:\n- google-sheets-public\n- google-sheets\n- google-sheets-proxy\n- csv\n- json\n- mock'
+              );
+              return;
+            }
+
+            // Convert embed options to widget config
+            let widgetConfig = {};
+            if (urlConfig.embedOptions) {
+              widgetConfig = window.OpenMapEmbed.embedOptionsToWidgetConfig(urlConfig.embedOptions);
+            }
+
+            // Initialize the widget
+            window.OpenMapEmbed.init({
+              container: '#map-container',
+              dataSource: urlConfig.dataSource,
+              config: widgetConfig
+            });
+
+          } catch (error) {
+            console.error('OpenMapEmbed initialization error:', error);
+
+            let errorDetails = error.message;
+            if (error.stack) {
+              errorDetails += '\n\nStack trace:\n' + error.stack;
+            }
+
+            showError(
+              'Initialization Error',
+              'Failed to initialize the map widget. Please check the URL parameters and try again.',
+              errorDetails
+            );
+          }
+        }
+
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initializeWidget);
+        } else {
+          initializeWidget();
+        }
+      })();
+    </script>
+  </body>
+</html>

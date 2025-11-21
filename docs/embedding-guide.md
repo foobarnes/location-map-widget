@@ -22,6 +22,7 @@ A comprehensive guide to embedding and customizing the Location Map Widget in yo
   - [CDN (UMD) - Simple HTML Pages](#cdn-umd---simple-html-pages)
   - [NPM - React/Vue/Angular Apps](#npm---reactvueangular-apps)
   - [WordPress Integration](#wordpress-integration)
+  - [iframe Embedding - Single URL](#iframe-embedding---single-url)
 - [Configuration Options](#configuration-options)
 - [Category Customization](#category-customization)
 - [Image Galleries](#image-galleries)
@@ -308,6 +309,274 @@ Then in your page template:
   });
 </script>
 ```
+
+---
+
+### iframe Embedding - Single URL
+
+The simplest way to embed the widget is using a single iframe URL with all configuration passed as URL parameters. Perfect for no-code solutions, content management systems, or when you want users to customize embeds without touching JavaScript.
+
+#### How it Works
+
+Instead of loading the JavaScript library and calling `init()`, you can embed the widget using a single iframe that points to our embed page with URL parameters:
+
+```html
+<iframe
+  src="https://foobarnes.github.io/open-map-embed/embed.html?type=google-sheets-public&sheetId=YOUR_SHEET_ID"
+  width="100%"
+  height="600"
+  frameborder="0"
+  title="Location Map"
+></iframe>
+```
+
+The embed page automatically parses URL parameters and initializes the widget with the specified configuration.
+
+#### Basic iframe Example
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Embedded Map</title>
+</head>
+<body>
+  <h1>Our Locations</h1>
+
+  <iframe
+    src="https://foobarnes.github.io/open-map-embed/embed.html?type=google-sheets-public&sheetId=2PACX-1vQv1jSRY0gTFmVaSXufZ0SQ0cH0Wd9XjFNySoUXsrQpFeWMWbgT10HeK8GXq7z2aV-P5gOnTqaaXX6H"
+    width="100%"
+    height="600"
+    frameborder="0"
+    title="Location Map"
+    style="border: 1px solid #e5e7eb; border-radius: 8px;"
+  ></iframe>
+</body>
+</html>
+```
+
+#### URL Parameters Reference
+
+All configuration is passed via URL query parameters:
+
+**Data Source Parameters** (Required - at least `type`):
+
+| Parameter | Description | Example | Required |
+|-----------|-------------|---------|----------|
+| `type` | Data source type | `google-sheets-public` | ✅ Yes |
+| `sheetId` | Google Sheets ID | `1abc123...` | For Google Sheets |
+| `apiKey` | Google Sheets API key | `AIza...` | For `google-sheets` type |
+| `gid` | Sheet tab ID | `0` | Optional (Google Sheets) |
+| `range` | Cell range | `Sheet1!A1:Z100` | Optional (Google Sheets) |
+| `proxyUrl` | Proxy server URL | `https://proxy.com/api` | For `google-sheets-proxy` |
+| `url` | File URL | `https://example.com/data.csv` | For `csv` or `json` types |
+
+**Visual Options**:
+
+| Parameter | Description | Values | Default |
+|-----------|-------------|--------|---------|
+| `theme` | Color theme | `light`, `dark`, `auto` | `auto` |
+| `height` | Widget height | Any CSS height | Container height |
+| `width` | Widget width | Any CSS width | Container width |
+| `defaultView` | Initial view mode | `map`, `table` | `map` |
+
+**Feature Toggles** (use `true` or `false`):
+
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `hideSearch` | Hide search bar | `false` |
+| `hideFilters` | Hide category filters | `false` |
+| `hideGeolocation` | Hide "Find Near Me" button | `false` |
+| `hideTable` | Hide table view toggle | `false` |
+
+**Initial Map State**:
+
+| Parameter | Description | Example |
+|-----------|-------------|---------|
+| `lat` | Initial latitude | `40.7128` |
+| `lng` | Initial longitude | `-74.0060` |
+| `zoom` | Initial zoom level | `12` |
+| `category` | Pre-selected category | `restaurant` |
+
+#### iframe Examples
+
+**Example 1: Public Google Sheet with Dark Theme**
+
+```html
+<iframe
+  src="https://foobarnes.github.io/open-map-embed/embed.html?type=google-sheets-public&sheetId=YOUR_SHEET_ID&theme=dark"
+  width="100%"
+  height="600"
+  frameborder="0"
+></iframe>
+```
+
+**Example 2: Custom Initial Position (NYC)**
+
+```html
+<iframe
+  src="https://foobarnes.github.io/open-map-embed/embed.html?type=google-sheets-public&sheetId=YOUR_SHEET_ID&lat=40.7128&lng=-74.0060&zoom=12"
+  width="100%"
+  height="600"
+  frameborder="0"
+></iframe>
+```
+
+**Example 3: Table View with Hidden Search**
+
+```html
+<iframe
+  src="https://foobarnes.github.io/open-map-embed/embed.html?type=google-sheets-public&sheetId=YOUR_SHEET_ID&defaultView=table&hideSearch=true"
+  width="100%"
+  height="800"
+  frameborder="0"
+></iframe>
+```
+
+**Example 4: All Options Combined**
+
+```html
+<iframe
+  src="https://foobarnes.github.io/open-map-embed/embed.html?type=google-sheets-public&sheetId=YOUR_SHEET_ID&theme=dark&lat=34.0522&lng=-118.2437&zoom=11&hideSearch=true&hideFilters=false&defaultView=map"
+  width="100%"
+  height="700"
+  frameborder="0"
+></iframe>
+```
+
+**Example 5: CSV Data Source**
+
+```html
+<iframe
+  src="https://foobarnes.github.io/open-map-embed/embed.html?type=csv&url=https://example.com/locations.csv&theme=light"
+  width="100%"
+  height="600"
+  frameborder="0"
+></iframe>
+```
+
+#### Responsive iframe
+
+Make your iframe responsive with CSS:
+
+```html
+<style>
+  .map-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+  }
+
+  .map-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+</style>
+
+<div class="map-container">
+  <iframe
+    src="https://foobarnes.github.io/open-map-embed/embed.html?type=google-sheets-public&sheetId=YOUR_SHEET_ID"
+    title="Location Map"
+  ></iframe>
+</div>
+```
+
+#### Programmatically Building iframe URLs
+
+Use the JavaScript helper functions to build embed URLs programmatically:
+
+```html
+<script src="https://foobarnes.github.io/open-map-embed/dist/open-map-embed.umd.js"></script>
+<script>
+  // Build embed URL with helper functions
+  const embedUrl = OpenMapEmbed.buildEmbedURL(
+    'https://foobarnes.github.io/open-map-embed/embed.html',
+    {
+      type: 'google-sheets-public',
+      sheetId: 'YOUR_SHEET_ID'
+    },
+    {
+      theme: 'dark',
+      lat: 40.7128,
+      lng: -74.0060,
+      zoom: 12,
+      hideSearch: true
+    }
+  );
+
+  // Generate iframe code
+  const iframeCode = OpenMapEmbed.generateIframeCode(embedUrl, {
+    width: '100%',
+    height: '600px',
+    title: 'My Location Map',
+    allowFullScreen: false
+  });
+
+  // Insert into page
+  document.getElementById('map-container').innerHTML = iframeCode;
+</script>
+```
+
+#### iframe vs JavaScript Embedding
+
+**Use iframe embedding when:**
+- ✅ You want the simplest possible integration
+- ✅ Users need to customize embeds without coding
+- ✅ You're using a no-code platform or CMS
+- ✅ You want to isolate the widget from your page's styles/scripts
+- ✅ You need to embed in platforms that don't allow custom JavaScript
+
+**Use JavaScript embedding when:**
+- ✅ You need programmatic control over the widget
+- ✅ You want to interact with the widget via its API
+- ✅ You need to update the widget dynamically based on user actions
+- ✅ You want tighter integration with your application
+- ✅ You need to avoid iframe overhead
+
+#### iframe Security & CORS
+
+The iframe embed page is hosted on GitHub Pages and loads data according to your data source configuration. No sensitive data is exposed in the URL - API keys should only be used with proper restrictions (see [Security Guide](./security-guide.md)).
+
+**Best Practices:**
+- Use `google-sheets-public` type to avoid exposing API keys
+- If using `google-sheets` type, restrict your API key to your domain
+- Consider using `sandbox` attribute for additional security:
+  ```html
+  <iframe
+    src="..."
+    sandbox="allow-scripts allow-same-origin"
+  ></iframe>
+  ```
+
+#### Troubleshooting iframe Embeds
+
+**Map not displaying:**
+- Check that the `type` parameter is present in the URL
+- Verify the data source parameters are correct (sheetId, url, etc.)
+- Open the iframe URL directly in a browser to see error messages
+- Check browser console for CORS or loading errors
+
+**Incorrect configuration:**
+- URL parameters are case-sensitive
+- Boolean values must be lowercase: `true` or `false`
+- Numeric values (lat, lng, zoom) don't need quotes
+- Special characters in URLs must be URL-encoded
+
+**Example debugging:**
+Open the iframe src URL directly:
+```
+https://foobarnes.github.io/open-map-embed/embed.html?type=google-sheets-public&sheetId=YOUR_SHEET_ID
+```
+
+If you see an error page, it will explain what's missing or incorrect.
 
 ---
 

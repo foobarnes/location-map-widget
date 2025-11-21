@@ -42,6 +42,8 @@ jobs:
         run: |
           mkdir -p demo-site
           cp demo.html demo-site/index.html
+          cp public/embed.html demo-site/embed.html
+          cp public/iframe-test.html demo-site/iframe-test.html
           cp -r dist demo-site/
           cp -r docs demo-site/
           cp -r public demo-site/

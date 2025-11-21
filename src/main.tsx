@@ -9,6 +9,7 @@ import { Widget } from './components/Widget';
 import { createWidgetStore } from './stores/widgetStore';
 import { StoreProvider } from './contexts/StoreContext';
 import { createFieldRendererRegistry } from './renderers';
+import { parseURLConfig, embedOptionsToWidgetConfig } from './utils/urlConfig';
 import type { WidgetInitParams, WidgetConfig } from './types';
 import './style.css';
 
@@ -74,10 +75,12 @@ function init(params: WidgetInitParams): void {
 if (typeof window !== 'undefined') {
   (window as any).OpenMapEmbed = {
     init,
+    parseURLConfig,
+    embedOptionsToWidgetConfig,
     version: '1.0.0',
   };
 }
 
 // For module imports
-export { init, Widget };
+export { init, Widget, parseURLConfig, embedOptionsToWidgetConfig };
 export type { WidgetInitParams, WidgetConfig };
