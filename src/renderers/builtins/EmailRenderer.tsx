@@ -27,6 +27,6 @@ export const EmailRenderer: React.FC<RendererProps> = ({ value }) => {
 /**
  * Email renderer function for registry
  */
-export const emailRendererFn: FieldRendererFn = (value) => {
-  return <EmailRenderer value={value} fieldName="" location={{} as never} />;
+export const emailRendererFn: FieldRendererFn = (value, fieldName, location) => {
+  return <EmailRenderer value={value} fieldName={fieldName} location={location} />;
 };

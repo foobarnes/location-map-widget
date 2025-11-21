@@ -72,20 +72,40 @@ export const CustomFields: React.FC<CustomFieldsProps> = ({
         Additional Information
       </h4>
       <div className="lmw-space-y-1 lmw-text-sm">
-        {Object.entries(customFields).map(([key, value]) => (
-          <div
-            key={key}
-            className="lmw-flex lmw-items-start lmw-text-gray-600 dark:lmw-text-gray-400"
-          >
-            <span className="lmw-mr-2 lmw-flex-shrink-0">•</span>
-            <span>
-              <span className="lmw-font-medium lmw-text-gray-700 dark:lmw-text-gray-300">
-                {formatKey(key)}:
-              </span>{' '}
-              {renderValue(key, value)}
-            </span>
-          </div>
-        ))}
+        {Object.entries(customFields).map(([key, value]) => {
+          // Check if this field is a URL to determine rendering style
+          const isUrlField =
+            fieldRendererRegistry?.getRendererType(key, value) === 'url';
+
+          // For URL fields, only show the hyperlink (no key label)
+          if (isUrlField) {
+            return (
+              <div
+                key={key}
+                className="lmw-flex lmw-items-start lmw-text-gray-600 dark:lmw-text-gray-400"
+              >
+                <span className="lmw-mr-2 lmw-flex-shrink-0">•</span>
+                <span>{renderValue(key, value)}</span>
+              </div>
+            );
+          }
+
+          // For other fields, show key and value
+          return (
+            <div
+              key={key}
+              className="lmw-flex lmw-items-start lmw-text-gray-600 dark:lmw-text-gray-400"
+            >
+              <span className="lmw-mr-2 lmw-flex-shrink-0">•</span>
+              <span>
+                <span className="lmw-font-medium lmw-text-gray-700 dark:lmw-text-gray-300">
+                  {formatKey(key)}:
+                </span>{' '}
+                {renderValue(key, value)}
+              </span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

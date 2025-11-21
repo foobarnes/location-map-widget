@@ -10,11 +10,11 @@ import type { FieldRendererFn, RendererProps } from '../types';
 /**
  * UrlRenderer component
  * Renders URLs as clickable links that open in new tabs
+ * The field name is used as the link text
  */
-export const UrlRenderer: React.FC<RendererProps> = ({ value }) => {
+export const UrlRenderer: React.FC<RendererProps> = ({ value, fieldName }) => {
   const urlString = String(value);
   const href = normalizeUrl(urlString);
-  const displayText = formatDisplayUrl(urlString);
 
   return (
     <a
@@ -23,7 +23,7 @@ export const UrlRenderer: React.FC<RendererProps> = ({ value }) => {
       rel="noopener noreferrer"
       className="lmw-text-blue-600 dark:lmw-text-blue-400 hover:lmw-underline lmw-cursor-pointer lmw-transition-colors"
     >
-      {displayText}
+      {fieldName}
     </a>
   );
 };
@@ -44,18 +44,8 @@ function normalizeUrl(url: string): string {
 }
 
 /**
- * Format URL for display (remove protocol, trailing slash)
- */
-function formatDisplayUrl(url: string): string {
-  return url
-    .replace(/^https?:\/\//i, '')
-    .replace(/\/$/, '')
-    .substring(0, 50) + (url.length > 50 ? '...' : '');
-}
-
-/**
  * URL renderer function for registry
  */
-export const urlRendererFn: FieldRendererFn = (value) => {
-  return <UrlRenderer value={value} fieldName="" location={{} as never} />;
+export const urlRendererFn: FieldRendererFn = (value, fieldName, location) => {
+  return <UrlRenderer value={value} fieldName={fieldName} location={location} />;
 };

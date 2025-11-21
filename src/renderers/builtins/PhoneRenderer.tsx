@@ -38,6 +38,6 @@ function formatPhoneForTel(phone: string): string {
 /**
  * Phone renderer function for registry
  */
-export const phoneRendererFn: FieldRendererFn = (value) => {
-  return <PhoneRenderer value={value} fieldName="" location={{} as never} />;
+export const phoneRendererFn: FieldRendererFn = (value, fieldName, location) => {
+  return <PhoneRenderer value={value} fieldName={fieldName} location={location} />;
 };

@@ -164,6 +164,44 @@ export class FieldRendererRegistry {
   }
 
   /**
+   * Get the renderer type that will be used for a field
+   * Useful for conditional rendering logic
+   */
+  getRendererType(
+    fieldName: string,
+    value: string | number | boolean
+  ): BuiltInRendererType {
+    const normalizedName = fieldName.toLowerCase();
+
+    // Check explicit configuration
+    const explicit = this.explicitRenderers.get(normalizedName);
+    if (explicit) {
+      if (typeof explicit === 'string') {
+        return explicit;
+      }
+      // Custom function - return 'text' as fallback type
+      return 'text';
+    }
+
+    // Check standard field mappings
+    const standardType = getStandardFieldRenderer(fieldName);
+    if (standardType) {
+      return standardType;
+    }
+
+    // Try auto-detection if enabled
+    if (this.autoDetectEnabled) {
+      const detected = detectFieldType(value);
+      if (detected) {
+        return detected.type;
+      }
+    }
+
+    // Default to text renderer
+    return 'text';
+  }
+
+  /**
    * Resolve a config value to a renderer function
    */
   private resolveRenderer(config: FieldRendererConfigValue): FieldRendererFn {

@@ -56,6 +56,6 @@ function getArrayItems(value: string | number | boolean): string[] {
 /**
  * Array renderer function for registry
  */
-export const arrayRendererFn: FieldRendererFn = (value) => {
-  return <ArrayRenderer value={value} fieldName="" location={{} as never} />;
+export const arrayRendererFn: FieldRendererFn = (value, fieldName, location) => {
+  return <ArrayRenderer value={value} fieldName={fieldName} location={location} />;
 };

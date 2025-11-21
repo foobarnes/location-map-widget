@@ -29,6 +29,6 @@ function formatTextValue(value: string | number | boolean): string {
 /**
  * Text renderer function for registry
  */
-export const textRendererFn: FieldRendererFn = (value) => {
-  return <TextRenderer value={value} fieldName="" location={{} as never} />;
+export const textRendererFn: FieldRendererFn = (value, fieldName, location) => {
+  return <TextRenderer value={value} fieldName={fieldName} location={location} />;
 };

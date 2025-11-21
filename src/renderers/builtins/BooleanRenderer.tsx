@@ -48,6 +48,6 @@ function getBooleanValue(value: string | number | boolean): boolean {
 /**
  * Boolean renderer function for registry
  */
-export const booleanRendererFn: FieldRendererFn = (value) => {
-  return <BooleanRenderer value={value} fieldName="" location={{} as never} />;
+export const booleanRendererFn: FieldRendererFn = (value, fieldName, location) => {
+  return <BooleanRenderer value={value} fieldName={fieldName} location={location} />;
 };
