@@ -139,6 +139,7 @@ export class GoogleSheetsProxyAdapter implements DataAdapter {
     }
 
     const [headers, ...rows] = values;
+    const originalHeaders = headers; // Preserve original case
     const headerMap = this.createHeaderMap(headers);
 
     // Log header information
@@ -177,7 +178,7 @@ export class GoogleSheetsProxyAdapter implements DataAdapter {
     return rows
       .map((row, index) => {
         try {
-          return this.parseRow(row, headerMap, index + 2); // +2 because row 1 is header, index starts at 0
+          return this.parseRow(row, headerMap, originalHeaders, index + 2); // +2 because row 1 is header, index starts at 0
         } catch (error) {
           console.warn(`⚠ Error parsing row ${index + 2}:`, error);
           return null;
@@ -205,6 +206,7 @@ export class GoogleSheetsProxyAdapter implements DataAdapter {
   private parseRow(
     row: string[],
     headerMap: Record<string, number>,
+    originalHeaders: string[],
     rowNumber?: number
   ): Partial<Location> | null {
     const getValue = (key: string): string | undefined => {
@@ -313,9 +315,11 @@ export class GoogleSheetsProxyAdapter implements DataAdapter {
       'lastupdated',
     ]);
 
-    Object.entries(headerMap).forEach(([header, index]) => {
-      if (!standardFields.has(header) && row[index]?.trim()) {
-        customFields[header] = row[index].trim();
+    // Use original headers for custom field keys (preserves case)
+    originalHeaders.forEach((originalHeader, index) => {
+      const normalizedHeader = originalHeader.toLowerCase().trim().replace(/\s+/g, '_');
+      if (!standardFields.has(normalizedHeader) && row[index]?.trim()) {
+        customFields[originalHeader] = row[index].trim();
       }
     });
 

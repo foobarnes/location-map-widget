@@ -119,6 +119,7 @@ export class PublicSheetsAdapter implements DataAdapter {
 
     const [headerLine, ...dataLines] = lines;
     const headers = this.parseCSVLine(headerLine);
+    const originalHeaders = headers; // Preserve original case
     const headerMap = this.createHeaderMap(headers);
 
     // Log header information
@@ -158,7 +159,7 @@ export class PublicSheetsAdapter implements DataAdapter {
       .map((line, index) => {
         try {
           const values = this.parseCSVLine(line);
-          return this.parseRow(values, headerMap, index + 2); // +2 because row 1 is header, index starts at 0
+          return this.parseRow(values, headerMap, originalHeaders, index + 2); // +2 because row 1 is header, index starts at 0
         } catch (error) {
           console.warn(`⚠ Error parsing CSV row ${index + 2}:`, error);
           return null;
@@ -222,6 +223,7 @@ export class PublicSheetsAdapter implements DataAdapter {
   private parseRow(
     row: string[],
     headerMap: Record<string, number>,
+    originalHeaders: string[],
     rowNumber?: number
   ): Partial<Location> | null {
     const getValue = (key: string): string | undefined => {
@@ -330,9 +332,11 @@ export class PublicSheetsAdapter implements DataAdapter {
       'lastupdated',
     ]);
 
-    Object.entries(headerMap).forEach(([header, index]) => {
-      if (!standardFields.has(header) && row[index]?.trim()) {
-        customFields[header] = row[index].trim();
+    // Use original headers for custom field keys (preserves case)
+    originalHeaders.forEach((originalHeader, index) => {
+      const normalizedHeader = originalHeader.toLowerCase().trim().replace(/\s+/g, '_');
+      if (!standardFields.has(normalizedHeader) && row[index]?.trim()) {
+        customFields[originalHeader] = row[index].trim();
       }
     });
 
