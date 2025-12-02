@@ -133,7 +133,6 @@ describe('buildEmbedURL', () => {
         hideSearch: true,
         hideTable: false,
         hideFilters: true,
-        hideGeolocation: false,
       };
 
       const url = buildEmbedURL(baseUrl, dataSource, embedOptions);
@@ -141,7 +140,6 @@ describe('buildEmbedURL', () => {
       expect(url).toContain('hideSearch=true');
       expect(url).toContain('hideTable=false');
       expect(url).toContain('hideFilters=true');
-      expect(url).toContain('hideGeolocation=false');
     });
 
     it('should add defaultView option', () => {

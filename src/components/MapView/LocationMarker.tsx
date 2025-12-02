@@ -7,7 +7,6 @@ import { Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import type { Location } from "../../types";
 import { useWidgetState, useStore } from "../../contexts/StoreContext";
-import { formatDistance } from "../../utils/distance";
 import { ImageGallery, CustomFields } from "../shared";
 import { ExpandableText } from "../common/ExpandableText";
 
@@ -340,13 +339,6 @@ export const LocationMarker: React.FC<LocationMarkerProps> = ({ location }) => {
               images={location.images}
               locationName={location.name}
             />
-          )}
-
-          {/* Distance (if calculated) */}
-          {location.distance !== undefined && (
-            <p className="lmw-text-sm lmw-text-gray-600 dark:lmw-text-gray-400 lmw-mb-2">
-              📍 {formatDistance(location.distance)} away
-            </p>
           )}
 
           {/* Address */}

@@ -145,9 +145,6 @@ function parseEmbedOptions(params: URLSearchParams): EmbedOptions {
   const hideFilters = params.get('hideFilters');
   if (hideFilters !== null) options.hideFilters = hideFilters === 'true';
 
-  const hideGeolocation = params.get('hideGeolocation');
-  if (hideGeolocation !== null) options.hideGeolocation = hideGeolocation === 'true';
-
   const defaultView = params.get('defaultView');
   if (defaultView && (defaultView === 'map' || defaultView === 'table')) {
     options.defaultView = defaultView as ViewMode;
@@ -191,7 +188,6 @@ export function embedOptionsToWidgetConfig(
   defaultCenter: [number, number];
   defaultZoom: number;
   enableSearch: boolean;
-  enableGeolocation: boolean;
   enableFilters: boolean;
 }> {
   const config: any = {};
@@ -212,9 +208,6 @@ export function embedOptionsToWidgetConfig(
   // Feature toggles (inverted logic - hide* becomes enable*)
   if (embedOptions.hideSearch !== undefined) {
     config.enableSearch = !embedOptions.hideSearch;
-  }
-  if (embedOptions.hideGeolocation !== undefined) {
-    config.enableGeolocation = !embedOptions.hideGeolocation;
   }
   if (embedOptions.hideFilters !== undefined) {
     config.enableFilters = !embedOptions.hideFilters;

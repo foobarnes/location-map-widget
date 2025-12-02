@@ -130,7 +130,6 @@ const WidgetContent: React.FC<{ config: WidgetConfig }> = ({ config }) => {
       >
         {currentView === 'map' ? (
           <MapView
-            enableGeolocation={config.enableGeolocation}
             enableClustering={config.enableClustering}
             showFullscreenButton={config.showFullscreenButton}
           />

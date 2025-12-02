@@ -100,8 +100,7 @@ Best for static websites, WordPress sites, or quick prototypes.
     },
     config: {
       defaultView: 'map',
-      theme: 'auto',
-      enableGeolocation: true
+      theme: 'auto'
     }
   });
 </script>
@@ -151,8 +150,7 @@ function MapComponent() {
         },
         config: {
           defaultView: 'map',
-          theme: 'auto',
-          enableGeolocation: true
+          theme: 'auto'
         }
       });
     }
@@ -264,8 +262,7 @@ export class MapComponent implements AfterViewInit {
         },
         config: {
           defaultView: 'map',
-          theme: 'auto',
-          enableGeolocation: true
+          theme: 'auto'
         }
       });
     }
@@ -388,7 +385,6 @@ All configuration is passed via URL query parameters:
 |-----------|-------------|---------|
 | `hideSearch` | Hide search bar | `false` |
 | `hideFilters` | Hide category filters | `false` |
-| `hideGeolocation` | Hide "Find Near Me" button | `false` |
 | `hideTable` | Hide table view toggle | `false` |
 
 **Initial Map State**:
@@ -599,11 +595,9 @@ interface WidgetConfig {
   defaultZoom?: number;         // Initial zoom level (default: 4)
 
   // Feature Flags
-  enableGeolocation?: boolean;  // Show "Find Near Me" button (default: true)
   enableClustering?: boolean;   // Enable marker clustering (default: true)
   enableSearch?: boolean;       // Enable search bar (default: true)
   enableFilters?: boolean;      // Enable category filters (default: true)
-  enableDistanceFilter?: boolean; // Enable distance filtering (default: true)
 
   // Pagination
   itemsPerPage?: number;        // Items per page in table view (default: 10)
@@ -651,11 +645,9 @@ OpenMapEmbed.init({
     defaultZoom: 10,
 
     // Features
-    enableGeolocation: true,
     enableClustering: true,
     enableSearch: true,
     enableFilters: true,
-    enableDistanceFilter: true,
 
     // Table
     itemsPerPage: 20,
@@ -1029,7 +1021,7 @@ Results: Locations with "Bay" or "Bikes" in the name
 - **Case-insensitive**: "california", "California", and "CALIFORNIA" all work
 - **Partial matching**: "calif" will match "California"
 - **Real-time filtering**: Results update as you type
-- **Combined with filters**: Search works alongside category and distance filters
+- **Combined with filters**: Search works alongside category filters
 
 ### Category Filtering
 
@@ -1039,28 +1031,13 @@ Click category badges to filter by one or more categories:
 - **Multiple categories**: Click multiple badges to show locations from any selected category
 - **Clear filter**: Click a selected badge again to deselect it
 
-### Distance Filtering
-
-Use the "Find Near Me" button to enable location-based filtering:
-
-1. Click "Find Near Me"
-2. Allow location access
-3. Use distance slider to set maximum distance
-4. Locations are filtered and sorted by distance
-
-**Distance Filter Features:**
-- Shows distance to each location
-- Automatically sorts by nearest first
-- Works with search and category filters
-- Distance displayed in miles or kilometers
-
 ### Combining Filters
 
-All filters work together:
+Search and category filters work together:
 
 ```
-Example: Search "California" + Category "rental" + Within 50 miles
-Result: Rental locations in California within 50 miles of your location
+Example: Search "California" + Category "rental"
+Result: Rental locations in California
 ```
 
 ### Configuration
@@ -1073,8 +1050,7 @@ init({
   dataSource: { /* ... */ },
   config: {
     enableSearch: true,           // Enable/disable search bar
-    enableFilters: true,           // Enable/disable category filters
-    enableDistanceFilter: true     // Enable/disable distance filtering
+    enableFilters: true            // Enable/disable category filters
   }
 });
 ```

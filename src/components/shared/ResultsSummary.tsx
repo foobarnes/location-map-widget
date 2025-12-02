@@ -15,8 +15,7 @@ export const ResultsSummary: React.FC = () => {
   // Check if any filters are active
   const hasActiveFilters =
     filters.searchQuery.length > 0 ||
-    filters.selectedCategories.length > 0 ||
-    filters.distanceFilter.enabled;
+    filters.selectedCategories.length > 0;
 
   const filteredCount = filteredLocations.length;
   const totalCount = locations.length;
