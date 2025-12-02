@@ -77,9 +77,6 @@ export interface Location {
 
   // Metadata
   lastUpdated?: string; // ISO timestamp
-
-  // Calculated fields (not from data source)
-  distance?: number; // Distance from user location in miles
 }
 
 /**
@@ -160,11 +157,9 @@ export interface WidgetConfig {
   defaultZoom?: number; // Zoom level
 
   // Feature flags
-  enableGeolocation?: boolean; // Show "Find Near Me" button
   enableClustering?: boolean; // Enable marker clustering
   enableSearch?: boolean; // Enable search bar
   enableFilters?: boolean; // Enable category filters
-  enableDistanceFilter?: boolean; // Enable distance-based filtering
   showFullscreenButton?: boolean; // Show fullscreen toggle button (default: true)
 
   // Pagination
@@ -196,14 +191,6 @@ export interface WidgetInitParams {
 export interface FilterState {
   searchQuery: string;
   selectedCategories: LocationCategory[];
-  distanceFilter: {
-    enabled: boolean;
-    maxDistance: number; // in miles
-    userLocation?: {
-      latitude: number;
-      longitude: number;
-    };
-  };
 }
 
 /**
@@ -291,7 +278,6 @@ export interface EmbedFeatureOptions {
   hideSearch?: boolean; // Hide search bar
   hideTable?: boolean; // Hide table view toggle
   hideFilters?: boolean; // Hide category filters
-  hideGeolocation?: boolean; // Hide "Find Near Me" button
   hideFullscreen?: boolean; // Hide fullscreen button
   defaultView?: ViewMode; // Default view on load (map or table)
 }

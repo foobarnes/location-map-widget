@@ -5,7 +5,6 @@
 import React, { useState } from 'react';
 import type { Location } from '../../types';
 import { useWidgetState, useStore } from '../../contexts/StoreContext';
-import { formatDistance } from '../../utils/distance';
 import { ImageGallery, CustomFields } from '../shared';
 
 export const DataTable: React.FC = () => {
@@ -85,9 +84,6 @@ export const DataTable: React.FC = () => {
               </th>
               <th className="lmw-px-4 lmw-py-3 lmw-text-left lmw-text-xs lmw-font-semibold lmw-text-gray-700 dark:lmw-text-gray-300 lmw-uppercase lmw-tracking-wider lmw-hidden lg:lmw-table-cell">
                 Address
-              </th>
-              <th className="lmw-px-4 lmw-py-3 lmw-text-left lmw-text-xs lmw-font-semibold lmw-text-gray-700 dark:lmw-text-gray-300 lmw-uppercase lmw-tracking-wider lmw-hidden sm:lmw-table-cell">
-                Distance
               </th>
             </tr>
           </thead>
@@ -191,17 +187,12 @@ const TableRow: React.FC<TableRowProps> = ({ location, isExpanded, isSelected, o
         <td className="lmw-px-4 lmw-py-4 lmw-text-sm lmw-text-gray-600 dark:lmw-text-gray-400 lmw-hidden lg:lmw-table-cell">
           {location.address.city}, {location.address.state}
         </td>
-
-        {/* Distance - Hidden on mobile */}
-        <td className="lmw-px-4 lmw-py-4 lmw-text-sm lmw-text-gray-600 dark:lmw-text-gray-400 lmw-hidden sm:lmw-table-cell">
-          {location.distance !== undefined ? formatDistance(location.distance) : '—'}
-        </td>
       </tr>
 
       {/* Expanded Row Details */}
       {isExpanded && (
         <tr className="lmw-bg-gray-50 dark:lmw-bg-gray-800">
-          <td colSpan={4} className="lmw-px-4 lmw-py-4">
+          <td colSpan={3} className="lmw-px-4 lmw-py-4">
             <ExpandedRowDetails location={location} />
           </td>
         </tr>

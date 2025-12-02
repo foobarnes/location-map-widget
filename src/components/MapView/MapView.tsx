@@ -7,7 +7,6 @@ import { MapContainer, TileLayer, useMap, useMapEvents } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import { useWidgetState, useStore } from '../../contexts/StoreContext';
 import { LocationMarker } from './LocationMarker';
-import { GeolocationButton } from './GeolocationButton';
 import { FullscreenButton } from './FullscreenButton';
 import 'leaflet/dist/leaflet.css';
 
@@ -87,13 +86,11 @@ const createClusterCustomIcon = (cluster: any) => {
 };
 
 interface MapViewProps {
-  enableGeolocation?: boolean;
   enableClustering?: boolean;
   showFullscreenButton?: boolean;
 }
 
 export const MapView: React.FC<MapViewProps> = ({
-  enableGeolocation = true,
   enableClustering = true,
   showFullscreenButton = true,
 }) => {
@@ -175,9 +172,6 @@ export const MapView: React.FC<MapViewProps> = ({
 
         {/* Fullscreen button */}
         {showFullscreenButton && <FullscreenButton mapContainerRef={mapContainerRef} />}
-
-        {/* Geolocation button */}
-        {enableGeolocation && <GeolocationButton />}
 
         {/* Markers with optional clustering */}
         {enableClustering ? (
@@ -278,8 +272,7 @@ const MapController: React.FC = () => {
     // Check if filters are active
     const hasActiveFilters =
       filters.searchQuery.length > 0 ||
-      filters.selectedCategories.length > 0 ||
-      filters.distanceFilter.enabled;
+      filters.selectedCategories.length > 0;
 
     // Only auto-zoom if the filtered count actually changed
     if (filteredLocations.length !== prevFilteredCount.current) {

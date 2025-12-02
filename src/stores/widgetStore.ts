@@ -7,7 +7,6 @@ import { create } from 'zustand';
 import type { StoreApi } from 'zustand';
 import type { WidgetState, Location, ViewMode, Theme, FilterState, CategoryConfig } from '../types';
 import type { FieldRendererRegistry } from '../renderers/FieldRendererRegistry';
-import { calculateDistance } from '../utils/distance';
 import { extractCategories } from '../utils/category';
 
 /**
@@ -31,11 +30,6 @@ export function createWidgetStore() {
   filters: {
     searchQuery: '',
     selectedCategories: [],
-    distanceFilter: {
-      enabled: false,
-      maxDistance: 25, // default 25 miles
-      userLocation: undefined,
-    },
   },
 
   // Pagination
@@ -162,22 +156,6 @@ export function createWidgetStore() {
       filtered = filtered.filter((loc) =>
         filters.selectedCategories.includes(loc.category.toLowerCase())
       );
-    }
-
-    // Apply distance filter
-    if (filters.distanceFilter.enabled && filters.distanceFilter.userLocation) {
-      const { userLocation, maxDistance } = filters.distanceFilter;
-
-      filtered = filtered
-        .map((loc) => ({
-          ...loc,
-          distance: calculateDistance(
-            { latitude: loc.latitude, longitude: loc.longitude },
-            userLocation
-          ),
-        }))
-        .filter((loc) => loc.distance! <= maxDistance)
-        .sort((a, b) => a.distance! - b.distance!); // Sort by distance
     }
 
     set({ filteredLocations: filtered });

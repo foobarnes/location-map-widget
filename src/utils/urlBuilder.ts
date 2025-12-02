@@ -88,9 +88,6 @@ function addEmbedOptionsParams(
   if (options.hideFilters !== undefined) {
     params.set('hideFilters', options.hideFilters.toString());
   }
-  if (options.hideGeolocation !== undefined) {
-    params.set('hideGeolocation', options.hideGeolocation.toString());
-  }
   if (options.defaultView) params.set('defaultView', options.defaultView);
 
   // Initial state

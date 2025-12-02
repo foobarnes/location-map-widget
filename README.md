@@ -29,10 +29,10 @@ An embeddable, customizable location map widget with dynamic category support an
 
 - 🎨 **Dynamic Categories** - Auto-discovers categories from data with 8-color palette
 - 📊 **Google Sheets Integration** - Use any Google Sheet as your data source
-- 🗺️ **Interactive Maps** - Leaflet-powered with clustering and geolocation
+- 🗺️ **Interactive Maps** - Leaflet-powered with clustering
 - 🖼️ **Image Galleries** - Display location photos in tooltips and table view
 - 📱 **Fully Responsive** - Works on any device, height controlled by container
-- 🔍 **Powerful Filters** - Search, category, and distance-based filtering
+- 🔍 **Powerful Filters** - Search and category filtering
 - 📋 **Table View** - Alternate view with pagination
 - ⚡ **Lightweight** - Only 218 KB gzipped
 - 🚀 **Easy Setup** - No API keys required, just 3 lines of code

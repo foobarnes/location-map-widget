@@ -167,7 +167,6 @@ describe('parseURLConfig', () => {
         hideSearch: 'true',
         hideTable: 'false',
         hideFilters: 'true',
-        hideGeolocation: 'false',
       });
 
       const result = parseURLConfig(params);
@@ -176,7 +175,6 @@ describe('parseURLConfig', () => {
         hideSearch: true,
         hideTable: false,
         hideFilters: true,
-        hideGeolocation: false,
       });
     });
 
@@ -408,20 +406,6 @@ describe('embedOptionsToWidgetConfig', () => {
     expect(result2.enableSearch).toBe(true);
   });
 
-  it('should invert hideGeolocation to enableGeolocation', () => {
-    const embedOptions1: EmbedOptions = {
-      hideGeolocation: true,
-    };
-    const result1 = embedOptionsToWidgetConfig(embedOptions1);
-    expect(result1.enableGeolocation).toBe(false);
-
-    const embedOptions2: EmbedOptions = {
-      hideGeolocation: false,
-    };
-    const result2 = embedOptionsToWidgetConfig(embedOptions2);
-    expect(result2.enableGeolocation).toBe(true);
-  });
-
   it('should invert hideFilters to enableFilters', () => {
     const embedOptions1: EmbedOptions = {
       hideFilters: true,
@@ -442,7 +426,6 @@ describe('embedOptionsToWidgetConfig', () => {
     const result = embedOptionsToWidgetConfig(embedOptions);
 
     expect(result.enableSearch).toBeUndefined();
-    expect(result.enableGeolocation).toBeUndefined();
     expect(result.enableFilters).toBeUndefined();
   });
 
@@ -456,7 +439,6 @@ describe('embedOptionsToWidgetConfig', () => {
       zoom: 11,
       hideSearch: true,
       hideFilters: false,
-      hideGeolocation: true,
     };
 
     const result = embedOptionsToWidgetConfig(embedOptions);
@@ -469,7 +451,6 @@ describe('embedOptionsToWidgetConfig', () => {
       defaultZoom: 11,
       enableSearch: false,
       enableFilters: true,
-      enableGeolocation: false,
     });
   });
 
